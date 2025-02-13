@@ -8,6 +8,10 @@ export const routes: Routes = [
         component: AddMatchComponent
     },
     {
+        path: "",
+        component: AddMatchComponent
+    },
+    {
         path: "historic",
         component: HistoricComponent
     }

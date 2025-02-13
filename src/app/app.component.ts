@@ -8,7 +8,7 @@ import {Panel} from 'primeng/panel';
 
 @Component({
   selector: 'app-root',
-    imports: [RouterOutlet, DockModule, NavigationComponent, Card, Panel],
+    imports: [RouterOutlet, DockModule, NavigationComponent, Panel],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
