@@ -1,0 +1,98 @@
+@if (!playerA?.id || !playerB?.id) {
+    <app-choose-player (playerSelected)="onPlayerSelected($event)"/>
+} @else {
+    <p-fluid class="header-wrapper">
+        <div class="score-field">
+            <div class="player-info a-background">
+                <p-tag class="score-tag">JOUEUR A</p-tag>
+                <h2 class="player-name">{{ playerA?.firstname }}</h2>
+                <h1 class="player-score">{{ getPlayerScore('A') }}</h1>
+            </div>
+            <div class="player-info b-background">
+                <p-tag class="score-tag" severity="secondary">JOUEUR B</p-tag>
+                <h2 class="player-name">{{ playerB?.firstname }}</h2>
+                <h1 class="player-score">{{ getPlayerScore('B') }}</h1>
+            </div>
+        </div>
+        <p-fluid class="history-tag-wrapper">
+            @for (point of history; track point; let last = $last) {
+                @if (last && isMatchFinished()) {
+                    <p-tag class="score-tag" value="{{point}}" severity="success"/>
+                } @else {
+                    <p-tag class="score-tag" value="{{point}}" [severity]="point[0] === 'A' ? undefined : 'secondary'"/>
+                }
+            }
+        </p-fluid>
+    </p-fluid>
+    @if (history.length === 0) {
+        <p-divider/>
+        <p-fieldset legend="Premier service">
+            <p-fluid class="flex-wrapper">
+                <p-fluid class="buttons-wrapper">
+                    <p-button severity="primary" label="{{playerA!.firstname}} - Service Gauche"
+                              (click)="addService('A', 'L')"
+                    />
+                    <p-button severity="primary" label="{{playerA!.firstname}} - Service Droite"
+                              (click)="addService('A', 'R')"
+                    />
+                </p-fluid>
+                <p-fluid class="buttons-wrapper">
+                    <p-button severity="primary" label="{{playerB!.firstname}} - Service Gauche"
+                              (click)="addService('B', 'L')"
+                    />
+                    <p-button severity="primary" label="{{playerB!.firstname}} - Service Droite"
+                              (click)="addService('B', 'R')"
+                    />
+                </p-fluid>
+            </p-fluid>
+        </p-fieldset>
+    } @else if (!isMatchFinished()) {
+        <p-divider/>
+        @if ((history.length === 1 && !lastWinnerPoint) || isServerWinPoint()) {
+            <p-fieldset legend="Gagnant du point">
+                <p-fluid class="buttons-wrapper">
+                    <p-fluid>
+                        <p-button severity="primary" label="{{playerA!.firstname}}" size="large"
+                                  (click)="onClickWinnerPoint('A')"/>
+                    </p-fluid>
+                    <p-fluid>
+                        <p-button severity="primary" label="{{playerB!.firstname}}" size="large"
+                                  (click)="onClickWinnerPoint('B')"/>
+                    </p-fluid>
+                </p-fluid>
+            </p-fieldset>
+        } @else {
+            <p-fieldset legend="Où {{lastWinnerPoint === 'A' ? playerA!.firstname : playerB!.firstname}} va servir ?">
+                <p-fluid class="buttons-wrapper">
+                    <p-fluid>
+                        <p-button severity="secondary" label="Gauche" size="large"
+                                  (click)="addService(lastWinnerPoint!,'L')"/>
+                    </p-fluid>
+                    <p-fluid>
+                        <p-button severity="secondary" label="Droite" size="large"
+                                  (click)="addService(lastWinnerPoint!,'R')"/>
+                    </p-fluid>
+                </p-fluid>
+            </p-fieldset>
+        }
+    } @else if (isMatchFinished()) {
+        <p-fieldset legend="Partie terminée">
+            <p-fluid class="buttons-wrapper">
+                <p-fluid *ngIf="matchSent === null; else successButton">
+                    <p-progress-spinner ariaLabel="loading"/>
+                </p-fluid>
+                <ng-template #successButton *ngIf="matchSent; else retryButton">
+                    <p-fluid>
+                        <p-button severity="primary" label="Fermer ce match" (click)="closeMatch()"/>
+                    </p-fluid>
+                </ng-template>
+                <ng-template #retryButton>
+                    <p-fluid>
+                        <p-button severity="warn" label="Erreur lors de l'envoi des donn es, cliquez pour r essayer"
+                                  (click)="saveFinishedMatch()"/>
+                    </p-fluid>
+                </ng-template>
+            </p-fluid>
+        </p-fieldset>
+    }
+}

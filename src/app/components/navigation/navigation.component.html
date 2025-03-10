@@ -1,0 +1,17 @@
+<p-menubar [model]="items" breakpoint="100px">
+    <ng-template let-item>
+        <ng-template>
+            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menubar-item-link">
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+            </a>
+        </ng-template>
+        <ng-template #noLink>
+            <div class="p-menubar-item-link">
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+            </div>
+        </ng-template>
+    </ng-template>
+</p-menubar>
+
