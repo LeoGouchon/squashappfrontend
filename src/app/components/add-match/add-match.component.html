@@ -78,18 +78,18 @@
     } @else if (isMatchFinished()) {
         <p-fieldset legend="Partie terminée">
             <p-fluid class="buttons-wrapper">
-                <p-fluid *ngIf="matchSent === null; else successButton">
+                <p-fluid *ngIf="matchSent === null; else retryButton">
                     <p-progress-spinner ariaLabel="loading"/>
                 </p-fluid>
-                <ng-template #successButton *ngIf="matchSent; else retryButton">
-                    <p-fluid>
-                        <p-button severity="primary" label="Fermer ce match" (click)="closeMatch()"/>
-                    </p-fluid>
-                </ng-template>
                 <ng-template #retryButton>
-                    <p-fluid>
+                    <p-fluid *ngIf="!matchSent; else successButton">
                         <p-button severity="warn" label="Erreur lors de l'envoi des donn es, cliquez pour r essayer"
                                   (click)="saveFinishedMatch()"/>
+                    </p-fluid>
+                </ng-template>
+                <ng-template #successButton>
+                    <p-fluid>
+                        <p-button severity="primary" label="Fermer ce match" (click)="closeMatch()"/>
                     </p-fluid>
                 </ng-template>
             </p-fluid>

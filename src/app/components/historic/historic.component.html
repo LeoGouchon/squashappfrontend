@@ -1,1 +1,14 @@
-<p>historic works!</p>
+<p>
+<p-table [value]="groupMatchesByDate(matches)" [scrollable]="true" scrollHeight="flex" [groupRowsBy]="groupMatchesByDate(matches)">
+    <ng-template pTemplate="body" let-group>
+        <tr class="date-header">
+            <th colspan="5">{{ group.date }}</th>
+        </tr>
+        <tr *ngFor="let match of group.matches">
+            <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
+            <td class="score"><p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/></td>
+            <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+</p>

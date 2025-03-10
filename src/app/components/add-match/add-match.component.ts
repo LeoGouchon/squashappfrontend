@@ -49,7 +49,7 @@ export class AddMatchComponent {
         this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
             this.saveFinishedMatch();
         });
-    }
+    };
 
     closeMatch() {
         this.navigation.goBack();

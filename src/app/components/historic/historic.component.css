@@ -1,0 +1,37 @@
+.match-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+
+.player-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.player-a {
+    text-align: left;
+    width: 35%;
+}
+
+.player-b {
+    text-align: right;
+    width: 35%;
+}
+
+.score {
+    text-align: center;
+    width: 30%;
+}
+
+.date-header {
+    text-align: center;
+    padding: 8px;
+}
+
+.winner {
+    font-weight: bold;
+}
