@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Player} from '../../components/choose-player/choose-player.component';
 import {ApiMatchInterface} from './api-match.interface';
 import {timeout} from 'rxjs';
+import {TokenService} from '../token.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,14 @@ export class ApiMatchService implements ApiMatchInterface {
     }
 
     createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: string[]) {
-        return this.http.post(this.apiUrl + "/matches", {playerAId, playerBId, pointsHistory: history.join(";")}).pipe(timeout(this.timeoutValue))
+        return this.http.post(this.apiUrl + "/matches",
+            {
+                playerAId,
+                playerBId,
+                pointsHistory: history.join(";")
+            },
+            { withCredentials: true }
+        ).pipe(timeout(this.timeoutValue))
     }
 
     createFinishedMatchWithoutHistory(playerAId: number, playerBId: number, finalScoreA: number, finalScoreB: number) {

@@ -5,9 +5,8 @@ import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
-
-
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {authInterceptor} from './services/auth-interceptor/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
         providers: [
@@ -21,7 +20,9 @@ export const appConfig: ApplicationConfig = {
                     ripple: true
                 }
             ),
-            provideHttpClient()
+            provideHttpClient(
+                withInterceptors([authInterceptor]),
+            )
         ],
     }
 ;

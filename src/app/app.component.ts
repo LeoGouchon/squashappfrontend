@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import {PrimeNG} from 'primeng/config';
 import {DockModule} from 'primeng/dock';
 import {NavigationComponent} from './components/navigation/navigation.component';
-import {Card} from 'primeng/card';
 import {Panel} from 'primeng/panel';
+import {NavigationService} from './services/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +15,13 @@ import {Panel} from 'primeng/panel';
 export class AppComponent implements OnInit {
   title = 'Squash';
 
-  constructor(private primeng: PrimeNG) {}
+  constructor(
+      private primeng: PrimeNG,
+      private navigationService: NavigationService
+  ) {}
 
   ngOnInit() {
     this.primeng.ripple.set(true);
+    this.navigationService.checkTokenAndNavigate();
   }
 }

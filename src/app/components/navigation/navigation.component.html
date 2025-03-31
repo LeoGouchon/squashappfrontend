@@ -1,17 +1,21 @@
-<p-menubar [model]="items" breakpoint="100px">
+<p-toast />
+<p-menubar [model]="items" breakpoint="50px">
     <ng-template let-item>
-        <ng-template>
-            <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menubar-item-link">
+        @if (item.url) {
+            <a [href]="item.url" class="p-menubar-item-link">
                 <span [class]="item.icon"></span>
                 <span class="ml-2">{{ item.label }}</span>
             </a>
-        </ng-template>
-        <ng-template #noLink>
+        } @else {
             <div class="p-menubar-item-link">
                 <span [class]="item.icon"></span>
                 <span class="ml-2">{{ item.label }}</span>
             </div>
-        </ng-template>
+        }
     </ng-template>
+    @if (tokenService.isTokenPresent()){
+        <p-overlay-badge value="" severity="success">
+            <p-avatar label="L" shape="square"/>
+        </p-overlay-badge>
+    }
 </p-menubar>
-

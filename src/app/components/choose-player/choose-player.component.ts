@@ -33,12 +33,12 @@ export class ChoosePlayerComponent implements OnInit {
     formGroup!: FormGroup;
 
     constructor(
-        @Inject('ApiPlayerInterface') private apiPLayerService: ApiPlayerInterface,
+        @Inject('ApiPlayerInterface') private apiPlayerService: ApiPlayerInterface,
     ) {
     }
 
     ngOnInit() {
-        this.apiPLayerService.getPlayers().subscribe(players => this.players = players);
+        this.apiPlayerService.getPlayers().subscribe(players => this.players = players);
 
         this.formGroup = new FormGroup({
             selectedPlayers: new FormControl<Player[] | null>(null)

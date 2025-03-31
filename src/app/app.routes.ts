@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {AddMatchComponent} from './components/add-match/add-match.component';
 import {HistoricComponent} from './components/historic/historic.component';
+import {LoginComponent} from './components/login/login.component';
 
 export const routes: Routes = [
     {
@@ -8,8 +9,8 @@ export const routes: Routes = [
         component: AddMatchComponent
     },
     {
-        path: "",
-        component: AddMatchComponent
+        path: "login",
+        component: LoginComponent
     },
     {
         path: "historic",
