@@ -14,8 +14,10 @@
         }
     </ng-template>
     @if (tokenService.isTokenPresent()){
-        <p-overlay-badge value="" severity="success">
-            <p-avatar label="L" shape="square"/>
-        </p-overlay-badge>
+        <a href="/profile">
+            <p-overlay-badge value="" severity="success">
+                <p-avatar label="L" shape="square"/>
+            </p-overlay-badge>
+        </a>
     }
 </p-menubar>

@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Menubar} from 'primeng/menubar';
 import {MenuItem, MessageService} from 'primeng/api';
-import {NgIf} from '@angular/common';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {TokenService} from '../../services/token.service';
 import {Avatar} from 'primeng/avatar';
