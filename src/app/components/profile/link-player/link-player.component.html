@@ -1,0 +1,32 @@
+<p-fluid>
+    <p-accordion value="0">
+        <p-accordion-panel value="0">
+            @if (user?.player == null) {
+                <form [formGroup]="formGroup">
+                    <p-accordion-header>Associer un joueur existant</p-accordion-header>
+                    <p-accordion-content>
+                        <p-listbox
+                            [options]="unlinkedPlayers"
+                            optionLabel="firstname"
+                            formControlName="selectedPlayer"
+                        />
+                        <p-button label="Associer le joueur"
+                                  (click)="onSubmit()"
+                                  [disabled]="!formGroup.valid"
+                                  severity="primary"
+                        />
+                    </p-accordion-content>
+                </form>
+            } @else {
+                <p>
+                    {{
+                        user?.player?.firstname
+                        + " "
+                        + user?.player?.lastname
+                    }}
+                </p>
+            }
+        </p-accordion-panel>
+    </p-accordion>
+</p-fluid>
+
