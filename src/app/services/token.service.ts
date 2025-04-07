@@ -14,10 +14,5 @@ export class TokenService {
       return !!tokenCookie && tokenCookie.split('=')[1] !== '';
   }
 
-  getToken(): string | null {
-      const tokenCookie = document.cookie.split(';').find(x => x.trim().startsWith('token='));
-      return tokenCookie ? tokenCookie.split('=')[1] : null
-  }
-
   removeToken(): void { document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'; }
 }
