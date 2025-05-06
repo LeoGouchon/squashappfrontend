@@ -27,8 +27,8 @@ import {Toast} from 'primeng/toast';
 export class NavigationComponent implements OnInit {
 
     constructor(
-        @Inject('NavigationServiceInterface') private navigation: NavigationServiceInterface,
-        private messageService: MessageService,
+        @Inject('NavigationServiceInterface') private readonly navigation: NavigationServiceInterface,
+        private readonly messageService: MessageService,
         protected tokenService: TokenService
     ) {
         this.tokenService = tokenService;
@@ -43,7 +43,7 @@ export class NavigationComponent implements OnInit {
                 label: 'Nouveau Match',
                 icon: 'pi pi-plus',
                 command: () => {
-                    this.tokenService.isTokenPresent()
+                    this.tokenService.getAccessToken()
                         ?
                         this.navigation.navigateTo('/add-match')
                         :
@@ -59,7 +59,7 @@ export class NavigationComponent implements OnInit {
                 label: 'Historique',
                 icon: 'pi pi-book',
                 command: () => {
-                    this.tokenService.isTokenPresent()
+                    this.tokenService.getAccessToken()
                         ?
                         this.navigation.navigateTo('/historic')
                         :

@@ -13,7 +13,7 @@
             </div>
         }
     </ng-template>
-    @if (tokenService.isTokenPresent()){
+    @if (tokenService.getAccessToken()){
         <a href="/profile">
             <p-overlay-badge value="" severity="success">
                 <p-avatar label="L" shape="square"/>

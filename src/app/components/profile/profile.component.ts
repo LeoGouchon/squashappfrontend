@@ -17,7 +17,7 @@ import {LinkPlayerComponent} from './link-player/link-player.component';
 export class ProfileComponent implements OnInit {
   @Input() userProfile: any;
 
-  constructor(private apiUserService: ApiUserService) {
+  constructor(private readonly apiUserService: ApiUserService) {
       this.apiUserService = apiUserService;
   }
 
@@ -29,8 +29,7 @@ export class ProfileComponent implements OnInit {
   }
 
   disconnect(): void {
-      console.log("DISCONNECT");
-      this.apiUserService.logout(this.userProfile.token).subscribe();
+      this.apiUserService.logout().subscribe();
   }
 }
 

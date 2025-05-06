@@ -28,8 +28,8 @@ export class ApiUserService implements ApiUserInterface {
         );
     }
 
-    logout(token: string) {
-        return this.http.post(this.apiUrl + '/authenticate/logout', {token}).pipe(
+    logout() {
+        return this.http.post(this.apiUrl + '/authenticate/logout', {}).pipe(
             timeout(this.timeoutValue),
             tap(_ => {
                 this.tokenService.clearToken()
@@ -62,7 +62,7 @@ export class ApiUserService implements ApiUserInterface {
         }
     }
 
-    linkPlayer(userId: number, playerId: number) {
+    linkPlayer(userId: number, playerId: number): Observable<any> {
         return this.http.put(this.apiUrl + '/users/' + userId, {
             player: {
                 id: playerId,

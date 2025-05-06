@@ -42,9 +42,9 @@ export class AddMatchComponent {
     protected matchSent: boolean | null = null;
 
     constructor(
-        @Inject('ApiMatchInterface') private apiMatchService: ApiMatchInterface,
-        @Inject('NavigationServiceInterface') private navigation: NavigationServiceInterface,
-        private matchObserverService: MatchObserverService
+        @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface,
+        @Inject('NavigationServiceInterface') private readonly navigation: NavigationServiceInterface,
+        private readonly matchObserverService: MatchObserverService
     ) {
         this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
             this.saveFinishedMatch();

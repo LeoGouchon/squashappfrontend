@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {TokenService} from './token.service';
 
 export interface NavigationServiceInterface {
-    checkTokenAndNavigate(): void;
+    checkTokenAndNavigate(): Promise<void>;
     navigateTo(url: string): void;
     goBack(): void;
 }
@@ -14,19 +14,20 @@ export interface NavigationServiceInterface {
 export class NavigationService implements NavigationServiceInterface {
 
     constructor(
-        private router: Router,
-        private tokenService: TokenService
+        private readonly router: Router,
+        private readonly tokenService: TokenService
     ) {
     }
 
-    checkTokenAndNavigate() {
-        if (!this.tokenService.isTokenPresent()) {
-            this.router.navigate(['/login']);
+    async checkTokenAndNavigate(): Promise<void> {
+        await this.tokenService.initAuth();
+        if (!this.tokenService.getAccessToken()) {
+            await this.router.navigate(['/login']);
         }
     }
 
     navigateTo(url: string) {
-        if (!this.tokenService.isTokenPresent()) {
+        if (!this.tokenService.getAccessToken()) {
             this.router.navigate(['/login']);
         } else {
             this.router.navigate([url]);
@@ -34,7 +35,7 @@ export class NavigationService implements NavigationServiceInterface {
     }
 
     goBack() {
-        if (!this.tokenService.isTokenPresent()) {
+        if (!this.tokenService.getAccessToken()) {
             this.router.navigate(['/login']);
         } else {
             this.router.navigate(['/']);
