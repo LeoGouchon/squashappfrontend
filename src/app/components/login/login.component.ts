@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
                 const formValues = this.loginForm.value;
                 this.apiUserService.login(formValues.email, formValues.password).subscribe({
                     next: () => {
-                        if (this.tokenService.isTokenPresent()) {
+                        if (this.tokenService.getAccessToken()) {
                             this.formError = false;
                             this.formErrorText = '';
                             this.navigation.navigateTo('/');
@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
             if (this.loginForm.valid && this.isEmailvalid() && formValues.password === formValues.confirmedPassword) {
                 this.apiUserService.signup(formValues.email, formValues.password, formValues.selectedPlayer?.id).subscribe({
                     next: () => {
-                        if (this.tokenService.isTokenPresent()) {
+                        if (this.tokenService.getAccessToken()) {
                             this.formError = false;
                             this.formErrorText = '';
                             this.navigation.navigateTo('/');

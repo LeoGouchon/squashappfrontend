@@ -10,10 +10,10 @@ import {NavigationService} from '../navigation.service';
     providedIn: 'root'
 })
 export class ApiUserService implements ApiUserInterface {
-    private apiUrl = environment.apiUrl;
-    private timeoutValue: number = environment.timeoutValue;
+    private readonly apiUrl = environment.apiUrl;
+    private readonly timeoutValue: number = environment.timeoutValue;
 
-    constructor(private http: HttpClient, private tokenService: TokenService, private navigationService: NavigationService) {
+    constructor(private readonly http: HttpClient, private readonly tokenService: TokenService, private readonly navigationService: NavigationService) {
         this.tokenService = tokenService;
         this.navigationService = navigationService;
     }
@@ -22,17 +22,17 @@ export class ApiUserService implements ApiUserInterface {
         return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/login', {email, password}).pipe(
             timeout(this.timeoutValue),
             tap(response => {
-                document.cookie = `token=${response.token}; path=/;`;
+                const accessToken = response.token;
+                this.tokenService.setAccessToken(accessToken);
             })
         );
     }
 
     logout(token: string) {
-        console.log("LOGOUT" + token)
         return this.http.post(this.apiUrl + '/authenticate/logout', {token}).pipe(
             timeout(this.timeoutValue),
             tap(_ => {
-                this.tokenService.removeToken()
+                this.tokenService.clearToken()
                 this.navigationService.navigateTo("/")
             })
         );
@@ -46,9 +46,8 @@ export class ApiUserService implements ApiUserInterface {
         return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup', data).pipe(
             timeout(this.timeoutValue),
             tap(response => {
-                if (response.token != null) {
-                    document.cookie = `token=${response.token}; path=/;`;
-                }
+                const accessToken = response.token;
+                this.tokenService.setAccessToken(accessToken);
             }));
     }
 
@@ -66,7 +65,7 @@ export class ApiUserService implements ApiUserInterface {
     linkPlayer(userId: number, playerId: number) {
         return this.http.put(this.apiUrl + '/users/' + userId, {
             player: {
-                id: playerId
+                id: playerId,
             }
         })
             .pipe(timeout(this.timeoutValue));
