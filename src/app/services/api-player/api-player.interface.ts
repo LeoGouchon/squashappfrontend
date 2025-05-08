@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {Player} from '../../types/Player.type';
+import {Player} from '../../types/player.type';
 import {PaginatedResponse} from '../../types/pagination.type';
 
 export interface ApiPlayerInterface {

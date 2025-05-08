@@ -3,7 +3,7 @@ import {Fluid} from 'primeng/fluid';
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 import {Listbox} from 'primeng/listbox';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Player} from '../../../types/Player.type';
+import {Player} from '../../../types/player.type';
 import {ApiPlayerService} from '../../../services/api-player/api-player.service';
 import {Button} from 'primeng/button';
 import {ApiUserService} from '../../../services/api-user/api-user.service';

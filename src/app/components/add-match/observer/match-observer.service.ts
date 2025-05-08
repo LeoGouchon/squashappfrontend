@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class MatchObserverService {
-    private matchFinishedSubject = new Subject<void>();
+    private readonly matchFinishedSubject = new Subject<void>();
 
     notifyMatchFinished() {
         this.matchFinishedSubject.next();

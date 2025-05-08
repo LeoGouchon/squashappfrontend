@@ -5,7 +5,7 @@ import {Listbox} from 'primeng/listbox';
 import {Button} from 'primeng/button';
 import {ApiPlayerInterface} from '../../services/api-player/api-player.interface';
 import {ApiPlayerService} from '../../services/api-player/api-player.service';
-import {Player} from '../../types/Player.type';
+import {Player} from '../../types/player.type';
 
 @Component({
     selector: 'app-choose-player',

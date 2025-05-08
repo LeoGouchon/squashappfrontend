@@ -3,7 +3,7 @@ import {environment} from '../../../../environment';
 import {HttpClient} from '@angular/common/http';
 import {ApiPlayerInterface} from './api-player.interface';
 import {Observable, timeout} from 'rxjs';
-import {Player} from '../../types/Player.type';
+import {Player} from '../../types/player.type';
 import {PaginatedResponse} from '../../types/pagination.type';
 
 @Injectable({

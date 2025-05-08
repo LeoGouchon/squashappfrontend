@@ -11,7 +11,7 @@ import {NavigationService, NavigationServiceInterface} from '../../services/navi
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 import {Listbox} from 'primeng/listbox';
 import {ApiPlayerService} from '../../services/api-player/api-player.service';
-import {Player} from '../../types/Player.type';
+import {Player} from '../../types/player.type';
 
 @Component({
     selector: 'app-login',

@@ -4,7 +4,7 @@ import {Fieldset} from 'primeng/fieldset';
 import {Divider} from 'primeng/divider';
 import {Fluid} from 'primeng/fluid';
 import {ChoosePlayerComponent} from '../choose-player/choose-player.component';
-import {Player} from '../../types/Player.type';
+import {Player} from '../../types/player.type';
 import {Tag} from 'primeng/tag';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
 import {MatchObserverService} from './observer/match-observer.service';
@@ -12,6 +12,10 @@ import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {NgIf} from '@angular/common';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {ProgressSpinner} from 'primeng/progressspinner';
+import {MatchPoint} from '../../types/match-point.type';
+import {PlayerLetter} from '../../types/player-letter.type';
+import {ServiceSide} from '../../types/service-side.type';
+import {Message} from 'primeng/message';
 
 @Component({
     selector: 'app-add-match',
@@ -24,12 +28,13 @@ import {ProgressSpinner} from 'primeng/progressspinner';
         Tag,
         NgIf,
         ProgressSpinner,
+        Message,
     ],
     templateUrl: './add-match.component.html',
     styleUrl: './add-match.component.css',
     providers: [
-        { provide: 'ApiMatchInterface', useClass: ApiMatchService },
-        { provide: 'NavigationServiceInterface', useClass: NavigationService },
+        {provide: 'ApiMatchInterface', useClass: ApiMatchService},
+        {provide: 'NavigationServiceInterface', useClass: NavigationService},
     ]
 })
 export class AddMatchComponent {
@@ -37,8 +42,11 @@ export class AddMatchComponent {
     playerB: Player | undefined;
     playerAScore: number = 0;
     playerBScore: number = 0;
-    history: string[] = [];
-    lastWinnerPoint: "A" | "B" | undefined;
+    history: MatchPoint[] = [];
+    server: PlayerLetter | undefined;
+    serviceSide: ServiceSide | undefined;
+
+    private showScorerChoice: boolean = false;
     private gameEnded: boolean = false;
     protected matchSent: boolean | null = null;
 
@@ -58,7 +66,7 @@ export class AddMatchComponent {
 
     saveFinishedMatch() {
         if (this.playerA !== undefined && this.playerB !== undefined) {
-            this.apiMatchService.createFinishedMatchWithHistory(this.playerA.id, this.playerB.id, this.history).subscribe({
+            this.apiMatchService.createFinishedMatchWithHistory(this.playerA.id, this.playerB.id, this.history, this.playerAScore, this.playerBScore).subscribe({
                 next: (response: any) => {
                     console.log("Match sauvegardé avec succès", response);
                     this.matchSent = true;
@@ -75,7 +83,6 @@ export class AddMatchComponent {
     isMatchFinished(): boolean {
         const condition: boolean = Math.abs(this.playerAScore - this.playerBScore) >= 2 && (this.playerAScore >= 11 || this.playerBScore >= 11)
         if (condition && !this.gameEnded) {
-            console.log("GAME ENDED: ", this.history.join(";"));
             this.gameEnded = true;
             this.matchObserverService.notifyMatchFinished();
         }
@@ -87,42 +94,63 @@ export class AddMatchComponent {
         this.playerB = $event[1];
     }
 
-    getCurrentPlayerScore(player: "A" | "B"): number {
-        const playerPoints = this.history.filter(p => p.includes(player));
-        if (playerPoints.length === 0) {
-            return 0;
+    handleOnClickSetServer(server: PlayerLetter, serviceSide: ServiceSide) {
+        this.server = server;
+        this.serviceSide = serviceSide;
+        this.showScorerChoice = true;
+    }
+
+    addMatchPoint({server, serviceSide, scorer, scoreA, scoreB}: {
+        server: PlayerLetter,
+        serviceSide: ServiceSide,
+        scorer: PlayerLetter,
+        scoreA: number,
+        scoreB: number
+    }) {
+        this.history.push({server, serviceSide, scorer, scoreA, scoreB});
+    }
+
+    handleOnClickSetWinnerPoint(scorerPlayer: PlayerLetter) {
+        this.addMatchPoint({
+            server: this.server!,
+            serviceSide: this.serviceSide!,
+            scorer: scorerPlayer,
+            scoreA: this.playerAScore,
+            scoreB: this.playerBScore,
+        })
+        scorerPlayer === "A" ? this.playerAScore++ : this.playerBScore++;
+
+        // if the server is the scorer, switch the service side
+        if (this.server === scorerPlayer) this.serviceSide = this.serviceSide === 'L' ? 'R' : 'L';
+    }
+
+    displayedScorerChoice(): boolean {
+        const isLastServerWin: boolean = this.history[this.history.length - 1]?.server === this.history[this.history.length - 1]?.scorer || this.history.length === 0;
+
+        if (isLastServerWin) {
+            this.showScorerChoice = true;
+        }
+
+        if (!isLastServerWin && this.history[this.history.length - 1]?.server === this.server) {
+            this.showScorerChoice = false;
+        }
+
+        return this.showScorerChoice;
+    }
+
+    getValueScoreTag(matchPoint: MatchPoint): string {
+        if (matchPoint.server === 'A') {
+            return matchPoint.server + matchPoint.scoreA + matchPoint.serviceSide;
         } else {
-            return parseInt(playerPoints.pop()!.match(/\d+/)![0]);
+            return matchPoint.server + matchPoint.scoreB + matchPoint.serviceSide;
         }
     }
 
-    addService(player: "A" | "B", serviceSide: "L" | "R") {
-        if (!this.isMatchFinished()) {
-            this.history.length === 0 ? this.history.push(`${player}0${serviceSide}`) :
-                this.history.push(`${player}${this.getCurrentPlayerScore(player) + 1}${serviceSide}`);
-
-            this.playerAScore = this.getCurrentPlayerScore("A");
-            this.playerBScore = this.getCurrentPlayerScore("B");
-        }
+    isInitialization(): boolean {
+        return this.history.length === 0 && !this.server;
     }
 
-    onClickWinnerPoint(player: "A" | "B") {
-        this.lastWinnerPoint = player;
-
-        const lastService = this.history[this.history.length - 1];
-        if (lastService[0] === player) {
-            this.addService(player, lastService[lastService.length - 1] === "L" ? "R" : "L");
-        }
-    }
-
-    isServerWinPoint(): boolean {
-        return this.history[this.history.length - 1][0] === this.lastWinnerPoint;
-    }
-
-    getPlayerScore(player: "A" | "B"): number {
-        if (!(this.lastWinnerPoint !== player) && !this.isServerWinPoint()) {
-            return this.getCurrentPlayerScore(player)+1;
-        }
-        return this.getCurrentPlayerScore(player);
+    getLastWinnerPoint(): PlayerLetter {
+        return this.history[this.history.length - 1]?.scorer;
     }
 }

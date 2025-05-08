@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Player} from '../../types/Player.type';
 import {ApiMatchInterface} from './api-match.interface';
 import {Observable, timeout} from 'rxjs';
 import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
+import {MatchPoint} from '../../types/match-point.type';
 
 @Injectable({
     providedIn: 'root'
@@ -30,14 +30,15 @@ export class ApiMatchService implements ApiMatchInterface {
         return this.http.post(this.apiUrl + "/matches", {playerAId, playerBId}).pipe(timeout(this.timeoutValue))
     }
 
-    createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: string[]) {
+    createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: MatchPoint[], finalScoreA: number, finalScoreB: number) {
         return this.http.post(this.apiUrl + "/matches",
             {
                 playerAId,
                 playerBId,
-                pointsHistory: history.join(";")
-            },
-            { withCredentials: true }
+                pointsHistory: history,
+                finalScoreA: finalScoreA,
+                finalScoreB: finalScoreB,
+            }
         ).pipe(timeout(this.timeoutValue))
     }
 
@@ -47,9 +48,5 @@ export class ApiMatchService implements ApiMatchInterface {
 
     deleteMatch(id: number) {
         return this.http.delete(this.apiUrl + "/matches" + id).pipe(timeout(this.timeoutValue))
-    }
-
-    addServiceMatch(id: number, player: Player, serviceSide: "L" | "R") {
-        return this.http.post(this.apiUrl + "/matches/" + id + "/service", {serviceSide, player}).pipe(timeout(this.timeoutValue))
     }
 }
