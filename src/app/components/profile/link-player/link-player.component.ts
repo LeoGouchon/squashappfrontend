@@ -3,7 +3,7 @@ import {Fluid} from 'primeng/fluid';
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 import {Listbox} from 'primeng/listbox';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Player} from '../../choose-player/choose-player.component';
+import {Player} from '../../../types/Player.type';
 import {ApiPlayerService} from '../../../services/api-player/api-player.service';
 import {Button} from 'primeng/button';
 import {ApiUserService} from '../../../services/api-user/api-user.service';
@@ -43,7 +43,7 @@ export class LinkPlayerComponent implements OnInit {
     ngOnInit() {
         this.apiPlayerService.getUnlinkedPlayers().subscribe((players: Player[]): Player[] => this.unlinkedPlayers = players);
         this.formGroup = new FormGroup({
-            selectedPlayer: new FormControl<Player | null>(null,  Validators.required)
+            selectedPlayer: new FormControl<Player | null>(null, Validators.required)
         })
     }
 

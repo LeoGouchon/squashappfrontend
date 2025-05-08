@@ -1,7 +1,8 @@
 import {Observable} from 'rxjs';
+import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 
 export interface ApiMatchInterface {
-    getMatches(): Observable<any>;
+    getMatches(params: PaginatedRequest): Observable<PaginatedResponse<any>>;
     getMatch(id: number): Observable<any>;
     createEmptyMatch(playerAId: number, playerBId: number): Observable<any>;
     createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: string[]): Observable<any>;

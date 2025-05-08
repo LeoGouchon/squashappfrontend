@@ -1,22 +1,25 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../environment';
-import {HttpClient} from '@angular/common/http';
-import {Player} from '../../components/choose-player/choose-player.component';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Player} from '../../types/Player.type';
 import {ApiMatchInterface} from './api-match.interface';
-import {timeout} from 'rxjs';
-import {TokenService} from '../token.service';
+import {Observable, timeout} from 'rxjs';
+import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiMatchService implements ApiMatchInterface {
-    private apiUrl = environment.apiUrl;
-    private timeoutValue: number = environment.timeoutValue;
-    constructor(private http: HttpClient) {
+    private readonly apiUrl = environment.apiUrl;
+    private readonly timeoutValue: number = environment.timeoutValue;
+    constructor(private readonly http: HttpClient) {
     }
 
-    getMatches() {
-        return this.http.get(this.apiUrl + "/matches").pipe(timeout(this.timeoutValue))
+    getMatches(params: PaginatedRequest): Observable<PaginatedResponse<any>> {
+        const paramsStr = new HttpParams()
+            .set('size', params.size.toString())
+            .set('page', params.page.toString());
+        return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 
     getMatch(id: number) {

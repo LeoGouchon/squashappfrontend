@@ -5,12 +5,7 @@ import {Listbox} from 'primeng/listbox';
 import {Button} from 'primeng/button';
 import {ApiPlayerInterface} from '../../services/api-player/api-player.interface';
 import {ApiPlayerService} from '../../services/api-player/api-player.service';
-
-export type Player = {
-    id: number;
-    firstname: string;
-    lastname: string;
-}
+import {Player} from '../../types/Player.type';
 
 @Component({
     selector: 'app-choose-player',
@@ -33,19 +28,19 @@ export class ChoosePlayerComponent implements OnInit {
     formGroup!: FormGroup;
 
     constructor(
-        @Inject('ApiPlayerInterface') private apiPlayerService: ApiPlayerInterface,
+        @Inject('ApiPlayerInterface') private readonly  apiPlayerService: ApiPlayerInterface,
     ) {
     }
 
     ngOnInit() {
-        this.apiPlayerService.getPlayers().subscribe(players => this.players = players);
+        this.apiPlayerService.getPlayers().subscribe(response => this.players = response.content);
 
         this.formGroup = new FormGroup({
             selectedPlayers: new FormControl<Player[] | null>(null)
         })
     }
 
-    isError(): Boolean {
+    isError(): boolean {
         return this.formGroup.get('selectedPlayers')?.value?.length != 2;
     }
 
