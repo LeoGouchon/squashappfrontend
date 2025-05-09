@@ -1,0 +1,11 @@
+.menu-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px;
+
+    h3 {
+        margin: 0;
+    }
+}
+
