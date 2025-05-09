@@ -5,6 +5,7 @@ import {Observable, tap, timeout} from 'rxjs';
 import {ApiUserInterface} from './api-user.interface';
 import {TokenService} from '../token.service';
 import {NavigationService} from '../navigation.service';
+import {AppRoutes} from '../../AppRoutes';
 
 @Injectable({
     providedIn: 'root'
@@ -33,17 +34,13 @@ export class ApiUserService implements ApiUserInterface {
             timeout(this.timeoutValue),
             tap(_ => {
                 this.tokenService.clearToken()
-                this.navigationService.navigateTo("/")
+                this.navigationService.navigateTo(AppRoutes.LOGIN)
             })
         );
     }
 
-    signup(email: string, password: string, playerId?: number) {
-        let data: { email: string, password: string, player?: { id: number } } = {email, password};
-        if (playerId) {
-            data = {...data, player: {id: playerId}};
-        }
-        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup', data).pipe(
+    signup(email: string, password: string) {
+        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup', {email, password}).pipe(
             timeout(this.timeoutValue),
             tap(response => {
                 const accessToken = response.token;

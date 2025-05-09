@@ -10,6 +10,8 @@ import {PanelMenu} from 'primeng/panelmenu';
 import {Fluid} from 'primeng/fluid';
 import {Divider} from 'primeng/divider';
 import {Drawer} from 'primeng/drawer';
+import {ApiUserService} from '../../services/api-user/api-user.service';
+import {ApiUserInterface} from '../../services/api-user/api-user.interface';
 
 
 @Component({
@@ -27,6 +29,7 @@ import {Drawer} from 'primeng/drawer';
     styleUrl: './navigation.component.css',
     providers: [
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
+        {provide: 'ApiUserInterface', useClass: ApiUserService},
         MessageService,
         ConfirmationService
     ]
@@ -36,6 +39,7 @@ export class NavigationComponent implements OnInit {
 
     constructor(
         @Inject('NavigationServiceInterface') protected readonly navigation: NavigationServiceInterface,
+        @Inject('ApiUserInterface') protected readonly apiUserService: ApiUserInterface,
         private readonly messageService: MessageService,
         protected tokenService: TokenService,
     ) {
@@ -109,7 +113,7 @@ export class NavigationComponent implements OnInit {
                 icon: 'pi pi-sign-out',
                 command: () => {
                     if (this.tokenService.getAccessToken()) {
-                        this.navigation.navigateTo(AppRoutes.LOGIN);
+                        this.apiUserService.logout().subscribe();
                         this.toggleSidebar();
                     } else {
                         this.messageService.add({

@@ -1,11 +1,13 @@
 <p-toast/>
 <p-fluid class="menu-bar">
     <h3>SquashApp</h3>
-    <div class="mobile-menu-header">
-        <button class="p-button p-button-text" (click)="toggleSidebar()">
-            <i class="pi pi-bars"></i>
-        </button>
-    </div>
+    @if (this.tokenService.getAccessToken()) {
+        <div class="mobile-menu-header">
+            <button class="p-button p-button-text" (click)="toggleSidebar()">
+                <i class="pi pi-bars"></i>
+            </button>
+        </div>
+    }
 </p-fluid>
 <p-drawer class="menu-drawer" position="right" header="Menu" [(visible)]="displaySidebar" [baseZIndex]="10">
     <p-panelMenu [model]="items"/>

@@ -8,10 +8,7 @@ import {FloatLabel} from 'primeng/floatlabel';
 import {ApiUserService} from '../../services/api-user/api-user.service';
 import {TokenService} from '../../services/token.service';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
-import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
-import {Listbox} from 'primeng/listbox';
 import {ApiPlayerService} from '../../services/api-player/api-player.service';
-import {Player} from '../../types/player.type';
 
 @Component({
     selector: 'app-login',
@@ -23,18 +20,13 @@ import {Player} from '../../types/player.type';
         InputTextModule,
         FloatLabel,
         FormsModule,
-        Accordion,
-        AccordionPanel,
-        AccordionHeader,
-        AccordionContent,
-        Listbox,
     ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
     providers: [
-        { provide: 'NavigationServiceInterface', useClass: NavigationService },
-        { provide: 'ApiUserService', useClass: ApiUserService },
-        { provide: 'ApiPlayerService', useClass: ApiPlayerService },
+        {provide: 'NavigationServiceInterface', useClass: NavigationService},
+        {provide: 'ApiUserService', useClass: ApiUserService},
+        {provide: 'ApiPlayerService', useClass: ApiPlayerService},
     ]
 })
 export class LoginComponent implements OnInit {
@@ -43,26 +35,20 @@ export class LoginComponent implements OnInit {
     formError: boolean = false;
     formErrorText: string = '';
     isLoginPage: boolean = true;
-    unlinkedPlayers: Player[] = [];
 
     constructor(
-        @Inject('NavigationServiceInterface') private navigation: NavigationServiceInterface,
-        @Inject('ApiUserService') private apiUserService: ApiUserService,
-        @Inject('ApiPlayerService') private apiPlayerService: ApiPlayerService,
-        private tokenService: TokenService)
-    {
+        @Inject('NavigationServiceInterface') private readonly navigation: NavigationServiceInterface,
+        @Inject('ApiUserService') private readonly apiUserService: ApiUserService,
+        private readonly tokenService: TokenService) {
         this.apiUserService = apiUserService;
         this.tokenService = tokenService;
-        this.apiPlayerService = apiPlayerService;
     }
 
     ngOnInit() {
-        this.apiPlayerService.getUnlinkedPlayers().subscribe((players: Player[]):Player[] => this.unlinkedPlayers = players);
         this.loginForm = new FormGroup({
-            email: new FormControl<String>(''),
-            password: new FormControl<String>(''),
-            confirmedPassword: new FormControl<String>(''),
-            selectedPlayer: new FormControl<Player | null>(null)
+            email: new FormControl<string>(''),
+            password: new FormControl<string>(''),
+            confirmedPassword: new FormControl<string>(''),
         });
     }
 
@@ -95,12 +81,13 @@ export class LoginComponent implements OnInit {
                 this.formError = true;
                 this.formErrorText = 'Veuillez rentrer un email';
             }
-        }
-        else {
+        } else {
             const formValues = this.loginForm.value;
             if (this.loginForm.valid && this.isEmailvalid() && formValues.password === formValues.confirmedPassword) {
-                this.apiUserService.signup(formValues.email, formValues.password, formValues.selectedPlayer?.id).subscribe({
+                console.log('onSubmit, juste above the signUp')
+                this.apiUserService.signup(formValues.email, formValues.password).subscribe({
                     next: () => {
+                        console.log('on the next of the api call')
                         if (this.tokenService.getAccessToken()) {
                             this.formError = false;
                             this.formErrorText = '';
@@ -108,6 +95,7 @@ export class LoginComponent implements OnInit {
                         }
                     },
                     error: (error) => {
+                        console.log('error', error)
                         if (error.status === 401) {
                             this.formError = true;
                             this.formErrorText = 'Email ou mot de passe incorrect';
@@ -117,8 +105,7 @@ export class LoginComponent implements OnInit {
             } else if (!this.isEmailvalid()) {
                 this.formError = true;
                 this.formErrorText = 'Veuillez rentrer un email';
-            }
-            else if (formValues.password !== formValues.confirmedPassword) {
+            } else if (formValues.password !== formValues.confirmedPassword) {
                 this.formError = true;
                 this.formErrorText = 'Les mots de passe ne correspondent pas';
             }

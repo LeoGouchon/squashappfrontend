@@ -1,7 +1,14 @@
 <div class="global-wrapper">
-    <app-navigation/>
-    <p-panel>
-        <router-outlet/>
-    </p-panel>
+    @if (!this.isMobile) {
+        <h1>Oopsi</h1>
+        <h4>C'est une application mobile, va chercher ton téléphone intelligent (ou alors F12 puis ctrl + shift + m)</h4>
+        <p-image src="/images/no_phone_image.avif" width="100%"/>
+        <p>Promis je change cette page plus tard</p>
+    } @else {
+        <app-navigation/>
+        <p-panel>
+            <router-outlet/>
+        </p-panel>
+    }
 </div>
 

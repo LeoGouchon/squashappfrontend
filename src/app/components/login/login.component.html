@@ -49,18 +49,6 @@
                         <small>{{ formErrorText }}</small>
                     }
                 </p-floatlabel>
-                <p-accordion value="">
-                    <p-accordion-panel value="0">
-                        <p-accordion-header>Associer un joueur existant</p-accordion-header>
-                        <p-accordion-content>
-                            <p-listbox
-                                [options]="unlinkedPlayers"
-                                formControlName="selectedPlayer"
-                                optionLabel="firstname"
-                            />
-                        </p-accordion-content>
-                    </p-accordion-panel>
-                </p-accordion>
             }
             <div class="buttons-wrapper">
                 <p-fluid>

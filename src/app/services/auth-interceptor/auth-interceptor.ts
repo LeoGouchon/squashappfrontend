@@ -7,7 +7,9 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
     const tokenService = inject(TokenService);
     const token = tokenService.getAccessToken();
 
-    if (req.url.includes('/authenticate/refresh-token')) {
+    const excludedUrls = ['/authenticate/signup', '/authenticate/login', '/authenticate/refresh-token'];
+
+    if (excludedUrls.some(url => req.url.includes(url))) {
         const modifiedReq = req.clone({
             withCredentials: true
         })
