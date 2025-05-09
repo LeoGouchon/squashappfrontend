@@ -1,0 +1,35 @@
+<p-fluid>
+    <form [formGroup]="formGroup" class="global-wrapper">
+        <p-fluid class="select-player-wrapper">
+            <p>
+                Joueur A
+            </p>
+            <p-select
+                [options]="filteredPlayersForA"
+                optionLabel="firstname"
+                formControlName="playerA"
+                [filter]="true"
+                filterBy="firstname"
+            />
+        </p-fluid>
+        <p-fluid class="select-player-wrapper">
+            <p>
+                Joueur B
+            </p>
+            <p-select
+                [options]="filteredPlayersForB"
+                optionLabel="firstname"
+                formControlName="playerB"
+                [filter]="true"
+                filterBy="firstname"
+            />
+        </p-fluid>
+        <p-button
+            (click)="onClick()"
+            (keydown.enter)="onClick()"
+            label="Démarrer l'arbitrage"
+            [disabled]="isError()"
+            [severity]="isError() ? 'contrast' : 'success'"
+        />
+    </form>
+</p-fluid>

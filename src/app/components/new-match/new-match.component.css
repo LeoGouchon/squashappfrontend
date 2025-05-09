@@ -1,0 +1,15 @@
+.global-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.select-player-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    p {
+        margin: 0;
+    }
+}

@@ -1,0 +1,133 @@
+<p-fluid class="header-wrapper">
+    <div class="score-field">
+        <div class="player-info a-background">
+            <p-tag class="score-tag">JOUEUR A</p-tag>
+            <h2 class="player-name">{{ playerA?.firstname }}</h2>
+            <h1 class="player-score">{{ matchService.getPlayerScoreA() }}</h1>
+        </div>
+        <div class="player-info b-background">
+            <p-tag class="score-tag" severity="secondary">JOUEUR B</p-tag>
+            <h2 class="player-name">{{ playerB?.firstname }}</h2>
+            <h1 class="player-score">{{ matchService.getPlayerScoreB() }}</h1>
+        </div>
+    </div>
+    <p-fluid class="history-tag-wrapper">
+        @for (matchPoint of matchService.getHistory(); track matchPoint; let last = $last) {
+            <p-tag class="score-tag" value="{{getValueScoreTag(matchPoint)}}"
+                   [severity]="matchPoint.server === 'A' ? undefined : 'secondary'"/>
+        }
+        @if (isMatchFinished()) {
+            <p-tag class="score-tag"
+                   value="{{matchService.getPlayerScoreA() > matchService.getPlayerScoreB() ? 'A' + matchService.getPlayerScoreA() : 'B' + matchService.getPlayerScoreB()}}"
+                   severity="success"/>
+        }
+    </p-fluid>
+</p-fluid>
+@if (isInitialization()) {
+    <p-divider/>
+    <p-fieldset legend="Premier service">
+        <p-fluid class="flex-wrapper">
+            <p-fluid class="buttons-wrapper">
+                <p-button styleClass="bg-blue-600 text-white border-none"
+                          label="{{playerA!.firstname}} - Service Gauche"
+                          (click)="handleOnClickSetServer('A', 'L')"
+                          (keydown.enter)="handleOnClickSetServer('A', 'L')"
+                />
+                <p-button styleClass="bg-blue-600 text-white border-none"
+                          label="{{playerA!.firstname}} - Service Droite"
+                          (click)="handleOnClickSetServer('A', 'R')"
+                          (keydown.enter)="handleOnClickSetServer('A', 'R')"
+                />
+            </p-fluid>
+            <p-fluid class="buttons-wrapper">
+                <p-button styleClass="bg-orange-600 text-white border-none"
+                          label="{{playerB!.firstname}} - Service Gauche"
+                          (click)="handleOnClickSetServer('B', 'L')"
+                          (keydown.enter)="handleOnClickSetServer('B', 'L')"
+                />
+                <p-button styleClass="bg-orange-600 text-white border-none"
+                          label="{{playerB!.firstname}} - Service Droite"
+                          (click)="handleOnClickSetServer('B', 'R')"
+                          (keydown.enter)="handleOnClickSetServer('B', 'R')"
+                />
+            </p-fluid>
+        </p-fluid>
+    </p-fieldset>
+} @else if (!isMatchFinished()) {
+    <p-divider/>
+    @if (displayedScorerChoice()) {
+        <p-fluid>
+            <p-message severity="secondary">
+                {{ matchService.getServer() === 'A' ? playerA!.firstname : playerB!.firstname }} doit servir à
+                <strong>{{ matchService.getServiceSide() === 'L' ? "gauche" : "droite" }}</strong>
+            </p-message>
+        </p-fluid>
+        <p-fieldset legend="Gagnant du point">
+            <p-fluid class="buttons-wrapper">
+                <p-fluid>
+                    <p-button styleClass="bg-blue-600 text-white border-none" label="{{playerA!.firstname}}"
+                              size="large"
+                              (click)="handleOnClickSetWinnerPoint('A')"
+                              (keydown.enter)="handleOnClickSetWinnerPoint('A')"
+                    />
+                </p-fluid>
+                <p-fluid>
+                    <p-button styleClass="bg-orange-600 text-white border-none" label="{{playerB!.firstname}}"
+                              size="large"
+                              (click)="handleOnClickSetWinnerPoint('B')"
+                              (keydown.enter)="handleOnClickSetWinnerPoint('B')"
+                    />
+                </p-fluid>
+            </p-fluid>
+        </p-fieldset>
+    } @else {
+        <p-fluid>
+            <p-message severity="secondary">
+                {{ matchService.getServer() === 'A' ? playerB!.firstname : playerA!.firstname }} peut
+                <strong>choisir</strong> son côté de
+                service
+            </p-message>
+        </p-fluid>
+        <p-fieldset
+            legend="Où {{getLastWinnerPoint() === 'A' ? playerA!.firstname : playerB!.firstname}} va servir ?">
+            <p-fluid class="buttons-wrapper">
+                <p-fluid>
+                    <p-button severity="secondary" label="Gauche" size="large"
+                              (click)="handleOnClickSetServer(getLastWinnerPoint(),'L')"
+                              (keydown.enter)="handleOnClickSetServer(getLastWinnerPoint(),'L')"
+                    />
+                </p-fluid>
+                <p-fluid>
+                    <p-button severity="secondary" label="Droite" size="large"
+                              (click)="handleOnClickSetServer(getLastWinnerPoint(),'R')"
+                              (keydown.enter)="handleOnClickSetServer(getLastWinnerPoint(),'R')"
+                    />
+                </p-fluid>
+            </p-fluid>
+        </p-fieldset>
+    }
+} @else if (isMatchFinished()) {
+    <p-fieldset legend="Partie terminée">
+        <p-fluid class="buttons-wrapper">
+            @if (matchService.getMatchSent() === null) {
+                <p-fluid>
+                    <p-progress-spinner ariaLabel="loading"/>
+                </p-fluid>
+            } @else if (!matchService.getMatchSent()){
+                <p-fluid>
+                    <p-button severity="warn" label="Erreur lors de l'envoi des donn es, cliquez pour r essayer"
+                              (click)="saveFinishedMatch()"
+                              (keydown.enter)="saveFinishedMatch()"
+                    />
+                </p-fluid>
+            } @else {
+                <p-fluid>
+                    <p-button severity="primary" label="Fermer ce match"
+                              (click)="closeMatch()"
+                              (keydown.enter)="closeMatch()"
+                    />
+                </p-fluid>
+            }
+        </p-fluid>
+    </p-fieldset>
+}

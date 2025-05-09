@@ -8,6 +8,7 @@ import Aura from '@primeng/themes/aura';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './services/auth-interceptor/auth-interceptor';
 import {ConfirmationService} from 'primeng/api';
+import {ApiMatchService} from './services/api-match/api-match.service';
 
 export const appConfig: ApplicationConfig = {
         providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
             provideRouter(routes),
             provideAnimationsAsync(),
             ConfirmationService,
+            { provide: 'ApiMatchInterface', useClass: ApiMatchService },
             providePrimeNG({
                     theme: {
                         preset: Aura,

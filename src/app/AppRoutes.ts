@@ -1,5 +1,6 @@
 export class AppRoutes {
-    static readonly ADD_MATCH = 'add-match';
+    static readonly NEW_MATCH = 'new-match';
+    static readonly CURRENT_MATCH = 'current-match';
     static readonly LOGIN = 'login';
     static readonly HISTORIC = 'historic';
     static readonly PROFILE = 'profile';

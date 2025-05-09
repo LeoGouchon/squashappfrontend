@@ -12,6 +12,7 @@ import {MatchPoint} from '../../types/match-point.type';
 export class ApiMatchService implements ApiMatchInterface {
     private readonly apiUrl = environment.apiUrl;
     private readonly timeoutValue: number = environment.timeoutValue;
+
     constructor(private readonly http: HttpClient) {
     }
 

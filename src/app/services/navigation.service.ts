@@ -7,6 +7,7 @@ import {ConfirmationService} from 'primeng/api';
 
 export interface NavigationServiceInterface {
     checkTokenAndNavigate(): Promise<void>;
+
     navigateTo(url: string): void;
 }
 
@@ -33,6 +34,8 @@ export class NavigationService implements NavigationServiceInterface {
     navigateTo(route: AppRoutes) {
         if (!this.tokenService.getAccessToken()) {
             this.router.navigate([AppRoutes.LOGIN]);
+        } else if (this.router.url === AppRoutes.CURRENT_MATCH) {
+
         } else if (this.matchService.hasMatchInProgress()) {
             this.confirmationService.confirm({
                 message: 'Un match est en cours. Voulez-vous vraiment quitter ?',

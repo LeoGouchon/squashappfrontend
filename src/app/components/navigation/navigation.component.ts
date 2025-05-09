@@ -50,7 +50,7 @@ export class NavigationComponent implements OnInit {
                 command: () => {
                     this.tokenService.getAccessToken()
                         ?
-                        this.navigation.navigateTo(AppRoutes.ADD_MATCH)
+                        this.navigation.navigateTo(AppRoutes.NEW_MATCH)
                         :
                         this.messageService.add({
                             severity: 'error',
