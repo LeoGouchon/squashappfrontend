@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Fluid} from 'primeng/fluid';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
@@ -18,7 +18,6 @@ import {AppRoutes} from '../../AppRoutes';
         Button,
         Select
     ],
-
     templateUrl: './new-match.component.html',
     styleUrl: './new-match.component.css',
     providers: [
@@ -32,7 +31,7 @@ export class NewMatchComponent implements OnInit {
     formGroup!: FormGroup;
 
     constructor(
-        @Inject('ApiPlayerInterface') private readonly  apiPlayerService: ApiPlayerInterface,
+        @Inject('ApiPlayerInterface') private readonly apiPlayerService: ApiPlayerInterface,
         @Inject('NavigationServiceInterface') private readonly navigate: NavigationServiceInterface,
         private readonly matchService: MatchService
     ) {
@@ -53,12 +52,12 @@ export class NewMatchComponent implements OnInit {
     }
 
     onClick() {
-        this.playerSelected.emit([this.formGroup.get('playerA')?.value, this.formGroup.get('playerB')?.value]);
+        this.matchService.startMatch({
+            playerA: this.formGroup.get('playerA')?.value,
+            playerB: this.formGroup.get('playerB')?.value
+        });
         this.navigate.navigateTo(AppRoutes.CURRENT_MATCH);
-        this.matchService.startMatch({playerA: this.formGroup.get('playerA')?.value, playerB: this.formGroup.get('playerB')?.value});
     }
-
-    @Output() playerSelected = new EventEmitter<[Player, Player]>();
 
     get filteredPlayersForB() {
         const playerAId = this.formGroup.get('playerA')?.value?.id;

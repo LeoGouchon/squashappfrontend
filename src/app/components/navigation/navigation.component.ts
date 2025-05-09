@@ -32,7 +32,6 @@ import {Drawer} from 'primeng/drawer';
     ]
 })
 export class NavigationComponent implements OnInit {
-    protected isMobile = false;
     protected displaySidebar = false;
 
     constructor(
@@ -55,32 +54,34 @@ export class NavigationComponent implements OnInit {
                 label: 'Nouveau Match',
                 icon: 'pi pi-plus',
                 command: () => {
-                    this.tokenService.getAccessToken()
-                        ?
-                        this.navigation.navigateTo(AppRoutes.NEW_MATCH)
-                        :
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.NEW_MATCH);
+                        this.toggleSidebar();
+                    } else {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Déconnecté',
                             detail: "Vous n'êtes pas connecté",
                             life: 3000
                         });
+                    }
                 }
             },
             {
                 label: 'Historique',
                 icon: 'pi pi-book',
                 command: () => {
-                    this.tokenService.getAccessToken()
-                        ?
-                        this.navigation.navigateTo(AppRoutes.HISTORIC)
-                        :
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.HISTORIC);
+                        this.toggleSidebar();
+                    } else {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Déconnecté',
                             detail: "Vous n'êtes pas connecté",
                             life: 3000
                         });
+                    }
                 }
             },
         ];
@@ -90,47 +91,40 @@ export class NavigationComponent implements OnInit {
                 label: 'Mon compte',
                 icon: 'pi pi-user',
                 command: () => {
-                    this.tokenService.getAccessToken()
-                        ?
-                        this.navigation.navigateTo(AppRoutes.PROFILE)
-                        :
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.PROFILE);
+                        this.toggleSidebar();
+                    } else {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Déconnecté',
                             detail: "Vous n'êtes pas connecté",
                             life: 3000
                         });
+                    }
                 }
             },
             {
                 label: 'Deconnexion',
                 icon: 'pi pi-sign-out',
                 command: () => {
-                    this.tokenService.getAccessToken()
-                        ?
-                        this.navigation.navigateTo(AppRoutes.LOGIN)
-                        :
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.LOGIN);
+                        this.toggleSidebar();
+                    } else {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Déconnecté',
                             detail: "Vous n'êtes pas connecté",
                             life: 3000
                         });
+                    }
                 }
             },
         ];
-
-        this.checkScreenSize();
-    }
-
-    @HostListener('window:resize')
-    checkScreenSize() {
-        this.isMobile = window.innerWidth < 768;
     }
 
     toggleSidebar() {
         this.displaySidebar = !this.displaySidebar;
     }
-
-    protected readonly AppRoutes = AppRoutes;
 }

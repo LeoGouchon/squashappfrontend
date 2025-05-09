@@ -9,6 +9,7 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './services/auth-interceptor/auth-interceptor';
 import {ConfirmationService} from 'primeng/api';
 import {ApiMatchService} from './services/api-match/api-match.service';
+import {NavigationService} from './services/navigation.service';
 
 export const appConfig: ApplicationConfig = {
         providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
             provideAnimationsAsync(),
             ConfirmationService,
             { provide: 'ApiMatchInterface', useClass: ApiMatchService },
+            { provide: 'NavigationServiceInterface', useClass: NavigationService },
             providePrimeNG({
                     theme: {
                         preset: Aura,
