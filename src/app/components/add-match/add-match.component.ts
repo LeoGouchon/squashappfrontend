@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {Button} from 'primeng/button';
 import {Fieldset} from 'primeng/fieldset';
 import {Divider} from 'primeng/divider';
@@ -16,6 +16,9 @@ import {MatchPoint} from '../../types/match-point.type';
 import {PlayerLetter} from '../../types/player-letter.type';
 import {ServiceSide} from '../../types/service-side.type';
 import {Message} from 'primeng/message';
+import {MatchService} from '../../services/match-service.service';
+import {AppRoutes} from '../../AppRoutes';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-add-match',
@@ -37,7 +40,7 @@ import {Message} from 'primeng/message';
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
     ]
 })
-export class AddMatchComponent {
+export class AddMatchComponent implements OnDestroy {
     playerA: Player | undefined;
     playerB: Player | undefined;
     playerAScore: number = 0;
@@ -50,27 +53,34 @@ export class AddMatchComponent {
     private gameEnded: boolean = false;
     protected matchSent: boolean | null = null;
 
+    private matchFinishedSubscription?: Subscription;
+
     constructor(
         @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface,
         @Inject('NavigationServiceInterface') private readonly navigation: NavigationServiceInterface,
-        private readonly matchObserverService: MatchObserverService
+        private readonly matchObserverService: MatchObserverService,
+        private readonly matchService: MatchService,
     ) {
-        this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
+        this.matchFinishedSubscription = this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
             this.saveFinishedMatch();
         });
+        this.matchService = matchService;
     };
 
+    ngOnDestroy(): void {
+        this.matchFinishedSubscription?.unsubscribe();
+    }
+
     closeMatch() {
-        this.navigation.goBack();
+        this.matchService.endMatch();
+        this.navigation.navigateTo(AppRoutes.HISTORIC);
     }
 
     saveFinishedMatch() {
         if (this.playerA !== undefined && this.playerB !== undefined) {
             this.apiMatchService.createFinishedMatchWithHistory(this.playerA.id, this.playerB.id, this.history, this.playerAScore, this.playerBScore).subscribe({
                 next: (response: any) => {
-                    console.log("Match sauvegardé avec succès", response);
                     this.matchSent = true;
-                    this.matchObserverService.getMatchFinishedObservable().subscribe().unsubscribe();
                 },
                 error: (error: any) => {
                     console.error("Erreur lors de la sauvegarde du match", error);

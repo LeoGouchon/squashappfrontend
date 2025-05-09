@@ -6,6 +6,7 @@ import {Button} from 'primeng/button';
 import {ApiPlayerInterface} from '../../services/api-player/api-player.interface';
 import {ApiPlayerService} from '../../services/api-player/api-player.service';
 import {Player} from '../../types/player.type';
+import {MatchService} from '../../services/match-service.service';
 
 @Component({
     selector: 'app-choose-player',
@@ -19,7 +20,7 @@ import {Player} from '../../types/player.type';
     templateUrl: './choose-player.component.html',
     styleUrl: './choose-player.component.css',
     providers: [
-        {provide: 'ApiPlayerInterface', useClass: ApiPlayerService},
+        {provide: 'ApiPlayerInterface', useClass: ApiPlayerService}
     ]
 })
 export class ChoosePlayerComponent implements OnInit {
@@ -29,7 +30,9 @@ export class ChoosePlayerComponent implements OnInit {
 
     constructor(
         @Inject('ApiPlayerInterface') private readonly  apiPlayerService: ApiPlayerInterface,
+        private readonly matchService: MatchService
     ) {
+        this.matchService = matchService;
     }
 
     ngOnInit() {
@@ -50,6 +53,7 @@ export class ChoosePlayerComponent implements OnInit {
 
     onClick() {
         this.playerSelected.emit(this.formGroup.get('selectedPlayers')?.value);
+        this.matchService.startMatch();
     }
 
     @Output() playerSelected = new EventEmitter<[Player, Player]>();

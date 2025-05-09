@@ -1,12 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Menubar} from 'primeng/menubar';
-import {MenuItem, MessageService} from 'primeng/api';
+import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {TokenService} from '../../services/token.service';
 import {Avatar} from 'primeng/avatar';
 import {OverlayBadge} from 'primeng/overlaybadge';
 import {Toast} from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {AppRoutes} from '../../AppRoutes';
+
 
 @Component({
     selector: 'app-navigation',
@@ -15,21 +18,23 @@ import {Toast} from 'primeng/toast';
         Menubar,
         Avatar,
         OverlayBadge,
-        Toast
+        Toast,
+        ConfirmDialogModule
     ],
     templateUrl: './navigation.component.html',
     styleUrl: './navigation.component.css',
     providers: [
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
-        MessageService
+        MessageService,
+        ConfirmationService
     ]
 })
 export class NavigationComponent implements OnInit {
 
     constructor(
-        @Inject('NavigationServiceInterface') private readonly navigation: NavigationServiceInterface,
+        @Inject('NavigationServiceInterface') protected readonly navigation: NavigationServiceInterface,
         private readonly messageService: MessageService,
-        protected tokenService: TokenService
+        protected tokenService: TokenService,
     ) {
         this.tokenService = tokenService;
         this.messageService = messageService;
@@ -45,7 +50,7 @@ export class NavigationComponent implements OnInit {
                 command: () => {
                     this.tokenService.getAccessToken()
                         ?
-                        this.navigation.navigateTo('/add-match')
+                        this.navigation.navigateTo(AppRoutes.ADD_MATCH)
                         :
                         this.messageService.add({
                             severity: 'error',
@@ -61,7 +66,7 @@ export class NavigationComponent implements OnInit {
                 command: () => {
                     this.tokenService.getAccessToken()
                         ?
-                        this.navigation.navigateTo('/historic')
+                        this.navigation.navigateTo(AppRoutes.HISTORIC)
                         :
                         this.messageService.add({
                             severity: 'error',
@@ -74,5 +79,5 @@ export class NavigationComponent implements OnInit {
         ];
     }
 
-
+    protected readonly AppRoutes = AppRoutes;
 }

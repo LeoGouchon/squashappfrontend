@@ -1,4 +1,4 @@
-<p-toast />
+<p-toast/>
 <p-menubar [model]="items" breakpoint="50px">
     <ng-template let-item>
         @if (item.url) {
@@ -13,11 +13,12 @@
             </div>
         }
     </ng-template>
-    @if (tokenService.getAccessToken()){
-        <a href="/profile">
+    @if (tokenService.getAccessToken()) {
+        <a (click)="navigation.navigateTo(AppRoutes.PROFILE)">
             <p-overlay-badge value="" severity="success">
                 <p-avatar label="L" shape="square"/>
             </p-overlay-badge>
         </a>
     }
 </p-menubar>
+<p-confirmdialog/>
