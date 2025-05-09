@@ -1,24 +1,19 @@
 <p-toast/>
-<p-menubar [model]="items" breakpoint="50px">
-    <ng-template let-item>
-        @if (item.url) {
-            <a [href]="item.url" class="p-menubar-item-link">
-                <span [class]="item.icon"></span>
-                <span class="ml-2">{{ item.label }}</span>
-            </a>
-        } @else {
-            <div class="p-menubar-item-link">
-                <span [class]="item.icon"></span>
-                <span class="ml-2">{{ item.label }}</span>
-            </div>
-        }
-    </ng-template>
-    @if (tokenService.getAccessToken()) {
-        <a (click)="navigation.navigateTo(AppRoutes.PROFILE)">
-            <p-overlay-badge value="" severity="success">
-                <p-avatar label="L" shape="square"/>
-            </p-overlay-badge>
-        </a>
+<p-fluid class="menu-bar">
+    <h3>SquashApp</h3>
+    @if (isMobile) {
+        <div class="mobile-menu-header">
+            <button class="p-button p-button-text" (click)="toggleSidebar()">
+                <i class="pi pi-bars"></i>
+            </button>
+        </div>
     }
-</p-menubar>
+</p-fluid>
+<p-drawer class="menu-drawer" position="right" header="Menu" [(visible)]="displaySidebar" [baseZIndex]="10">
+    <p-panelMenu [model]="items"/>
+    @if (this.tokenService.getAccessToken()) {
+        <p-divider/>
+        <p-panel-menu [model]="profilItems"/>
+    }
+</p-drawer>
 <p-confirmdialog/>

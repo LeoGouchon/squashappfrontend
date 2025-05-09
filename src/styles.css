@@ -38,3 +38,12 @@ h4 {
     font-weight: 600;
     margin-bottom: 0;
 }
+
+.p-panelmenu .p-panelmenu-panel {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.p-panelmenu {
+    gap: 0 !important;
+}
