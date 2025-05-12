@@ -25,6 +25,7 @@ export class NavigationService implements NavigationServiceInterface {
 
     async checkTokenAndNavigate(): Promise<void> {
         await this.tokenService.initAuth();
+        this.tokenService.fetchIsAdmin();
         if (!this.tokenService.getAccessToken()) {
             await this.router.navigate([AppRoutes.LOGIN]);
         }

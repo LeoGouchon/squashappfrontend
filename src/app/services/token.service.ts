@@ -17,6 +17,7 @@ export class TokenService {
     private readonly accessToken$ = new BehaviorSubject<string | null>(null);
     public tokenReady$ = this.accessToken$.asObservable();
 
+    private isAdmin: boolean = false;
     private accessToken: string | null = null;
 
     constructor(private readonly http: HttpClient) {}
@@ -40,11 +41,19 @@ export class TokenService {
         return this.accessToken;
     }
 
-    clearToken() {
+    clearToken(): void {
         this.accessToken = null;
     }
 
     refreshToken(): Observable<any> {
         return this.http.post(this.apiUrl + '/authenticate/refresh-token', {}).pipe(timeout(this.timeoutValue));
+    }
+
+    fetchIsAdmin(): void {
+        this.http.get(this.apiUrl + '/me').pipe(timeout(this.timeoutValue)).subscribe(
+            (response: any) => {
+                this.isAdmin = response.isAdmin;
+            }
+        );
     }
 }

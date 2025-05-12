@@ -6,6 +6,7 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {NewMatchComponent} from './components/new-match/new-match.component';
 import {AppRoutes} from './AppRoutes';
 import {MatchGuard} from './services/routes-protection/match-guard';
+import {AdminComponent} from './components/admin/admin.component';
 
 export const routes: Routes = [
     {
@@ -28,5 +29,13 @@ export const routes: Routes = [
     {
         path: AppRoutes.PROFILE,
         component: ProfileComponent
+    },
+    {
+        path: AppRoutes.ADMIN,
+        component: AdminComponent
+    },
+    {
+        path: "**",
+        redirectTo: AppRoutes.NEW_MATCH,
     }
 ];
