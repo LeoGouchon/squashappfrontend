@@ -2,14 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import { ApiUserService } from '../../services/api-user/api-user.service';
 import {Button} from 'primeng/button';
 import {Fluid} from 'primeng/fluid';
-import {LinkPlayerComponent} from './link-player/link-player.component';
 
 @Component({
   selector: 'app-profile',
     imports: [
         Button,
         Fluid,
-        LinkPlayerComponent,
     ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'

@@ -39,8 +39,8 @@ export class ApiUserService implements ApiUserInterface {
         );
     }
 
-    signup(email: string, password: string) {
-        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup', {email, password}).pipe(
+    signup(email: string, password: string, invitationToken: string) {
+        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup' + "?token=" + invitationToken, {email, password}).pipe(
             timeout(this.timeoutValue),
             tap(response => {
                 const accessToken = response.token;
@@ -49,22 +49,9 @@ export class ApiUserService implements ApiUserInterface {
     }
 
     getCurrentUser(): Observable<any> {
-        const token = document.cookie.split(';').find(x => x.trim().startsWith('token='))?.split('=')[1];
-        if (token) {
-            return this.http.get(this.apiUrl + '/users/token/' + token).pipe(timeout(this.timeoutValue));
-        } else {
-            return new Observable<any>(observer => {
-                observer.error(new Error('No token found'));
-            });
-        }
-    }
-
-    linkPlayer(userId: number, playerId: number): Observable<any> {
-        return this.http.put(this.apiUrl + '/users/' + userId, {
-            player: {
-                id: playerId,
-            }
-        })
-            .pipe(timeout(this.timeoutValue));
+        return this.http.get(this.apiUrl + '/me').pipe(
+            timeout(this.timeoutValue),
+            tap((response: any) => {return response;})
+        );
     }
 }

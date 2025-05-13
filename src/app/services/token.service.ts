@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, firstValueFrom, Observable, take, timeout} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environment';
+import {ApiUserInterface} from './api-user/api-user.interface';
+import {ApiUserService} from './api-user/api-user.service';
+import {User} from '../types/user.type';
 
 export interface TokenServiceInterface {
 
@@ -49,10 +52,14 @@ export class TokenService {
         return this.http.post(this.apiUrl + '/authenticate/refresh-token', {}).pipe(timeout(this.timeoutValue));
     }
 
+    getIsAdmin(): boolean {
+        return this.isAdmin;
+    }
+
     fetchIsAdmin(): void {
         this.http.get(this.apiUrl + '/me').pipe(timeout(this.timeoutValue)).subscribe(
             (response: any) => {
-                this.isAdmin = response.isAdmin;
+                this.isAdmin = response.admin;
             }
         );
     }

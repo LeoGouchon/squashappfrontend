@@ -15,5 +15,9 @@
         <p-divider/>
         <p-panel-menu [model]="profilItems"/>
     }
+    @if (this.tokenService.getIsAdmin()) {
+        <p-divider/>
+        <p-panel-menu [model]="adminItems"/>
+    }
 </p-drawer>
 <p-confirmdialog/>

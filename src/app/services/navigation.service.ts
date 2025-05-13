@@ -7,6 +7,7 @@ import {ConfirmationService} from 'primeng/api';
 
 export interface NavigationServiceInterface {
     checkTokenAndNavigate(): Promise<void>;
+
     navigateTo(url: string): void;
 }
 
@@ -25,9 +26,10 @@ export class NavigationService implements NavigationServiceInterface {
 
     async checkTokenAndNavigate(): Promise<void> {
         await this.tokenService.initAuth();
-        this.tokenService.fetchIsAdmin();
         if (!this.tokenService.getAccessToken()) {
             await this.router.navigate([AppRoutes.LOGIN]);
+        } else {
+            this.tokenService.fetchIsAdmin();
         }
     }
 
