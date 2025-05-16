@@ -7,6 +7,7 @@ import {NewMatchComponent} from './components/new-match/new-match.component';
 import {AppRoutes} from './AppRoutes';
 import {MatchGuard} from './services/routes-protection/match-guard';
 import {AdminComponent} from './components/admin/admin.component';
+import {RegisterComponent} from './components/register/register.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,10 @@ export const routes: Routes = [
     {
         path: AppRoutes.ADMIN,
         component: AdminComponent
+    },
+    {
+        path: AppRoutes.REGISTER,
+        component: RegisterComponent,
     },
     {
         path: "**",

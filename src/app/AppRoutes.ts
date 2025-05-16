@@ -5,4 +5,5 @@ export class AppRoutes {
     static readonly HISTORIC = 'historic';
     static readonly PROFILE = 'profile';
     static readonly ADMIN = 'admin';
+    static readonly REGISTER = 'register';
 }

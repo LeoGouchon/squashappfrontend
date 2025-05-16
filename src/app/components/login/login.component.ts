@@ -8,7 +8,6 @@ import {FloatLabel} from 'primeng/floatlabel';
 import {ApiUserService} from '../../services/api-user/api-user.service';
 import {TokenService} from '../../services/token.service';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
-import {ApiPlayerService} from '../../services/api-player/api-player.service';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +25,6 @@ import {ApiPlayerService} from '../../services/api-player/api-player.service';
     providers: [
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
         {provide: 'ApiUserService', useClass: ApiUserService},
-        {provide: 'ApiPlayerService', useClass: ApiPlayerService},
     ]
 })
 export class LoginComponent implements OnInit {
@@ -59,57 +57,29 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.alreadySubmitOnce = true;
-        if (this.isLoginPage) {
-            if (this.loginForm.valid && this.isEmailvalid()) {
-                const formValues = this.loginForm.value;
-                this.apiUserService.login(formValues.email, formValues.password).subscribe({
-                    next: () => {
-                        if (this.tokenService.getAccessToken()) {
-                            this.formError = false;
-                            this.formErrorText = '';
-                            this.navigation.navigateTo('/');
-                        }
-                    },
-                    error: (error) => {
-                        if (error.status === 401) {
-                            this.formError = true;
-                            this.formErrorText = 'Email ou mot de passe incorrect';
-                        }
-                    }
-                });
-            } else if (!this.isEmailvalid()) {
-                this.formError = true;
-                this.formErrorText = 'Veuillez rentrer un email';
-            }
-        } else {
+
+        if (this.loginForm.valid && this.isEmailvalid()) {
             const formValues = this.loginForm.value;
-            if (this.loginForm.valid && this.isEmailvalid() && formValues.password === formValues.confirmedPassword) {
-                console.log('onSubmit, juste above the signUp')
-                this.apiUserService.signup(formValues.email, formValues.password).subscribe({
-                    next: () => {
-                        console.log('on the next of the api call')
-                        if (this.tokenService.getAccessToken()) {
-                            this.formError = false;
-                            this.formErrorText = '';
-                            this.navigation.navigateTo('/');
-                        }
-                    },
-                    error: (error) => {
-                        console.log('error', error)
-                        if (error.status === 401) {
-                            this.formError = true;
-                            this.formErrorText = 'Email ou mot de passe incorrect';
-                        }
+            this.apiUserService.login(formValues.email, formValues.password).subscribe({
+                next: () => {
+                    if (this.tokenService.getAccessToken()) {
+                        this.formError = false;
+                        this.formErrorText = '';
+                        this.navigation.navigateTo('/');
                     }
-                });
-            } else if (!this.isEmailvalid()) {
-                this.formError = true;
-                this.formErrorText = 'Veuillez rentrer un email';
-            } else if (formValues.password !== formValues.confirmedPassword) {
-                this.formError = true;
-                this.formErrorText = 'Les mots de passe ne correspondent pas';
-            }
+                },
+                error: (error) => {
+                    if (error.status === 401) {
+                        this.formError = true;
+                        this.formErrorText = 'Email ou mot de passe incorrect';
+                    }
+                }
+            });
+        } else if (!this.isEmailvalid()) {
+            this.formError = true;
+            this.formErrorText = 'Veuillez rentrer un email';
         }
+
 
     }
 

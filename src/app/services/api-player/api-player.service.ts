@@ -15,8 +15,8 @@ export class ApiPlayerService implements ApiPlayerInterface {
 
     constructor(private readonly http: HttpClient) {}
 
-    createPlayer(FirstName: string, LastName: string): Observable<Player> {
-        return this.http.post<Player>(this.apiUrl + '/players', {FirstName, LastName}).pipe(timeout(this.timeoutValue));
+    createPlayer(firstname: string, lastname: string): Observable<Player> {
+        return this.http.post<Player>(this.apiUrl + '/players', {firstname, lastname}).pipe(timeout(this.timeoutValue));
     }
 
     getPlayers(): Observable<PaginatedResponse<Player>> {
