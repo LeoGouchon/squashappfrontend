@@ -1,0 +1,35 @@
+<p-toast/>
+<p-fluid>
+    <form [formGroup]="formGroup" class="global-wrapper">
+        <p-fluid class="select-player-wrapper">
+            <h3>
+                Joueur à associer à l'invitation
+            </h3>
+            <p-select
+                [options]="players"
+                optionLabel="firstname"
+                formControlName="player"
+                [filter]="true"
+                filterBy="firstname"
+            />
+        </p-fluid>
+        <p-button
+            (click)="onClick()"
+            (keydown.enter)="onClick()"
+            label="Générer l'invitation"
+            [disabled]="!formGroup.valid"
+            [severity]="!formGroup.valid ? 'contrast' : 'success'"
+        />
+    </form>
+    @if (invitationUrl) {
+        <div class="result-after-invitation">
+            <div class="button-wrapper">
+                <p-button class="copy-link-button" (click)="copyLink()" (keydown.enter)="copyLink()" severity="secondary" icon="pi pi-copy"/>
+            </div>
+            <input #invitationValue pInputText [value]="invitationUrl" (focus)="selectText(invitationValue)"
+            />
+        </div>
+    }
+    <p-divider/>
+    <app-add-player/>
+</p-fluid>

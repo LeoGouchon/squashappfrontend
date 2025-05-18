@@ -1,0 +1,20 @@
+.global-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.result-after-invitation {
+    display: flex;
+    width: 100%;
+    gap: 0;
+    justify-content: center;
+    align-items: center;
+
+    input {
+        flex: 1;
+        border-radius: 0 4px 4px 0;
+        border-left: none;
+    }
+}
