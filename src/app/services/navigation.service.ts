@@ -26,6 +26,7 @@ export class NavigationService implements NavigationServiceInterface {
 
     async checkTokenAndNavigate(): Promise<void> {
         await this.tokenService.initAuth();
+        if (this.router.url.split("?")[0] === `/${AppRoutes.REGISTER}`) return;
         if (!this.tokenService.getAccessToken()) {
             await this.router.navigate([AppRoutes.LOGIN]);
         } else {
