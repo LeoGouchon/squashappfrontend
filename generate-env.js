@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 
-const envFilePath = './src/environments/environment.prod.ts';
+const envDir = path.join(__dirname, 'src/environments');
+const envFilePath = path.join(envDir, 'environment.prod.ts');
 
 const targetEnvironment = `
 export const environment = {
@@ -10,10 +12,15 @@ export const environment = {
 };
 `;
 
+if (!fs.existsSync(envDir)) {
+    fs.mkdirSync(envDir, { recursive: true });
+    console.log('📁 Dossier environments/ créé');
+}
+
 fs.writeFile(envFilePath, targetEnvironment, function (err) {
     if (err) {
-        console.error('❌ Erreur lors de la création de environmentDev.prod.ts', err);
+        console.error('❌ Erreur lors de la création de environment.prod.ts', err);
     } else {
-        console.log('✅ Fichier environmentDev.prod.ts généré avec succès');
+        console.log('✅ Fichier environment.prod.ts généré avec succès');
     }
 });
