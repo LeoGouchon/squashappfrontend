@@ -1,0 +1,20 @@
+<p-toast/>
+<h3>Ajouter un joueur</h3>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="add-player-wrapper">
+    <p-floatlabel>
+        <input pInputText formControlName="firstname" id="firstname" required/>
+        <label for="firstname">Prénom</label>
+    </p-floatlabel>
+
+    <p-floatlabel>
+        <input pInputText formControlName="lastname" id="lastname" required/>
+        <label for="lastname">Nom</label>
+    </p-floatlabel>
+
+    <p-button
+        type="submit"
+        [disabled]="!formGroup.valid"
+        [severity]="!formGroup.valid ? 'contrast' : 'success'"
+        label="Ajouter"
+    />
+</form>

@@ -1,0 +1,63 @@
+<p-fluid class="global-wrapper">
+    <h1>S'inscrire</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-wrapper">
+
+            <!-- Email -->
+            <p-floatlabel>
+                <input
+                    pInputText
+                    id="emailInput"
+                    formControlName="email"
+                    type="email"
+                    autocomplete="off"
+                    (focus)="onFocus()"
+                    [class.ng-invalid]="isFieldInvalid('email')"
+                />
+                <label for="emailInput">Email</label>
+                @if (isFieldInvalid('email')) {
+                    <small class="p-error">Adresse email invalide</small>
+                }
+            </p-floatlabel>
+
+            <!-- Password -->
+            <p-floatlabel>
+                <p-password
+                    formControlName="password"
+                    id="passwordInput"
+                    [feedback]="false"
+                    [toggleMask]="true"
+                    (focus)="onFocus()"
+                    [class.ng-invalid]="isFieldInvalid('password')"
+                />
+                <label for="passwordInput">Mot de passe</label>
+                @if (isFieldInvalid('password')) {
+                    <small class="p-error">Mot de passe requis (8 caractères minimum, 1 chiffre, 1 caractère spécial )</small>
+                }
+            </p-floatlabel>
+
+            <!-- Confirmed Password -->
+            <p-floatlabel>
+                <p-password
+                    formControlName="confirmedPassword"
+                    id="confirmedPasswordInput"
+                    [feedback]="false"
+                    [toggleMask]="true"
+                    (focus)="onFocus()"
+                    [class.ng-invalid]="isFieldInvalid('confirmedPassword') || passwordMismatch"
+                />
+                <label for="confirmedPasswordInput">Confirmation du mot de passe</label>
+                @if (isFieldInvalid('confirmedPassword')) {
+                    <small class="p-error">Confirmation requise</small>
+                }
+                @if (passwordMismatch) {
+                    <small class="p-error">Les mots de passe ne correspondent pas</small>
+                }
+            </p-floatlabel>
+
+            <div class="buttons-wrapper">
+                <p-button type="submit" label="S'inscrire" severity="primary" />
+            </div>
+        </div>
+    </form>
+</p-fluid>
