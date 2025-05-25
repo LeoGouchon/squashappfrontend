@@ -5,7 +5,7 @@ import {PlayerLetter} from '../types/player-letter.type';
 import {ServiceSide} from '../types/service-side.type';
 import {ApiMatchInterface} from './api-match/api-match.interface';
 import {MatchObserverService} from '../components/current-match/observer/match-observer.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription, tap} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -110,6 +110,43 @@ export class MatchService {
                     this.updateStorage();
                 }
             });
+        }
+    }
+
+    saveFinishedMatchWithoutHistory(
+        {
+            playerA,
+            playerB,
+            playerAScore,
+            playerBScore
+        }: {
+            playerA: Player,
+            playerB: Player,
+            playerAScore: number,
+            playerBScore: number
+        }): Observable<unknown> {
+        if (playerA && playerB) {
+            return this.apiMatchService.createFinishedMatchWithoutHistory(
+                playerA.id,
+                playerB.id,
+                playerAScore,
+                playerBScore
+            ).pipe(
+                tap({
+                    next: () => {
+                        this.matchSent = true;
+                        this.updateStorage();
+                    },
+                    error: error => {
+                        console.error("Erreur lors de la sauvegarde du match", error);
+                        this.matchSent = false;
+                        this.updateStorage();
+                        throw new Error("Error saving match");
+                    }
+                })
+            );
+        } else {
+            throw new Error("Player A or Player B is undefined.");
         }
     }
 

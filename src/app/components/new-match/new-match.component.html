@@ -1,35 +1,85 @@
 <p-fluid>
     <form [formGroup]="formGroup" class="global-wrapper">
-        <p-fluid class="select-player-wrapper">
-            <p>
-                Joueur A
-            </p>
-            <p-select
-                [options]="filteredPlayersForA"
-                optionLabel="firstname"
-                formControlName="playerA"
-                [filter]="true"
-                filterBy="firstname"
-            />
-        </p-fluid>
-        <p-fluid class="select-player-wrapper">
-            <p>
-                Joueur B
-            </p>
-            <p-select
-                [options]="filteredPlayersForB"
-                optionLabel="firstname"
-                formControlName="playerB"
-                [filter]="true"
-                filterBy="firstname"
-            />
+        <p-fluid class="input-wrapper">
+            <p-fluid>
+                <p-floatlabel>
+                    <p-select
+                        [options]="filteredPlayersForA"
+                        id="playerA"
+                        optionLabel="firstname"
+                        formControlName="playerA"
+                        [filter]="true"
+                        filterBy="firstname"
+                    />
+                    <label for="playerA">
+                        Joueur A
+                    </label>
+                </p-floatlabel>
+            </p-fluid>
+            <p-fluid class="select-player-wrapper">
+                <p-floatlabel>
+                    <p-select
+                        [options]="filteredPlayersForB"
+                        id="playerB"
+                        optionLabel="firstname"
+                        formControlName="playerB"
+                        [filter]="true"
+                        filterBy="firstname"
+                    />
+                    <label for="playerB">
+                        Joueur B
+                    </label>
+                </p-floatlabel>
+            </p-fluid>
         </p-fluid>
         <p-button
-            (click)="onClick()"
-            (keydown.enter)="onClick()"
+            (click)="onClickStartRefereeMatch()"
+            (keydown.enter)="onClickStartRefereeMatch()"
             label="Démarrer l'arbitrage"
             [disabled]="isError()"
             [severity]="isError() ? 'contrast' : 'success'"
         />
+        <p-accordion>
+            <p-accordion-panel value="0">
+                <p-accordion-header>
+                    Enregistrer le score final
+                </p-accordion-header>
+                <p-accordion-content>
+                    <p-fluid class="input-wrapper">
+                        <p-fluid>
+                            <p-floatlabel>
+                                <input pInputText
+                                       formControlName="playerAScore"
+                                       id="finalScoreA"
+                                       type="number"
+                                       min="0"
+                                       required
+                                />
+                                <label for="finalScoreA">Score A</label>
+                            </p-floatlabel>
+                        </p-fluid>
+                        <p-fluid>
+                            <p-floatlabel>
+                                <input pInputText
+                                       formControlName="playerBScore"
+                                       id="finalScoreB"
+                                       type="number"
+                                       min="0"
+                                       required
+                                />
+                                <label for="finalScoreB">Score B</label>
+                            </p-floatlabel>
+                        </p-fluid>
+                    </p-fluid>
+                    <p-button
+                        (click)="onClickSaveScore()"
+                        (keydown.enter)="onClickSaveScore()"
+                        label="Enregistrer le score final"
+                        [disabled]="isSaveFinalScoreError()"
+                        [severity]="isSaveFinalScoreError() ? 'contrast' : 'success'"
+                    />
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
     </form>
 </p-fluid>

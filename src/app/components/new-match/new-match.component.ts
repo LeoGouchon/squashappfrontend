@@ -9,6 +9,9 @@ import {MatchService} from '../../services/match-service.service';
 import {Select} from 'primeng/select';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {AppRoutes} from '../../AppRoutes';
+import {FloatLabelModule} from 'primeng/floatlabel';
+import {InputText} from 'primeng/inputtext';
+import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 
 @Component({
     selector: 'app-new-match',
@@ -16,7 +19,13 @@ import {AppRoutes} from '../../AppRoutes';
         Fluid,
         ReactiveFormsModule,
         Button,
-        Select
+        Select,
+        FloatLabelModule,
+        InputText,
+        Accordion,
+        AccordionContent,
+        AccordionPanel,
+        AccordionHeader
     ],
     templateUrl: './new-match.component.html',
     styleUrl: './new-match.component.css',
@@ -44,6 +53,8 @@ export class NewMatchComponent implements OnInit {
         this.formGroup = new FormGroup({
             playerA: new FormControl<Player | null>(null),
             playerB: new FormControl<Player | null>(null),
+            playerAScore: new FormControl<number>(0),
+            playerBScore: new FormControl<number>(0),
         })
     }
 
@@ -51,12 +62,46 @@ export class NewMatchComponent implements OnInit {
         return !this.formGroup.get('playerA')?.value || !this.formGroup.get('playerB')?.value;
     }
 
-    onClick() {
+    isSaveFinalScoreError(): boolean {
+        const finalScoreA = this.formGroup.get('playerAScore')?.value;
+        const finalScoreB = this.formGroup.get('playerBScore')?.value;
+        return this.isError() || !(
+            (finalScoreA > 11 && Math.abs(finalScoreA - finalScoreB) === 2)
+            || (finalScoreB > 11 && Math.abs(finalScoreA - finalScoreB) === 2)
+            || (Math.abs(finalScoreA - finalScoreB) >= 2 && (finalScoreA === 11 || finalScoreB === 11))
+        );
+    }
+
+    onClickStartRefereeMatch() {
         this.matchService.startMatch({
             playerA: this.formGroup.get('playerA')?.value,
             playerB: this.formGroup.get('playerB')?.value
         });
         this.navigate.navigateTo(AppRoutes.CURRENT_MATCH);
+    }
+
+    onClickSaveScore() {
+        const playerA = this.formGroup.get('playerA')?.value;
+        const playerB = this.formGroup.get('playerB')?.value;
+        const playerAScore = this.formGroup.get('playerAScore')?.value;
+        const playerBScore = this.formGroup.get('playerBScore')?.value;
+
+        console.log('Player A:', playerA);
+        console.log('Player B:', playerB);
+        console.log('Player A Score:', playerAScore);
+        console.log('Player B Score:', playerBScore);
+        this.matchService.saveFinishedMatchWithoutHistory({
+            playerA: this.formGroup.get('playerA')?.value,
+            playerB: this.formGroup.get('playerB')?.value,
+            playerAScore: this.formGroup.get('playerAScore')?.value,
+            playerBScore: this.formGroup.get('playerBScore')?.value
+        }).subscribe({
+            error: error => {
+                console.error("Erreur lors de la sauvegarde du match", error);
+            },
+            complete: () => this.navigate.navigateTo(AppRoutes.HISTORIC)
+        });
+        this.navigate.navigateTo(AppRoutes.HISTORIC);
     }
 
     get filteredPlayersForB() {
