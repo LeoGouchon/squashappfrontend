@@ -1,14 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, firstValueFrom, Observable, take, timeout} from 'rxjs';
+import {BehaviorSubject, firstValueFrom, Observable, timeout} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {ApiUserInterface} from './api-user/api-user.interface';
-import {ApiUserService} from './api-user/api-user.service';
-import {User} from '../types/user.type';
-
-export interface TokenServiceInterface {
-
-}
 
 @Injectable({
     providedIn: 'root'

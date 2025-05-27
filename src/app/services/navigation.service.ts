@@ -4,9 +4,10 @@ import {TokenService} from './token.service';
 import {AppRoutes} from '../AppRoutes';
 import {MatchService} from './match-service.service';
 import {ConfirmationService} from 'primeng/api';
+import {EMPTY, from, map, Observable, of, switchMap} from 'rxjs';
 
 export interface NavigationServiceInterface {
-    checkTokenAndNavigate(): Promise<void>;
+    checkTokenAndNavigate(): Observable<void>;
 
     navigateTo(url: string): void;
 }
@@ -24,14 +25,20 @@ export class NavigationService implements NavigationServiceInterface {
     ) {
     }
 
-    async checkTokenAndNavigate(): Promise<void> {
-        await this.tokenService.initAuth();
-        if (this.router.url.split("?")[0] === `/${AppRoutes.REGISTER}`) return;
-        if (!this.tokenService.getAccessToken()) {
-            await this.router.navigate([AppRoutes.LOGIN]);
-        } else {
-            this.tokenService.fetchIsAdmin();
-        }
+    checkTokenAndNavigate(): Observable<void> {
+        return from(this.tokenService.initAuth()).pipe(
+            switchMap(() => {
+                if (this.router.url.split("?")[0] === `/${AppRoutes.REGISTER}`) {
+                    return EMPTY;
+                }
+                if (!this.tokenService.getAccessToken()) {
+                    return from(this.router.navigate([AppRoutes.LOGIN])).pipe(map(() => undefined));
+                } else {
+                    this.tokenService.fetchIsAdmin();
+                    return of(undefined);
+                }
+            })
+        );
     }
 
     navigateTo(route: AppRoutes) {

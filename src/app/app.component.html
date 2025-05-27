@@ -4,7 +4,17 @@
         <h4>C'est une application mobile, va chercher ton téléphone intelligent (ou alors F12 puis ctrl + shift + m)</h4>
         <p-image src="/images/no_phone_image.avif" width="100%"/>
         <p>Promis je change cette page plus tard</p>
+    } @else if (this.isBackendError) {
+        <div class="fullscreen-loader">
+            PÉTARD LES SERVEURS ILS FONCTIONNENT PAS. DEMANDE À LÉO SE QUI SE PASSE
+        </div>
     } @else {
+        @if (this.isBackendLoading) {
+            <div class="fullscreen-loader">
+                <p-progressSpinner strokeWidth="5" styleClass="spinner" />
+                <h2>{{ currentLoadingMessage }}</h2>
+            </div>
+        }
         <app-navigation/>
         <p-panel>
             <router-outlet/>
