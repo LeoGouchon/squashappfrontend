@@ -94,22 +94,35 @@ export class NavigationComponent implements OnInit {
             {
                 label: 'Mon compte',
                 icon: 'pi pi-user',
-                command: () => this.tokenService.getAccessToken() ? this.navigation.navigateTo(AppRoutes.PROFILE) : this.messageService.add({
-                    severity: 'error',
-                    summary: 'Déconnecté',
-                    detail: "Vous n'êtes pas connecté",
-                    life: 3000
-                })
+                command: () => {
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.PROFILE);
+                        this.toggleSidebar();
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Déconnecté',
+                            detail: "Vous n'êtes pas connecté",
+                            life: 3000
+                        });
+                    }
+                }
             },
             {
                 label: 'Deconnexion',
                 icon: 'pi pi-sign-out',
-                command: () => this.tokenService.getAccessToken() ? this.apiUserService.logout().subscribe(() => this.toggleSidebar()) : this.messageService.add({
-                    severity: 'error',
-                    summary: 'Déconnecté',
-                    detail: "Vous n'êtes pas connecté",
-                    life: 3000
-                })
+                command: () => {
+                    if (this.tokenService.getAccessToken()) {
+                        this.apiUserService.logout().subscribe(() => this.toggleSidebar())
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Déconnecté',
+                            detail: "Vous n'êtes pas connecté",
+                            life: 3000
+                        })
+                    }
+                }
             },
         ];
 

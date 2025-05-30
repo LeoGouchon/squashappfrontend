@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
 import {PrimeTemplate} from 'primeng/api';
 import {TableModule} from 'primeng/table';
@@ -7,6 +7,8 @@ import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
 import {NavigationService} from '../../services/navigation.service';
 import {PaginatedRequest} from '../../types/pagination.type';
+import {Match} from '../../types/match.type';
+import {Skeleton} from 'primeng/skeleton';
 
 @Component({
     selector: 'app-historic',
@@ -15,6 +17,7 @@ import {PaginatedRequest} from '../../types/pagination.type';
         TableModule,
         NgForOf,
         Chip,
+        Skeleton,
     ],
     templateUrl: './historic.component.html',
     styleUrl: './historic.component.css',
@@ -22,9 +25,10 @@ import {PaginatedRequest} from '../../types/pagination.type';
         { provide: 'ApiMatchInterface', useClass: ApiMatchService },
     ]
 })
-export class HistoricComponent {
-    protected matches: any[] = [];
+export class HistoricComponent implements OnInit {
+    protected matches: Match[] = [];
     private readonly pagination: PaginatedRequest = {page: 0, size: 50};
+    protected isMatchesLoading: boolean = true;
 
     constructor(
         @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface,
@@ -32,10 +36,17 @@ export class HistoricComponent {
     };
 
     ngOnInit() {
-        this.apiMatchService.getMatches(this.pagination).subscribe(matches => this.matches = matches.content);
+        this.isMatchesLoading = true;
+        this.apiMatchService.getMatches(this.pagination).subscribe(
+            matches => {
+                this.matches = matches.content;
+                this.groupMatchesByDate(this.matches);
+                this.isMatchesLoading = false;
+            }
+        );
     }
 
-        groupMatchesByDate(matches: any[]): any[] {
+    groupMatchesByDate(matches: Match[]): { date: string, matches: Match[] }[] {
         const groupedMatches: { [key: string]: any } = {};
         matches.forEach((match: any) => {
             const date = new Date(match.startTime ?? match.endTime).toLocaleDateString();
@@ -49,4 +60,6 @@ export class HistoricComponent {
                 return ({date, matches: sortedMatches});
             });
     }
+
+    protected readonly Array = Array;
 }

@@ -1,28 +1,21 @@
 <div class="global-wrapper">
-    @if (!this.isMobile) {
-        <div class="background-wrapper">
-            <div class="fake-phone-screen-wrapper">
-                <app-navigation/>
-                <p-panel>
-                    <router-outlet/>
-                </p-panel>
-            </div>
+    <div [class.background-wrapper]="!isMobile">
+        <div [class.fake-phone-screen-wrapper]="!isMobile">
+            <app-navigation/>
+            <p-panel>
+                <router-outlet/>
+            </p-panel>
         </div>
-    } @else if (this.isBackendError) {
+    </div>
+    @if (isBackendLoading) {
+        <div class="fullscreen-loader">
+            <p-progressSpinner strokeWidth="5" styleClass="spinner"/>
+            <h2>{{ currentLoadingMessage }}</h2>
+        </div>
+    } @else if (isBackendError) {
         <div class="fullscreen-loader">
             PÉTARD LES SERVEURS ILS FONCTIONNENT PAS. DEMANDE À LÉO SE QUI SE PASSE
         </div>
-    } @else {
-        @if (this.isBackendLoading) {
-            <div class="fullscreen-loader">
-                <p-progressSpinner strokeWidth="5" styleClass="spinner"/>
-                <h2>{{ currentLoadingMessage }}</h2>
-            </div>
-        }
-        <app-navigation/>
-        <p-panel>
-            <router-outlet/>
-        </p-panel>
     }
 </div>
 

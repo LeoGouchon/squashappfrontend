@@ -119,6 +119,10 @@ export class CurrentMatchComponent implements OnDestroy, OnInit {
         }
     }
 
+    undoLastPoint(): void {
+        this.matchService.undoLastMatchPoint();
+    }
+
     isInitialization(): boolean {
         return this.matchService.isInitialization();
     }

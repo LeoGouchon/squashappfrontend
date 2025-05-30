@@ -1,14 +1,32 @@
-<p>
-<p-table [value]="groupMatchesByDate(matches)" [scrollable]="true" scrollHeight="flex" [groupRowsBy]="groupMatchesByDate(matches)">
+<p-table [value]="groupMatchesByDate(matches)" [scrollable]="true" scrollHeight="flex"
+         [groupRowsBy]="groupMatchesByDate(matches)"
+         [loading]="isMatchesLoading"
+         [showLoader]="false"
+>
     <ng-template pTemplate="body" let-group>
         <tr class="date-header">
-            <th colspan="5">{{ group.date }}</th>
+            <th colspan="5" scope="col">{{ group.date }}</th>
         </tr>
         <tr *ngFor="let match of group.matches">
             <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
-            <td class="score"><p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/></td>
+            <td class="score">
+                <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
+            </td>
             <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
         </tr>
     </ng-template>
+
+    <ng-template pTemplate="loadingbody">
+        <tr *ngFor="let _ of [1,2,3]">
+            <td><p-skeleton width="100%"></p-skeleton></td>
+            <td><p-skeleton width="100%"></p-skeleton></td>
+            <td><p-skeleton width="100%"></p-skeleton></td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="3" class="text-center">Aucun match enregistré</td>
+        </tr>
+    </ng-template>
 </p-table>
-</p>

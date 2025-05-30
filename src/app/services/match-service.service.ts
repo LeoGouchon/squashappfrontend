@@ -184,6 +184,27 @@ export class MatchService {
         this.updateStorage();
     }
 
+    undoLastMatchPoint(): void {
+        const lastPoint = this.history.pop();
+        const lastValidPoint = this.history[this.history.length - 1];
+        // Reset point
+        if (lastPoint) {
+            lastPoint.scorer === 'A' ? this.playerAScore-- : this.playerBScore--;
+        }
+        // Reset server and server side
+        if (lastValidPoint) {
+            if (lastValidPoint.server === lastValidPoint.scorer) {
+                this.server = lastValidPoint.server;
+                this.serviceSide = lastValidPoint.serviceSide === 'L' ? 'R' : 'L';
+            } else {
+                this.server = lastValidPoint.scorer === 'A' ? 'B' : 'A';
+            }
+        } else {
+            this.endMatch();
+        }
+        this.updateStorage();
+    }
+
     // --- Getters
     getPlayerA(): Player | undefined { return this.playerA; }
     getPlayerB(): Player | undefined { return this.playerB; }
