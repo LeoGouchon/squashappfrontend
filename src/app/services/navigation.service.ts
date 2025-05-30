@@ -26,11 +26,11 @@ export class NavigationService implements NavigationServiceInterface {
     }
 
     checkTokenAndNavigate(): Observable<void> {
+        if (this.router.url.split("?")[0] === `/${AppRoutes.REGISTER}`) {
+            return EMPTY;
+        }
         return from(this.tokenService.initAuth()).pipe(
             switchMap(() => {
-                if (this.router.url.split("?")[0] === `/${AppRoutes.REGISTER}`) {
-                    return EMPTY;
-                }
                 if (!this.tokenService.getAccessToken()) {
                     return from(this.router.navigate([AppRoutes.LOGIN])).pipe(map(() => undefined));
                 } else {

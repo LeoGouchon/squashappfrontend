@@ -25,6 +25,7 @@
 .score {
     text-align: center;
     width: 30%;
+    min-width: 100px;
 }
 
 .date-header {

@@ -42,7 +42,7 @@ export class TokenService {
     }
 
     refreshToken(): Observable<any> {
-        return this.http.post(this.apiUrl + '/authenticate/refresh-token', {}).pipe(timeout(this.timeoutValue));
+        return this.http.post(this.apiUrl + '/authenticate/refresh-token', {}).pipe();
     }
 
     getIsAdmin(): boolean {

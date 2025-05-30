@@ -5,13 +5,12 @@ import {DockModule} from 'primeng/dock';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {Panel} from 'primeng/panel';
 import {NavigationService} from './services/navigation.service';
-import {Image} from 'primeng/image';
 import {catchError, of, retry, timeout, timer} from 'rxjs';
 import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, Image, ProgressSpinner],
+    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, ProgressSpinner],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -60,8 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
             retry({
                 count: 5,
                 delay: (error, retryCount) => {
-                    if (error.name === 'TimeoutError') {
-                        console.warn(`⏳ Timeout (tentative ${retryCount}/5), retry dans 3s...`);
+                    if (error.name === 'TimeoutError' || error.name === 'CanceledError') {
+                        console.warn(`⏳ Timeout or Canceled (tentative ${retryCount}/5), retry dans 3s...`);
                         return timer(3000);
                     }
                     throw error;
