@@ -106,6 +106,16 @@
             </p-fluid>
         </p-fieldset>
     }
+    <p-divider/>
+    <p-fluid>
+        <p-button
+            label="Annuler le dernier point"
+            icon="pi pi-undo"
+            (click)="undoLastPoint()"
+            (keydown.enter)="undoLastPoint()"
+            severity="secondary"
+        />
+    </p-fluid>
 } @else if (isMatchFinished()) {
     <p-fieldset legend="Partie terminée">
         <p-fluid class="buttons-wrapper">
@@ -113,7 +123,7 @@
                 <p-fluid>
                     <p-progress-spinner ariaLabel="loading"/>
                 </p-fluid>
-            } @else if (!matchService.getMatchSent()){
+            } @else if (!matchService.getMatchSent()) {
                 <p-fluid>
                     <p-button severity="warn" label="Erreur lors de l'envoi des donn es, cliquez pour r essayer"
                               (click)="saveFinishedMatch()"
