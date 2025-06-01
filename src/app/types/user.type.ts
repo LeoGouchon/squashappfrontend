@@ -4,5 +4,5 @@ export type User = {
     id: number;
     admin: boolean;
     mail: string;
-    players: Player;
+    player: Player;
 }

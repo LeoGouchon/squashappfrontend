@@ -8,6 +8,7 @@ import {AppRoutes} from './AppRoutes';
 import {MatchGuard} from './services/routes-protection/match-guard';
 import {AdminComponent} from './components/admin/admin.component';
 import {RegisterComponent} from './components/register/register.component';
+import {HomeComponent} from './components/home/home.component';
 
 export const routes: Routes = [
     {
@@ -40,7 +41,11 @@ export const routes: Routes = [
         component: RegisterComponent,
     },
     {
+        path: AppRoutes.HOME,
+        component: HomeComponent,
+    },
+    {
         path: "**",
-        redirectTo: AppRoutes.NEW_MATCH,
+        redirectTo: AppRoutes.HOME,
     }
 ];

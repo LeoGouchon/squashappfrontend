@@ -6,4 +6,5 @@ export class AppRoutes {
     static readonly PROFILE = 'profile';
     static readonly ADMIN = 'admin';
     static readonly REGISTER = 'register';
+    static readonly HOME = '';
 }
