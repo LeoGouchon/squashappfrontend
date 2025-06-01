@@ -9,15 +9,17 @@
         </div>
     }
 </p-fluid>
-<p-drawer class="menu-drawer" position="right" header="Menu" [(visible)]="displaySidebar" [baseZIndex]="10">
-    <p-panelMenu [model]="items"/>
-    @if (this.tokenService.getAccessToken()) {
-        <p-divider/>
-        <p-panel-menu [model]="profilItems"/>
-    }
-    @if (this.tokenService.getIsAdmin()) {
-        <p-divider/>
-        <p-panel-menu [model]="adminItems"/>
-    }
-</p-drawer>
-<p-confirmdialog/>
+@if (this.tokenService.getAccessToken()) {
+    <p-drawer class="menu-drawer" position="right" header="Menu" [(visible)]="displaySidebar" [baseZIndex]="10">
+        <p-panelMenu [model]="items"/>
+        @if (this.tokenService.getAccessToken()) {
+            <p-divider/>
+            <p-panel-menu [model]="profilItems"/>
+        }
+        @if (this.tokenService.getIsAdmin()) {
+            <p-divider/>
+            <p-panel-menu [model]="adminItems"/>
+        }
+    </p-drawer>
+}
+<p-confirmdialog></p-confirmdialog>

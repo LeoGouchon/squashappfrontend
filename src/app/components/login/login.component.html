@@ -1,5 +1,5 @@
 <p-fluid>
-    <h1>{{ isLoginPage ? "Se connecter" : "S'inscrire" }}</h1>
+    <h1>Se connecter</h1>
     <form [formGroup]="loginForm">
         <div class="form-wrapper">
             <p-floatlabel variant="on">
@@ -28,36 +28,16 @@
                     (focus)="onFocus()"
                 />
                 <label for="passwordInput">Mot de passe</label>
-                @if (formError && isLoginPage) {
+                @if (formError) {
                     <small>{{ formErrorText }}</small>
                 }
             </p-floatlabel>
-            @if (!isLoginPage) {
-                <p-floatlabel variant="on">
-                    <p-password
-                        formControlName="confirmedPassword"
-                        required
-                        id="confirmedPasswordInput"
-                        [feedback]=false
-                        [toggleMask]=true
-                        [class.ng-invalid]="formError && alreadySubmitOnce && isEmailvalid()"
-                        [class.ng-dirty]="formError && alreadySubmitOnce && isEmailvalid()"
-                        (focus)="onFocus()"
-                    />
-                    <label for="confirmedPasswordInput">Confirmation du mot de passe</label>
-                    @if (formError && !isLoginPage) {
-                        <small>{{ formErrorText }}</small>
-                    }
-                </p-floatlabel>
-            }
             <div class="buttons-wrapper">
                 <p-fluid>
-                    <p-button [label]="isLoginPage ? 'S\'inscrire' : 'Se connecter'" severity="secondary" (onClick)="switchLoginSignUp()"></p-button>
-                </p-fluid>
-                <p-fluid>
-                    <p-button type="submit" [label]="isLoginPage ? 'Connexion' : 'Valider'" severity="primary" (onClick)="onSubmit()"></p-button>
+                    <p-button type="submit" label="Connexion" severity="primary" [loading]="" (onClick)="onSubmit()"></p-button>
                 </p-fluid>
             </div>
         </div>
     </form>
 </p-fluid>
+<p-toast/>
