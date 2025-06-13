@@ -6,8 +6,8 @@ export type Match = {
     pointsHistory: MatchPoint[] | null;
     finalScoreA: number;
     finalScoreB: number;
-    startTime: string;
-    endTime: string;
+    startTime: number;
+    endTime: number;
     playerA: Player;
     playerB: Player;
     finished: boolean;

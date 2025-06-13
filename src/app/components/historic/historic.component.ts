@@ -1,14 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
 import {PrimeTemplate} from 'primeng/api';
 import {TableModule} from 'primeng/table';
 import {Chip} from 'primeng/chip';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
-import {NavigationService} from '../../services/navigation.service';
 import {PaginatedRequest} from '../../types/pagination.type';
 import {Match} from '../../types/match.type';
 import {Skeleton} from 'primeng/skeleton';
+import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 
 @Component({
     selector: 'app-historic',
@@ -18,6 +18,11 @@ import {Skeleton} from 'primeng/skeleton';
         NgForOf,
         Chip,
         Skeleton,
+        Accordion,
+        AccordionPanel,
+        AccordionHeader,
+        AccordionContent,
+        DatePipe,
     ],
     templateUrl: './historic.component.html',
     styleUrl: './historic.component.css',
@@ -46,6 +51,10 @@ export class HistoricComponent implements OnInit {
         );
     }
 
+    protected trackByDate(index: number, date: number): number {
+        return date;
+    }
+
     groupMatchesByDate(matches: Match[]): { date: string, matches: Match[] }[] {
         const groupedMatches: { [key: string]: any } = {};
         matches.forEach((match: any) => {
@@ -61,5 +70,40 @@ export class HistoricComponent implements OnInit {
             });
     }
 
-    protected readonly Array = Array;
+    protected getAllDates(): number[] {
+        const dates = this.matches.reduce((dates, match) => {
+            const timestamp = match.startTime ?? match.endTime;
+            if (!timestamp) return dates;
+
+            const dt = new Date(timestamp);
+            const dayTimestamp = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()).getTime();
+
+            if (!dates.includes(dayTimestamp)) {
+                dates.push(dayTimestamp);
+            }
+            return dates;
+        }, [] as number[]);
+
+        return dates.sort((a, b) => b - a);
+    }
+
+    protected getMatchesByDate(dateTimestamp: number): Match[] {
+        const inputDate = new Date(dateTimestamp);
+
+        return this.matches.filter(match => {
+            const matchTimestamp = match.startTime ?? match.endTime;
+            if (!matchTimestamp) return false;
+            const matchDate = new Date(matchTimestamp);
+            return (
+                matchDate.getFullYear() === inputDate.getFullYear() &&
+                matchDate.getMonth() === inputDate.getMonth() &&
+                matchDate.getDate() === inputDate.getDate()
+            );
+        });
+    }
+
+    protected getLastDate(): number {
+        const dates = this.getAllDates();
+        return dates.length > 0 ? dates[0] : -1;
+    }
 }

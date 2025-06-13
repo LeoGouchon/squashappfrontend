@@ -5,6 +5,8 @@ import {Button} from 'primeng/button';
 import {Card} from 'primeng/card';
 import {Panel} from 'primeng/panel';
 import {PrimeTemplate} from 'primeng/api';
+import {AppRoutes} from '../../AppRoutes';
+import {NavigationService} from '../../services/navigation.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,11 @@ import {PrimeTemplate} from 'primeng/api';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-    constructor(protected readonly tokenService: TokenService) {
+    constructor(protected readonly tokenService: TokenService, protected readonly navigationService: NavigationService) {
         this.tokenService = tokenService;
+        this.navigationService = navigationService;
+
     }
+
+    protected readonly AppRoutes = AppRoutes;
 }

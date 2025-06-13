@@ -14,18 +14,23 @@
 
 .player-a {
     text-align: left;
-    width: 35%;
+    padding: 4px;
 }
 
 .player-b {
     text-align: right;
-    width: 35%;
+    padding: 4px;
 }
 
 .score {
     text-align: center;
-    width: 30%;
-    min-width: 100px;
+    min-width: 150px;
+    padding: 4px;
+
+    .p-chip {
+        padding: 4px 12px;
+        border-radius: 8px;
+    }
 }
 
 .date-header {
@@ -35,4 +40,8 @@
 
 .winner {
     font-weight: bold;
+}
+
+:host ::ng-deep .p-accordioncontent-content {
+    padding: 0 !important;
 }

@@ -1,32 +1,40 @@
-<p-table [value]="groupMatchesByDate(matches)" [scrollable]="true" scrollHeight="flex"
-         [groupRowsBy]="groupMatchesByDate(matches)"
-         [loading]="isMatchesLoading"
-         [showLoader]="false"
->
-    <ng-template pTemplate="body" let-group>
-        <tr class="date-header">
-            <th colspan="5" scope="col">{{ group.date }}</th>
-        </tr>
-        <tr *ngFor="let match of group.matches">
-            <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
-            <td class="score">
-                <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
-            </td>
-            <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
-        </tr>
-    </ng-template>
+<p-accordion [value]="getLastDate()">
+    <ng-container *ngFor="let date of getAllDates(); trackBy: trackByDate">
+        <p-accordion-panel [value]="date">
+            <p-accordion-header>
+                {{ date | date:'dd/MM/yyyy' }}
+            </p-accordion-header>
+            <p-accordion-content>
+                <p-table [value]="getMatchesByDate(date)" [scrollable]="true" scrollHeight="flex"
+                         [loading]="isMatchesLoading"
+                         [showLoader]="false"
+                >
+                    <ng-template pTemplate="body" let-match>
+                        <tr>
+                            <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
+                            <td class="score">
+                                <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
+                            </td>
+                            <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
+                        </tr>
+                    </ng-template>
 
-    <ng-template pTemplate="loadingbody">
-        <tr *ngFor="let _ of [1,2,3]">
-            <td><p-skeleton width="100%"></p-skeleton></td>
-            <td><p-skeleton width="100%"></p-skeleton></td>
-            <td><p-skeleton width="100%"></p-skeleton></td>
-        </tr>
-    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr *ngFor="let _ of [1,2,3]">
+                            <td><p-skeleton width="100%"></p-skeleton></td>
+                            <td><p-skeleton width="100%"></p-skeleton></td>
+                            <td><p-skeleton width="100%"></p-skeleton></td>
+                        </tr>
+                    </ng-template>
 
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="3" class="text-center">Aucun match enregistré</td>
-        </tr>
-    </ng-template>
-</p-table>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="3" class="text-center">Aucun match enregistré</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordion-content>
+        </p-accordion-panel>
+    </ng-container>
+</p-accordion>
+

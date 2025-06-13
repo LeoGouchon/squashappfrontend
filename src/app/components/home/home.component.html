@@ -2,8 +2,16 @@
     <h2>Wesh wesh {{ tokenService.getUser()?.player?.firstname }}</h2>
     <p-fluid>
         <div class="menu-container">
-            <p-button class="action-button">Nouvelle partie</p-button>
-            <p-button class="action-button" variant="outlined">Historique</p-button>
+            <p-button class="action-button"
+                      (click)="navigationService.navigateTo(AppRoutes.NEW_MATCH)"
+                      (keydown.enter)="navigationService.navigateTo(AppRoutes.NEW_MATCH)">
+                Nouvelle partie
+            </p-button>
+            <p-button class="action-button"
+                      (click)="navigationService.navigateTo(AppRoutes.HISTORIC)"
+                      (keydown.enter)="navigationService.navigateTo(AppRoutes.HISTORIC)" variant="outlined">
+                Historique
+            </p-button>
         </div>
     </p-fluid>
 </p-fluid>
