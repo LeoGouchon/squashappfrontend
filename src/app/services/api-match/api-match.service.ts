@@ -16,10 +16,19 @@ export class ApiMatchService implements ApiMatchInterface {
     constructor(private readonly http: HttpClient) {
     }
 
-    getMatches(params: PaginatedRequest): Observable<PaginatedResponse<any>> {
-        const paramsStr = new HttpParams()
+    getMatches(params: PaginatedRequest, filter?: {playerIds?: number[], date?: number}): Observable<PaginatedResponse<any>> {
+        let paramsStr = new HttpParams()
             .set('size', params.size.toString())
-            .set('page', params.page.toString());
+            .set('page', params.page.toString())
+
+        if (filter?.playerIds?.length) {
+            paramsStr = paramsStr.set('playerIds', filter.playerIds.join(','));
+        }
+
+        if (filter?.date) {
+            paramsStr = paramsStr.set('date', filter.date.toString());
+        }
+
         return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 
@@ -49,5 +58,13 @@ export class ApiMatchService implements ApiMatchInterface {
 
     deleteMatch(id: number) {
         return this.http.delete(this.apiUrl + "/matches" + id).pipe(timeout(this.timeoutValue))
+    }
+
+    getSessionDate(params: PaginatedRequest): Observable<PaginatedResponse<number>> {
+        const paramsStr = new HttpParams()
+            .set('size', params.size.toString())
+            .set('page', params.page.toString())
+
+        return this.http.get<PaginatedResponse<number>>(this.apiUrl + "/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 }

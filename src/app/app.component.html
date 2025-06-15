@@ -1,12 +1,10 @@
 <div class="global-wrapper">
-<!--    <div [class.background-wrapper]="!isMobile">-->
-<!--        <div [class.fake-phone-screen-wrapper]="!isMobile">-->
-            <app-navigation/>
-            <p-panel>
-                <router-outlet/>
-            </p-panel>
-<!--        </div>-->
-<!--    </div>-->
+    <div>
+        <app-navigation/>
+        <p-panel>
+            <router-outlet/>
+        </p-panel>
+    </div>
     @if (isBackendLoading) {
         <div class="fullscreen-loader">
             <p-progressSpinner strokeWidth="5" styleClass="spinner"/>
