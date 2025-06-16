@@ -5,6 +5,7 @@ import {ApiMatchInterface} from './api-match.interface';
 import {Observable, timeout} from 'rxjs';
 import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 import {MatchPoint} from '../../types/match-point.type';
+import {SessionStat} from '../../types/session-stat.type';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,7 @@ export class ApiMatchService implements ApiMatchInterface {
         }
 
         if (filter?.date) {
-            paramsStr = paramsStr.set('date', filter.date.toString());
+            paramsStr = paramsStr.set('date', filter.date);
         }
 
         return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
@@ -60,11 +61,11 @@ export class ApiMatchService implements ApiMatchInterface {
         return this.http.delete(this.apiUrl + "/matches" + id).pipe(timeout(this.timeoutValue))
     }
 
-    getSessionDate(params: PaginatedRequest): Observable<PaginatedResponse<number>> {
+    getSessionStats(params: PaginatedRequest): Observable<PaginatedResponse<SessionStat>> {
         const paramsStr = new HttpParams()
             .set('size', params.size.toString())
             .set('page', params.page.toString())
 
-        return this.http.get<PaginatedResponse<number>>(this.apiUrl + "/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
+        return this.http.get<PaginatedResponse<SessionStat>>(this.apiUrl + "/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 }

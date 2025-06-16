@@ -7,6 +7,7 @@ import {TableModule} from "primeng/table";
 import {Match} from '../../../../types/match.type';
 import {PaginatedRequest} from '../../../../types/pagination.type';
 import {ApiMatchInterface} from '../../../../services/api-match/api-match.interface';
+import {SessionStat} from '../../../../types/session-stat.type';
 
 @Component({
   selector: 'app-match-list',
@@ -21,7 +22,7 @@ import {ApiMatchInterface} from '../../../../services/api-match/api-match.interf
   styleUrl: './match-list.component.css'
 })
 export class MatchListComponent implements OnInit {
-    @Input() date!: number;
+    @Input() sessionStat!: SessionStat;
 
     protected matches: Match[] = [];
     protected isMatchesLoading: boolean = true;
@@ -34,7 +35,7 @@ export class MatchListComponent implements OnInit {
 
     ngOnInit(): void {
         this.isMatchesLoading = true;
-        this.apiMatchService.getMatches(this.pagination, {date: this.date}).subscribe(
+        this.apiMatchService.getMatches(this.pagination, {date: this.sessionStat.date}).subscribe(
             matches => {
                 this.matches = matches.content;
                 this.isMatchesLoading = false;
