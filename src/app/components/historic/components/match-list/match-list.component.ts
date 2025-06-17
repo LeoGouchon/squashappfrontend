@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Chip} from "primeng/chip";
 import {NgForOf} from "@angular/common";
 import {PrimeTemplate} from "primeng/api";
@@ -19,7 +19,8 @@ import {SessionStat} from '../../../../types/session-stat.type';
         TableModule
     ],
   templateUrl: './match-list.component.html',
-  styleUrl: './match-list.component.css'
+  styleUrl: './match-list.component.css',
+    encapsulation: ViewEncapsulation.None
 })
 export class MatchListComponent implements OnInit {
     @Input() sessionStat!: SessionStat;
@@ -41,5 +42,10 @@ export class MatchListComponent implements OnInit {
                 this.isMatchesLoading = false;
             }
         )
+    }
+
+    protected generateWinnerHue(id: number): number {
+        console.log(Math.abs(id * 123 % 360))
+        return Math.abs(id * 123 % 360);
     }
 }

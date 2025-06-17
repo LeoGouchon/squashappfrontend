@@ -1,0 +1,23 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {RankSessionStat, SessionStat} from '../../../../types/session-stat.type';
+import {DatePipe, NgForOf} from '@angular/common';
+import {Tag} from 'primeng/tag';
+
+@Component({
+  selector: 'app-accordion-header',
+    imports: [
+        DatePipe,
+        Tag,
+        NgForOf
+    ],
+  templateUrl: './accordion-header.component.html',
+  styleUrl: './accordion-header.component.css'
+})
+export class AccordionHeaderComponent implements OnInit {
+    @Input() sessionStat!: SessionStat;
+    protected sortedRank: RankSessionStat[] = [];
+
+    ngOnInit(): void {
+        this.sortedRank = [...this.sessionStat.rank].sort((a, b) => b.wins - a.wins || b.totalPointsScored - a.totalPointsScored);
+    }
+}

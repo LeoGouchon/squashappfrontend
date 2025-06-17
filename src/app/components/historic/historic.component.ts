@@ -8,6 +8,7 @@ import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'prim
 import {MatchListComponent} from './components/match-list/match-list.component';
 import {SessionStat} from '../../types/session-stat.type';
 import {Badge} from 'primeng/badge';
+import {AccordionHeaderComponent} from './components/accordion-header/accordion-header.component';
 
 @Component({
     selector: 'app-historic',
@@ -21,6 +22,7 @@ import {Badge} from 'primeng/badge';
         DatePipe,
         MatchListComponent,
         Badge,
+        AccordionHeaderComponent,
     ],
     templateUrl: './historic.component.html',
     styleUrl: './historic.component.css',
