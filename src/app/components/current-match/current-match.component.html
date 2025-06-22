@@ -16,7 +16,7 @@
             <p-tag class="score-tag" value="{{getValueScoreTag(matchPoint)}}"
                    [severity]="matchPoint.server === 'A' ? undefined : 'secondary'"/>
         }
-        @if (isMatchFinished()) {
+        @if (matchService.getIsMatchFinished()) {
             <p-tag class="score-tag"
                    value="{{matchService.getPlayerScoreA() > matchService.getPlayerScoreB() ? 'A' + matchService.getPlayerScoreA() : 'B' + matchService.getPlayerScoreB()}}"
                    severity="success"/>
@@ -53,7 +53,7 @@
             </p-fluid>
         </p-fluid>
     </p-fieldset>
-} @else if (!isMatchFinished()) {
+} @else if (!matchService.getIsMatchFinished()) {
     <p-divider/>
     @if (displayedScorerChoice()) {
         <p-fluid>
@@ -116,7 +116,7 @@
             severity="secondary"
         />
     </p-fluid>
-} @else if (isMatchFinished()) {
+} @else if (matchService.getIsMatchFinished()) {
     <p-fieldset legend="Partie terminée">
         <p-fluid class="buttons-wrapper">
             @if (matchService.getMatchSent() === null) {

@@ -30,6 +30,7 @@ export class MatchService {
         private readonly matchObserverService: MatchObserverService,
     ) {
         this.matchFinishedSubscription = this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
+            console.log('match finished and saved it');
             this.saveFinishedMatch();
         });
 
@@ -73,6 +74,8 @@ export class MatchService {
         this.matchInProgress = true;
         this.playerA = playerA;
         this.playerB = playerB;
+        this.gameEnded = false;
+        this.matchSent = null;
         this.updateStorage();
     }
 
@@ -88,7 +91,6 @@ export class MatchService {
         this.gameEnded = false;
         this.matchSent = null;
         this.updateStorage();
-        this.matchFinishedSubscription?.unsubscribe();
     }
 
     saveFinishedMatch(): void {
@@ -150,17 +152,13 @@ export class MatchService {
         }
     }
 
-    isMatchFinished(): boolean {
-        const condition = Math.abs(this.playerAScore - this.playerBScore) >= 2 &&
+    private computeIsMatchFinished(): boolean {
+        return Math.abs(this.playerAScore - this.playerBScore) >= 2 &&
             (this.playerAScore >= 11 || this.playerBScore >= 11);
+    }
 
-        if (condition && !this.gameEnded) {
-            this.gameEnded = true;
-            this.matchObserverService.notifyMatchFinished();
-            this.updateStorage();
-        }
-
-        return condition;
+    public getIsMatchFinished(): boolean {
+        return this.computeIsMatchFinished();
     }
 
     setServerAndSide(server: PlayerLetter, serviceSide: ServiceSide): void {
@@ -176,6 +174,10 @@ export class MatchService {
 
     setWinnerPoint(scorerPlayer: PlayerLetter): void {
         scorerPlayer === "A" ? this.playerAScore++ : this.playerBScore++;
+        if (this.computeIsMatchFinished() && !this.gameEnded) {
+            this.gameEnded = true;
+            this.matchObserverService.notifyMatchFinished();
+        }
         this.updateStorage();
     }
 
@@ -206,15 +208,47 @@ export class MatchService {
     }
 
     // --- Getters
-    getPlayerA(): Player | undefined { return this.playerA; }
-    getPlayerB(): Player | undefined { return this.playerB; }
-    getPlayerScoreA(): number { return this.playerAScore; }
-    getPlayerScoreB(): number { return this.playerBScore; }
-    getServer(): PlayerLetter | undefined { return this.server; }
-    getServiceSide(): ServiceSide | undefined { return this.serviceSide; }
-    getHistory(): MatchPoint[] { return this.history; }
-    getLastWinnerPoint(): PlayerLetter { return this.history[this.history.length - 1]?.scorer; }
-    isInitialization(): boolean { return this.history.length === 0 && !this.server; }
-    hasMatchInProgress(): boolean { return this.matchInProgress; }
-    getMatchSent(): boolean | null { return this.matchSent; }
+    getPlayerA(): Player | undefined {
+        return this.playerA;
+    }
+
+    getPlayerB(): Player | undefined {
+        return this.playerB;
+    }
+
+    getPlayerScoreA(): number {
+        return this.playerAScore;
+    }
+
+    getPlayerScoreB(): number {
+        return this.playerBScore;
+    }
+
+    getServer(): PlayerLetter | undefined {
+        return this.server;
+    }
+
+    getServiceSide(): ServiceSide | undefined {
+        return this.serviceSide;
+    }
+
+    getHistory(): MatchPoint[] {
+        return this.history;
+    }
+
+    getLastWinnerPoint(): PlayerLetter {
+        return this.history[this.history.length - 1]?.scorer;
+    }
+
+    isInitialization(): boolean {
+        return this.history.length === 0 && !this.server;
+    }
+
+    hasMatchInProgress(): boolean {
+        return this.matchInProgress;
+    }
+
+    getMatchSent(): boolean | null {
+        return this.matchSent;
+    }
 }

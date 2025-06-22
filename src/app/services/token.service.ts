@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, firstValueFrom, Observable, timeout} from 'rxjs';
+import {firstValueFrom, Observable, Subject, timeout} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {User} from '../types/user.type';
@@ -11,7 +11,7 @@ export class TokenService {
     private readonly apiUrl = environment.apiUrl;
     private readonly timeoutValue: number = environment.timeoutValue;
 
-    private readonly accessToken$ = new BehaviorSubject<string | null>(null);
+    private readonly accessToken$ = new Subject<string | null>();
     public tokenReady$ = this.accessToken$.asObservable();
 
     private isAdmin: boolean = false;

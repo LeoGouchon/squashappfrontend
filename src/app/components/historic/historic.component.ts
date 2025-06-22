@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DatePipe, NgForOf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
@@ -7,7 +7,6 @@ import {PaginatedRequest} from '../../types/pagination.type';
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 import {MatchListComponent} from './components/match-list/match-list.component';
 import {SessionStat} from '../../types/session-stat.type';
-import {Badge} from 'primeng/badge';
 import {AccordionHeaderComponent} from './components/accordion-header/accordion-header.component';
 
 @Component({
@@ -19,9 +18,7 @@ import {AccordionHeaderComponent} from './components/accordion-header/accordion-
         AccordionPanel,
         AccordionHeader,
         AccordionContent,
-        DatePipe,
         MatchListComponent,
-        Badge,
         AccordionHeaderComponent,
     ],
     templateUrl: './historic.component.html',

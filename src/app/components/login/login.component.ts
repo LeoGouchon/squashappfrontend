@@ -10,6 +10,7 @@ import {TokenService} from '../../services/token.service';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {Toast} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
+import {filter, switchMap, take} from 'rxjs';
 
 @Component({
     selector: 'app-login',
@@ -65,24 +66,30 @@ export class LoginComponent implements OnInit {
 
         if (this.loginForm.valid && this.isEmailvalid()) {
             this.isResponseLoading = true;
-
             const formValues = this.loginForm.value;
-            this.apiUserService.login(formValues.email, formValues.password).subscribe({
+
+            this.apiUserService.login(formValues.email, formValues.password).pipe(
+                switchMap(() => this.tokenService.tokenReady$.pipe(
+                    filter(token => !!token),
+                    take(1)
+                ))
+            ).subscribe({
                 next: () => {
                     this.isResponseLoading = false;
-                    if (this.tokenService.getAccessToken()) {
-                        this.formError = false;
-                        this.formErrorText = '';
-                        this.navigation.navigateTo('/');
-                    }
+                    this.formError = false;
+                    this.formErrorText = '';
+                    this.navigation.navigateTo('/new-match');
                 },
                 error: (error) => {
                     this.isResponseLoading = false;
-                    if (error.status === 401) {
-                        this.formError = true;
-                        this.formErrorText = 'Email ou mot de passe incorrect';
-                        this.messageService.add({severity:'error', summary: 'Erreur de connexion', detail: this.formErrorText, life: 3000});
-                    }
+                    this.formError = true;
+                    this.formErrorText = 'Email ou mot de passe incorrect';
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Erreur de connexion',
+                        detail: this.formErrorText,
+                        life: 3000
+                    });
                 }
             });
         } else if (!this.isEmailvalid()) {

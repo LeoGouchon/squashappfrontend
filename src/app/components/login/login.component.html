@@ -34,7 +34,7 @@
             </p-floatlabel>
             <div class="buttons-wrapper">
                 <p-fluid>
-                    <p-button type="submit" label="Connexion" severity="primary" [loading]="" (onClick)="onSubmit()"></p-button>
+                    <p-button type="submit" label="Connexion" severity="primary" [loading]="isResponseLoading" (onClick)="onSubmit()"></p-button>
                 </p-fluid>
             </div>
         </div>

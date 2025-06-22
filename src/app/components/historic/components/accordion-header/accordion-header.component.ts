@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RankSessionStat, SessionStat} from '../../../../types/session-stat.type';
-import {DatePipe, NgForOf} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {Tag} from 'primeng/tag';
 
 @Component({
@@ -8,7 +8,6 @@ import {Tag} from 'primeng/tag';
     imports: [
         DatePipe,
         Tag,
-        NgForOf
     ],
   templateUrl: './accordion-header.component.html',
   styleUrl: './accordion-header.component.css'

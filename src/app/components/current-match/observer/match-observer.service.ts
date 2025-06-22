@@ -8,6 +8,7 @@ export class MatchObserverService {
     private readonly matchFinishedSubject = new Subject<void>();
 
     notifyMatchFinished() {
+        console.log('[MatchService] emitting matchFinished');
         this.matchFinishedSubject.next();
     }
 

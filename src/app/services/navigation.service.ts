@@ -44,6 +44,8 @@ export class NavigationService implements NavigationServiceInterface {
     navigateTo(route: AppRoutes) {
         if (!this.tokenService.getAccessToken()) {
             this.router.navigate([AppRoutes.LOGIN]);
+        } else if (this.tokenService.getAccessToken() && this.router.url === "/" + AppRoutes.LOGIN) {
+            this.router.navigate(['/']);
         } else if (this.matchService.hasMatchInProgress() && this.router.url !== "/" + AppRoutes.NEW_MATCH) {
             this.confirmationService.confirm({
                 message: 'Un match est en cours. Voulez-vous vraiment quitter ?',

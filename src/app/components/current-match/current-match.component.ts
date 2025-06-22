@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Button} from 'primeng/button';
 import {Fieldset} from 'primeng/fieldset';
 import {Divider} from 'primeng/divider';
@@ -13,7 +13,7 @@ import {ServiceSide} from '../../types/service-side.type';
 import {Message} from 'primeng/message';
 import {MatchService} from '../../services/match-service.service';
 import {AppRoutes} from '../../AppRoutes';
-
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-current-match',
@@ -32,7 +32,7 @@ import {AppRoutes} from '../../AppRoutes';
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
     ]
 })
-export class CurrentMatchComponent implements OnDestroy, OnInit {
+export class CurrentMatchComponent implements OnInit {
     private showScorerChoice: boolean = false;
     protected playerA: Player | undefined;
     protected playerB: Player | undefined;
@@ -49,10 +49,6 @@ export class CurrentMatchComponent implements OnDestroy, OnInit {
         this.playerB = this.matchService.getPlayerB()!;
     }
 
-    ngOnDestroy(): void {
-        this.matchService.endMatch();
-    }
-
     saveFinishedMatch() {
         this.matchService.saveFinishedMatch();
     }
@@ -60,10 +56,6 @@ export class CurrentMatchComponent implements OnDestroy, OnInit {
     closeMatch() {
         this.matchService.endMatch();
         this.navigation.navigateTo(AppRoutes.HISTORIC)
-    }
-
-    isMatchFinished(): boolean {
-        return this.matchService.isMatchFinished();
     }
 
     handleOnClickSetServer(server: PlayerLetter, serviceSide: ServiceSide) {

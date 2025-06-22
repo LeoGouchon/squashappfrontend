@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Observable, tap, timeout} from 'rxjs';
+import {map, Observable, tap, timeout} from 'rxjs';
 import {ApiUserInterface} from './api-user.interface';
 import {TokenService} from '../token.service';
 import {NavigationService} from '../navigation.service';
@@ -22,9 +22,10 @@ export class ApiUserService implements ApiUserInterface {
     login(email: string, password: string) {
         return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/login', {email, password}).pipe(
             timeout(this.timeoutValue),
-            tap(response => {
+            map(response => {
                 const accessToken = response.token;
                 this.tokenService.setAccessToken(accessToken);
+                return response;
             })
         );
     }
