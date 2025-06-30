@@ -4,10 +4,17 @@ const path = require('path');
 const envDir = path.join(__dirname, 'src/environments');
 const envFilePath = path.join(envDir, 'environment.prod.ts');
 
+const apiUrl = process.env.API_URL;
+
+if (!apiUrl) {
+    console.error('❌ Variable d\'environnement API_URL non définie !');
+    process.exit(1);
+}
+
 const targetEnvironment = `
 export const environment = {
   production: true,
-  apiUrl: '${process.env.API_URL}',
+  apiUrl: '${apiUrl}',
   timeoutValue: 3000,
 };
 `;
@@ -22,6 +29,6 @@ fs.writeFile(envFilePath, targetEnvironment, function (err) {
         console.error('❌ Erreur lors de la création de environment.prod.ts', err);
     } else {
         console.log('✅ Fichier environment.prod.ts généré avec succès');
-        console.log('Using API URL:', this.apiUrl);
+        console.log('Using API URL:', apiUrl);
     }
 });
