@@ -30,19 +30,19 @@ export class ApiMatchService implements ApiMatchInterface {
             paramsStr = paramsStr.set('date', filter.date);
         }
 
-        return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
+        return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/squash/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 
     getMatch(id: number) {
-        return this.http.get(this.apiUrl + "/matches" + id).pipe(timeout(this.timeoutValue))
+        return this.http.get(this.apiUrl + "/squash/matches" + id).pipe(timeout(this.timeoutValue))
     }
 
     createEmptyMatch(playerAId: number, playerBId: number) {
-        return this.http.post(this.apiUrl + "/matches", {playerAId, playerBId}).pipe(timeout(this.timeoutValue))
+        return this.http.post(this.apiUrl + "/squash/matches", {playerAId, playerBId}).pipe(timeout(this.timeoutValue))
     }
 
     createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: MatchPoint[], finalScoreA: number, finalScoreB: number) {
-        return this.http.post(this.apiUrl + "/matches",
+        return this.http.post(this.apiUrl + "/squash/matches",
             {
                 playerAId,
                 playerBId,
@@ -54,11 +54,11 @@ export class ApiMatchService implements ApiMatchInterface {
     }
 
     createFinishedMatchWithoutHistory(playerAId: number, playerBId: number, finalScoreA: number, finalScoreB: number) {
-        return this.http.post(this.apiUrl + "/matches", {playerAId, playerBId, finalScoreA, finalScoreB}).pipe(timeout(this.timeoutValue))
+        return this.http.post(this.apiUrl + "/squash/matches", {playerAId, playerBId, finalScoreA, finalScoreB}).pipe(timeout(this.timeoutValue))
     }
 
     deleteMatch(id: number) {
-        return this.http.delete(this.apiUrl + "/matches" + id).pipe(timeout(this.timeoutValue))
+        return this.http.delete(this.apiUrl + "/squash/matches" + id).pipe(timeout(this.timeoutValue))
     }
 
     getSessionStats(params: PaginatedRequest): Observable<PaginatedResponse<SessionStat>> {
@@ -66,6 +66,6 @@ export class ApiMatchService implements ApiMatchInterface {
             .set('size', params.size.toString())
             .set('page', params.page.toString())
 
-        return this.http.get<PaginatedResponse<SessionStat>>(this.apiUrl + "/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
+        return this.http.get<PaginatedResponse<SessionStat>>(this.apiUrl + "/squash/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 }
