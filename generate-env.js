@@ -22,5 +22,6 @@ fs.writeFile(envFilePath, targetEnvironment, function (err) {
         console.error('❌ Erreur lors de la création de environment.prod.ts', err);
     } else {
         console.log('✅ Fichier environment.prod.ts généré avec succès');
+        console.log('Using API URL:', this.apiUrl);
     }
 });
