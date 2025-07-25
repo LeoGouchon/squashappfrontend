@@ -120,12 +120,22 @@
     <p-fieldset legend="Partie terminée">
         <p-fluid class="buttons-wrapper">
             @if (matchService.getMatchSent() === null) {
-                <p-fluid>
-                    <p-progress-spinner ariaLabel="loading"/>
+                <p-fluid class="buttons-wrapper vertical">
+                    <p-button severity="primary" label="Enregistrer le résultat"
+                              (click)="saveFinishedMatch()"
+                              (keydown.enter)="saveFinishedMatch()"
+                    />
+                    <p-button
+                        label="Annuler le dernier point"
+                        icon="pi pi-undo"
+                        (click)="undoLastPoint()"
+                        (keydown.enter)="undoLastPoint()"
+                        severity="secondary"
+                    />
                 </p-fluid>
             } @else if (!matchService.getMatchSent()) {
                 <p-fluid>
-                    <p-button severity="warn" label="Erreur lors de l'envoi des donn es, cliquez pour r essayer"
+                    <p-button severity="warn" label="Erreur lors de l'envoi des données, cliquez pour réessayer"
                               (click)="saveFinishedMatch()"
                               (keydown.enter)="saveFinishedMatch()"
                     />

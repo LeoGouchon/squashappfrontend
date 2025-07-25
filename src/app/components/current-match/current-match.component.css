@@ -30,6 +30,10 @@
     display: flex;
     justify-content: space-between;
     gap: 16px;
+
+    &.vertical {
+        flex-direction: column;
+    }
 }
 
 .a-background {

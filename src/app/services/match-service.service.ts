@@ -4,8 +4,7 @@ import {MatchPoint} from '../types/match-point.type';
 import {PlayerLetter} from '../types/player-letter.type';
 import {ServiceSide} from '../types/service-side.type';
 import {ApiMatchInterface} from './api-match/api-match.interface';
-import {MatchObserverService} from '../components/current-match/observer/match-observer.service';
-import {Observable, Subscription, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -23,17 +22,9 @@ export class MatchService {
     private gameEnded: boolean = false;
     protected matchSent: boolean | null = null;
 
-    private readonly matchFinishedSubscription?: Subscription;
-
     constructor(
         @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface,
-        private readonly matchObserverService: MatchObserverService,
     ) {
-        this.matchFinishedSubscription = this.matchObserverService.getMatchFinishedObservable().subscribe(() => {
-            console.log('match finished and saved it');
-            this.saveFinishedMatch();
-        });
-
         this.restoreFromStorage();
     }
 
@@ -176,7 +167,6 @@ export class MatchService {
         scorerPlayer === "A" ? this.playerAScore++ : this.playerBScore++;
         if (this.computeIsMatchFinished() && !this.gameEnded) {
             this.gameEnded = true;
-            this.matchObserverService.notifyMatchFinished();
         }
         this.updateStorage();
     }
@@ -187,6 +177,9 @@ export class MatchService {
     }
 
     undoLastMatchPoint(): void {
+        if (this.getIsMatchFinished()) {
+            this.gameEnded = false;
+        }
         const lastPoint = this.history.pop();
         const lastValidPoint = this.history[this.history.length - 1];
         // Reset point

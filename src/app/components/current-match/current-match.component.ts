@@ -6,14 +6,12 @@ import {Fluid} from 'primeng/fluid';
 import {Player} from '../../types/player.type';
 import {Tag} from 'primeng/tag';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
-import {ProgressSpinner} from 'primeng/progressspinner';
 import {MatchPoint} from '../../types/match-point.type';
 import {PlayerLetter} from '../../types/player-letter.type';
 import {ServiceSide} from '../../types/service-side.type';
 import {Message} from 'primeng/message';
 import {MatchService} from '../../services/match-service.service';
 import {AppRoutes} from '../../AppRoutes';
-import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-current-match',
@@ -23,7 +21,6 @@ import {Subscription} from 'rxjs';
         Divider,
         Fluid,
         Tag,
-        ProgressSpinner,
         Message,
     ],
     templateUrl: './current-match.component.html',

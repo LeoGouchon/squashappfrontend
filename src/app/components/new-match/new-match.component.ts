@@ -81,15 +81,6 @@ export class NewMatchComponent implements OnInit {
     }
 
     onClickSaveScore() {
-        const playerA = this.formGroup.get('playerA')?.value;
-        const playerB = this.formGroup.get('playerB')?.value;
-        const playerAScore = this.formGroup.get('playerAScore')?.value;
-        const playerBScore = this.formGroup.get('playerBScore')?.value;
-
-        console.log('Player A:', playerA);
-        console.log('Player B:', playerB);
-        console.log('Player A Score:', playerAScore);
-        console.log('Player B Score:', playerBScore);
         this.matchService.saveFinishedMatchWithoutHistory({
             playerA: this.formGroup.get('playerA')?.value,
             playerB: this.formGroup.get('playerB')?.value,
