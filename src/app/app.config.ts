@@ -10,6 +10,7 @@ import {authInterceptor} from './services/auth-interceptor/auth-interceptor';
 import {ConfirmationService} from 'primeng/api';
 import {ApiMatchService} from './services/api-match/api-match.service';
 import {NavigationService} from './services/navigation.service';
+import {error401Interceptor} from './services/error-401-interceptor/error-401-interceptor';
 
 export const appConfig: ApplicationConfig = {
         providers: [
@@ -27,7 +28,10 @@ export const appConfig: ApplicationConfig = {
                 }
             ),
             provideHttpClient(
-                withInterceptors([authInterceptor]),
+                withInterceptors([
+                    authInterceptor,
+                    error401Interceptor
+                ]),
             )
         ],
     }

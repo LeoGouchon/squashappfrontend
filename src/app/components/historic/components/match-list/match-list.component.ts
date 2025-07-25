@@ -43,9 +43,4 @@ export class MatchListComponent implements OnInit {
             }
         )
     }
-
-    protected generateWinnerHue(id: number): number {
-        console.log(Math.abs(id * 123 % 360))
-        return Math.abs(id * 123 % 360);
-    }
 }
