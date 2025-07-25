@@ -2,6 +2,7 @@
     <ng-container *ngFor="let sessionStat of sessionStats; let i = index; trackBy: trackBySession">
         <p-accordion-panel [value]="i">
             <p-accordion-header>
+                <ng-template #toggleicon let-active="active"/>
                 <app-accordion-header [sessionStat]="sessionStat"/>
             </p-accordion-header>
             <p-accordion-content>

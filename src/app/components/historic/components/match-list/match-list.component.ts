@@ -8,6 +8,7 @@ import {Match} from '../../../../types/match.type';
 import {PaginatedRequest} from '../../../../types/pagination.type';
 import {ApiMatchInterface} from '../../../../services/api-match/api-match.interface';
 import {SessionStat} from '../../../../types/session-stat.type';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-match-list',
@@ -16,7 +17,8 @@ import {SessionStat} from '../../../../types/session-stat.type';
         NgForOf,
         PrimeTemplate,
         Skeleton,
-        TableModule
+        TableModule,
+        Button
     ],
   templateUrl: './match-list.component.html',
   styleUrl: './match-list.component.css',
@@ -40,6 +42,14 @@ export class MatchListComponent implements OnInit {
             matches => {
                 this.matches = matches.content;
                 this.isMatchesLoading = false;
+            }
+        )
+    }
+
+    onDeleteMatch (matchId: number) {
+        this.apiMatchService.deleteMatch(matchId).subscribe(
+            () => {
+                this.matches = this.matches.filter(match => match.id !== matchId);
             }
         )
     }

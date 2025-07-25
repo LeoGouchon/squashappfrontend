@@ -6,7 +6,7 @@
     <div class="wrapper-horizontal wrap">
         @for (playerSession of sortedRank; track playerSession; let index = $index) {
             <div class="wrapper-horizontal full-width">
-                <div class="wrapper-vertical no-gap full-width">
+                <div class="wrapper-horizontal no-gap full-width">
                     <p-tag
                         class="full-width"
                         [severity]="index === 0 ? 'success' : index === 1 ? 'warn' : 'danger'"

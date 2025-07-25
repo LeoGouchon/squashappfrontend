@@ -58,7 +58,7 @@ export class ApiMatchService implements ApiMatchInterface {
     }
 
     deleteMatch(id: number) {
-        return this.http.delete(this.apiUrl + "/squash/matches" + id).pipe(timeout(this.timeoutValue))
+        return this.http.delete(this.apiUrl + "/squash/matches/" + id).pipe(timeout(this.timeoutValue))
     }
 
     getSessionStats(params: PaginatedRequest): Observable<PaginatedResponse<SessionStat>> {
