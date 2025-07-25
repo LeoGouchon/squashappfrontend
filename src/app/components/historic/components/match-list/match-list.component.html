@@ -3,7 +3,7 @@
          [showLoader]="false"
 >
     <ng-template pTemplate="body" let-match>
-        <tr class="line-wrapper {{match.finalScoreA > match.finalScoreB ? 'left-winner' : 'right-winner'}}" [style.--winner-hue]="generateWinnerHue(match.finalScoreA > match.finalScoreB ? match.playerA.id : match.playerB.id)">
+        <tr class="line-wrapper {{match.finalScoreA > match.finalScoreB ? 'left-winner' : 'right-winner'}}" [style.--winner-hue]="">
             <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
             <td class="score">
                 <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
