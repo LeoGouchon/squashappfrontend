@@ -53,8 +53,8 @@ export class NewMatchComponent implements OnInit {
         this.formGroup = new FormGroup({
             playerA: new FormControl<Player | null>(null),
             playerB: new FormControl<Player | null>(null),
-            playerAScore: new FormControl<number>(0),
-            playerBScore: new FormControl<number>(0),
+            playerAScore: new FormControl<number | undefined>(undefined),
+            playerBScore: new FormControl<number | undefined>(undefined),
         })
     }
 
