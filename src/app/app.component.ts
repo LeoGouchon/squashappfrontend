@@ -7,10 +7,11 @@ import {Panel} from 'primeng/panel';
 import {NavigationService} from './services/navigation.service';
 import {catchError, of, retry, timeout, timer} from 'rxjs';
 import {ProgressSpinner} from 'primeng/progressspinner';
+import {Fluid} from 'primeng/fluid';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, ProgressSpinner],
+    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, ProgressSpinner, Fluid],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

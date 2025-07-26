@@ -10,6 +10,31 @@
     width: 100%;
 }
 
+.footer-wrapper {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--p-floatlabel-color);
+
+    .hubscore-link {
+        color: var(--p-button-text-primary-color);
+    }
+
+    margin-top: 8px;
+    padding: 4px 8px;
+
+
+    .social-network-wrapper {
+        display: flex;
+        gap: 12px;
+
+        i {
+            color: var(--p-button-text-primary-color);
+        }
+    }
+}
+
 .fullscreen-loader {
     position: fixed;
     top: 0;
