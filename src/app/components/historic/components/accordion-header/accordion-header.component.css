@@ -23,3 +23,7 @@
 .full-width {
     width: 100%;
 }
+
+.secondary-text-color {
+    color: var(--p-floatlabel-color) !important;
+}

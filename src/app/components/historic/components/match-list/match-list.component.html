@@ -4,8 +4,8 @@
          [showLoader]="false"
 >
     <ng-template pTemplate="body" let-match>
-        <tr class="line-wrapper {{match.finalScoreA > match.finalScoreB ? 'left-winner' : 'right-winner'}}" [style.--winner-hue]="">
-            <td><p-button class="delete-button" icon="pi pi-trash" severity="danger" variant="text" (click)="onDeleteMatch(match.id)" (keydown.enter)="onDeleteMatch(match.id)"></p-button></td>
+        <tr>
+            <td class="delete-match"><p-button class="delete-button" icon="pi pi-trash" severity="danger" variant="text" (click)="onDeleteMatch(match.id)" (keydown.enter)="onDeleteMatch(match.id)"></p-button></td>
             <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
             <td class="score">
                 <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>

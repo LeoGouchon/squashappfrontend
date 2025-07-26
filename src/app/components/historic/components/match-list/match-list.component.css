@@ -1,3 +1,8 @@
+td {
+    padding: 4px 0 !important;
+    border: none !important;
+}
+
 .player-a {
     text-align: left;
     padding: 4px;
@@ -8,11 +13,19 @@
     padding: 4px;
 }
 
+.delete-match {
+    width: fit-content;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
 .score {
     text-align: center;
     padding: 4px;
     display: flex;
     justify-content: center;
+    align-content: baseline;
+    height: 100%;
 
     .p-chip {
         text-wrap: nowrap;
@@ -28,11 +41,4 @@
 
 .winner {
     font-weight: bold;
-}
-
-.line-wrapper.left-winner {
-
-}
-
-.line-wrapper.right-winner {
 }
