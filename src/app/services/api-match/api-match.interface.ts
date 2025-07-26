@@ -2,9 +2,10 @@ import {Observable} from 'rxjs';
 import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 import {MatchPoint} from '../../types/match-point.type';
 import {SessionStat} from '../../types/session-stat.type';
+import {Match} from '../../types/match.type';
 
 export interface ApiMatchInterface {
-    getMatches(params: PaginatedRequest, filter?: {playerIds?: number[], date?: number}): Observable<PaginatedResponse<any>>;
+    getMatches(params: PaginatedRequest, filter?: {playerIds?: number[], date?: number}): Observable<PaginatedResponse<Match>>;
     getMatch(id: number): Observable<any>;
     createEmptyMatch(playerAId: number, playerBId: number): Observable<any>;
     createFinishedMatchWithHistory(playerAId: number, playerBId: number, history: MatchPoint[], finalScoreA: number, finalScoreB: number): Observable<any>;

@@ -43,8 +43,8 @@ export class MatchListComponent implements OnInit {
     ngOnInit(): void {
         this.isMatchesLoading = true;
         this.apiMatchService.getMatches(this.pagination, {date: this.sessionStat.date}).subscribe(
-            matches => {
-                this.matches = matches.content;
+            matchesResponse => {
+                this.matches = matchesResponse.content.sort((a: Match, b: Match) => b.startTime - a.startTime);
                 this.isMatchesLoading = false;
             }
         )
