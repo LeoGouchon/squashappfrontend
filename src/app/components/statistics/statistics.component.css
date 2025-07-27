@@ -1,0 +1,43 @@
+.stats-info {
+    padding: 8px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: color-mix(in srgb, var(--p-blue-500) 5%, transparent);
+    border-radius: 8px;
+}
+
+.score-tag {
+    --p-tag-primary-background: color-mix(in srgb, var(--p-blue-500) 15%, transparent);
+    --p-tag-primary-color: var(--p-blue-500);
+    --p-tag-secondary-background: color-mix(in srgb, var(--p-orange-500) 15%, transparent);
+    --p-tag-secondary-color: var(--p-orange-500);
+}
+
+.stats-wrapper-lines {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.score-field {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .date-field {
+        font-size: 0.875rem;
+    }
+}

@@ -3,6 +3,7 @@ import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 import {MatchPoint} from '../../types/match-point.type';
 import {SessionStat} from '../../types/session-stat.type';
 import {Match} from '../../types/match.type';
+import {OverallStats} from '../../types/overall-stats.type';
 
 export interface ApiMatchInterface {
     getMatches(params: PaginatedRequest, filter?: {playerIds?: number[], date?: number}): Observable<PaginatedResponse<Match>>;
@@ -12,4 +13,5 @@ export interface ApiMatchInterface {
     createFinishedMatchWithoutHistory(playerAId: number, playerBId: number, finalScoreA: number, finalScoreB: number): Observable<any>;
     deleteMatch(id: number): Observable<any>;
     getSessionStats(params: PaginatedRequest): Observable<PaginatedResponse<SessionStat>>;
+    getOverallStats(): Observable<OverallStats>;
 }

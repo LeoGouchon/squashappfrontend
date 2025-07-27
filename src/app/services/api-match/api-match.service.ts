@@ -6,6 +6,7 @@ import {Observable, timeout} from 'rxjs';
 import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 import {MatchPoint} from '../../types/match-point.type';
 import {SessionStat} from '../../types/session-stat.type';
+import {OverallStats} from '../../types/overall-stats.type';
 
 @Injectable({
     providedIn: 'root'
@@ -67,5 +68,9 @@ export class ApiMatchService implements ApiMatchInterface {
             .set('page', params.page.toString())
 
         return this.http.get<PaginatedResponse<SessionStat>>(this.apiUrl + "/squash/matches/sessions", {params: paramsStr}).pipe(timeout(this.timeoutValue))
+    }
+
+    getOverallStats(): Observable<OverallStats> {
+        return this.http.get<OverallStats>(this.apiUrl + "/squash/matches/overall").pipe(timeout(this.timeoutValue))
     }
 }

@@ -1,1 +1,41 @@
-<p>statistics works!</p>
+<p-fluid class="stats-wrapper">
+    <p-fluid class="stats-wrapper-lines">
+        <div class="stats-info">
+            <p-tag class="score-tag">Matchs</p-tag>
+            <h2 class="player-name">Nb. Matchs</h2>
+            <h1 class="player-score">{{ overallStats?.totalMatches }}</h1>
+        </div>
+    </p-fluid>
+    <p-fluid class="stats-wrapper-lines">
+        <div class="stats-info">
+            <p-tag class="score-tag">Matchs se jouant en 2 points d'écarts</p-tag>
+            <h2>Nb. Matchs serrés</h2>
+            <h1>{{ overallStats?.closeMatchesCount }}</h1>
+            <div class="score-field">
+                <p-tag class="score-tag">Score le plus serré</p-tag>
+                    <div class="score-field" *ngFor="let match of overallStats?.closestMatches">
+                        <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
+                        <p-fluid>{{ match.playerA.firstname }}
+                        <p-tag severity="secondary">{{ match.finalScoreA }} - {{ match.finalScoreB }}</p-tag>
+                        {{ match.playerB.firstname }}
+                            </p-fluid>
+                    </div>
+            </div>
+        </div>
+        <div class="stats-info">
+            <p-tag class="score-tag">Matchs avec une différence de min. 7 points</p-tag>
+            <h2>Nb. Stomp</h2>
+            <h1>{{ overallStats?.stompMatchesCount }}</h1>
+            <div class="score-field">
+                <p-tag class="score-tag">Score le plus serré</p-tag>
+                <div class="score-field" *ngFor="let match of overallStats?.stompestMatches">
+                    <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
+                    <p-fluid>{{ match.playerA.firstname }}
+                        <p-tag severity="secondary">{{ match.finalScoreA }} - {{ match.finalScoreB }}</p-tag>
+                        {{ match.playerB.firstname }}
+                    </p-fluid>
+                </div>
+            </div>
+        </div>
+    </p-fluid>
+</p-fluid>
