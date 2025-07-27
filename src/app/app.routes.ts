@@ -9,6 +9,7 @@ import {MatchGuard} from './services/routes-protection/match-guard';
 import {AdminComponent} from './components/admin/admin.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
+import {StatisticsComponent} from './components/statistics/statistics.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,10 @@ export const routes: Routes = [
     {
         path: AppRoutes.HOME,
         component: HomeComponent,
+    },
+    {
+        path: AppRoutes.STATISTICS,
+        component: StatisticsComponent,
     },
     {
         path: "**",

@@ -88,6 +88,23 @@ export class NavigationComponent implements OnInit {
                     }
                 }
             },
+            {
+                label: 'Statistiques',
+                icon: 'pi pi-chart-bar',
+                command: () => {
+                    if (this.tokenService.getAccessToken()) {
+                        this.navigation.navigateTo(AppRoutes.STATISTICS);
+                        this.toggleSidebar();
+                    } else {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Déconnecté',
+                            detail: "Vous n'êtes pas connecté",
+                            life: 3000
+                        });
+                    }
+                }
+            }
         ];
 
         this.profilItems = [
