@@ -12,7 +12,7 @@
             <h2>Nb. Matchs serrés</h2>
             <h1>{{ overallStats?.closeMatchesCount }}</h1>
             <div class="score-field">
-                <p-tag class="score-tag">Score le plus serré</p-tag>
+                <p-tag class="score-tag">Interminable</p-tag>
                     <div class="score-field" *ngFor="let match of overallStats?.closestMatches">
                         <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
                         <p-fluid>{{ match.playerA.firstname }}
@@ -27,7 +27,7 @@
             <h2>Nb. Stomp</h2>
             <h1>{{ overallStats?.stompMatchesCount }}</h1>
             <div class="score-field">
-                <p-tag class="score-tag">Score le plus serré</p-tag>
+                <p-tag class="score-tag">Match à oublier</p-tag>
                 <div class="score-field" *ngFor="let match of overallStats?.stompestMatches">
                     <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
                     <p-fluid>{{ match.playerA.firstname }}
