@@ -2,10 +2,14 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PlayerStats} from '../../types/player-stats.type';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
+import {ApiMatchService} from '../../services/api-match/api-match.service';
 
 @Component({
     selector: 'app-player',
     imports: [],
+    providers: [
+        {provide: 'ApiMatchInterface', useClass: ApiMatchService},
+    ],
     templateUrl: './player.component.html',
     styleUrl: './player.component.css'
 })

@@ -1,1 +1,9 @@
-<p>player-selector works!</p>
+<div class="player-item-wrapper">
+    <div class="player-item" *ngFor="let player of players">
+        <p-message severity="secondary" size="large">
+        <a (click)="selectPlayer(player)">
+            {{player.firstname}} {{player.lastname}}
+        </a>
+        </p-message>
+    </div>
+</div>
