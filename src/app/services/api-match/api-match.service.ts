@@ -7,6 +7,7 @@ import {PaginatedRequest, PaginatedResponse} from '../../types/pagination.type';
 import {MatchPoint} from '../../types/match-point.type';
 import {SessionStat} from '../../types/session-stat.type';
 import {OverallStats} from '../../types/overall-stats.type';
+import {PlayerStats} from '../../types/player-stats.type';
 
 @Injectable({
     providedIn: 'root'
@@ -71,6 +72,10 @@ export class ApiMatchService implements ApiMatchInterface {
     }
 
     getOverallStats(): Observable<OverallStats> {
-        return this.http.get<OverallStats>(this.apiUrl + "/squash/matches/overall").pipe(timeout(this.timeoutValue))
+        return this.http.get<OverallStats>(this.apiUrl + "/squash/matches/stats").pipe(timeout(this.timeoutValue))
+    }
+
+    getPlayerStats(playerId: number): Observable<PlayerStats> {
+        return this.http.get<PlayerStats>(this.apiUrl + "/squash/matches/stats/" + playerId).pipe(timeout(this.timeoutValue))
     }
 }

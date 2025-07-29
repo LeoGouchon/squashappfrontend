@@ -10,6 +10,8 @@ import {AdminComponent} from './components/admin/admin.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
 import {StatisticsComponent} from './components/statistics/statistics.component';
+import {PlayerComponent} from './components/player/player.component';
+import {PlayerSelectorComponent} from './components/player-selector/player-selector.component';
 
 export const routes: Routes = [
     {
@@ -48,6 +50,14 @@ export const routes: Routes = [
     {
         path: AppRoutes.STATISTICS,
         component: StatisticsComponent,
+    },
+    {
+        path: AppRoutes.PLAYER,
+        component: PlayerSelectorComponent,
+    },
+    {
+        path: AppRoutes.PLAYER + '/:id',
+        component: PlayerComponent,
     },
     {
         path: "**",
