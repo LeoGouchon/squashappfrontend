@@ -3,10 +3,17 @@ import {ActivatedRoute} from '@angular/router';
 import {PlayerStats} from '../../types/player-stats.type';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
+import {MeterGroup} from 'primeng/metergroup';
+import {Divider} from 'primeng/divider';
+import {Card} from 'primeng/card';
+import {Button} from 'primeng/button';
+import {NgForOf, NgIf} from '@angular/common';
+import {Fluid} from 'primeng/fluid';
+
 
 @Component({
     selector: 'app-player',
-    imports: [],
+    imports: [MeterGroup, Divider, Card, Button, NgForOf, NgIf, Fluid],
     providers: [
         {provide: 'ApiMatchInterface', useClass: ApiMatchService},
     ],

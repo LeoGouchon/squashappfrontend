@@ -20,7 +20,7 @@ export class ApiPlayerService implements ApiPlayerInterface {
     }
 
     getPlayers(): Observable<PaginatedResponse<Player>> {
-        return this.http.get<PaginatedResponse<Player>>(this.apiUrl + '/players').pipe(timeout(this.timeoutValue));
+        return this.http.get<PaginatedResponse<Player>>(this.apiUrl + '/players?size=50').pipe(timeout(this.timeoutValue));
     }
 
     getPlayer(id: number): Observable<Player> {

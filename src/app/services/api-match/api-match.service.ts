@@ -76,6 +76,6 @@ export class ApiMatchService implements ApiMatchInterface {
     }
 
     getPlayerStats(playerId: number): Observable<PlayerStats> {
-        return this.http.get<PlayerStats>(this.apiUrl + "/squash/matches/stats/" + playerId).pipe(timeout(this.timeoutValue))
+        return this.http.get<PlayerStats>(this.apiUrl + "/squash/matches/stats/player/" + playerId).pipe(timeout(this.timeoutValue))
     }
 }
