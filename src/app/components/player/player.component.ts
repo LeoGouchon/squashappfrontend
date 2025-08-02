@@ -3,17 +3,15 @@ import {ActivatedRoute} from '@angular/router';
 import {PlayerStats} from '../../types/player-stats.type';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
-import {MeterGroup} from 'primeng/metergroup';
-import {Divider} from 'primeng/divider';
-import {Card} from 'primeng/card';
-import {Button} from 'primeng/button';
-import {NgForOf, NgIf} from '@angular/common';
 import {Fluid} from 'primeng/fluid';
+import {Message} from 'primeng/message';
+import {Tag} from "primeng/tag";
+import {Badge} from "primeng/badge";
 
 
 @Component({
     selector: 'app-player',
-    imports: [MeterGroup, Divider, Card, Button, NgForOf, NgIf, Fluid],
+    imports: [Fluid, Message, Tag, Badge],
     providers: [
         {provide: 'ApiMatchInterface', useClass: ApiMatchService},
     ],
@@ -23,6 +21,7 @@ import {Fluid} from 'primeng/fluid';
 export class PlayerComponent implements OnInit {
     playedId?: string;
     playerStats?: PlayerStats;
+    isLoading = false;
 
     constructor(private route: ActivatedRoute, @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface
     ) {
@@ -30,11 +29,13 @@ export class PlayerComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
+            this.isLoading = true;
             const id = params['id'];
             if (id) {
                 this.playedId = id;
                 this.apiMatchService.getPlayerStats(id).subscribe(playerStats => this.playerStats = playerStats);
             }
+            this.isLoading = false;
         })
     }
 }
