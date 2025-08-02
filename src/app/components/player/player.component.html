@@ -1,21 +1,69 @@
-<div *ngIf="playerStats">
-    <div style="display: flex; flex-direction: column">
-        ici, plus tard, des stats OMG
-<!--        <h3>Général</h3>-->
-<!--        <span>Matchs: {{ playerStats?.totalMatches || 0 }}</span>-->
-<!--        <span>Victoires: {{ playerStats?.wins || 0 }}</span>-->
-<!--        <span>Défaites: {{ playerStats?.losses || 0 }}</span>-->
-<!--        <span><small>Moy. points lors d'une défaite: {{ playerStats?.averageLostScore?.toFixed(2) || 0 }}</small></span>-->
-<!--        <span><small>Moy. points lors d'une victoire: {{ (playerStats?.wins / playerStats?.totalMatches* 100).toFixed(2) || 0 }}</small></span>-->
-<!--        <p-divider/>-->
-<!--        <h3>Matchs serrés</h3>-->
-<!--        <span>Victoires: {{ playerStats?.closeWonCount || 0 }}</span>-->
-<!--        <span>Défaites: {{ playerStats?.closeLostCount || 0 }}</span>-->
-<!--        <p-divider/>-->
-<!--        <h3>Matches stomp</h3>-->
-<!--        <span>Victoires: {{ playerStats?.stompWonCount || 0 }}</span>-->
-<!--        <span>Défaites: {{ playerStats?.stompLostCount || 0 }}</span>-->
-<!--        <p-divider/>-->
-
-    </div>
+<div class="main-wrapper">
+    @if (playerStats) {
+        <h1>{{ playerStats.player.firstname }} {{ playerStats.player.lastname }}</h1>
+        <p-fluid class="stats-wrapper-lines">
+            <div class="stats-info">
+                <p-tag class="score-tag">Statistiques globales</p-tag>
+                <div class="stats-content">
+                    <div class="single-stat">
+                        <h2 class="player-name">Total match</h2>
+                        <h1 class="player-score">{{ playerStats.totalMatches }}</h1>
+                    </div>
+                    <div class="single-stat">
+                        <h2 class="player-name">.% Victoire</h2>
+                        <span>
+                        <h1 class="player-score">{{ (playerStats.wins / playerStats.totalMatches * 100).toFixed(2) || 0 }}
+                            %</h1>
+                            <p class="win-loss-description"><p-badge severity="success"/>{{playerStats.wins}} / <p-badge severity="danger"/>{{playerStats.losses}}</p>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </p-fluid>
+        <p-fluid class="stats-wrapper-lines">
+            <div class="stats-info green">
+                <p-tag class="score-tag green">Victoires notables</p-tag>
+                <div class="stats-content single-line">
+                    <div class="title-with-description">
+                        <h2>Score serré</h2>
+                        <p class="description">Score à 2 points d'écarts</p>
+                    </div>
+                    <h1>{{ playerStats.closeWonCount || 0 }}</h1>
+                    <p>{{ (playerStats.closeWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                </div>
+                <div class="stats-content single-line">
+                    <div class="title-with-description">
+                        <h2>Score écrasant</h2>
+                        <p class="description">Différence de 7 points ou plus</p>
+                    </div>
+                    <h1>{{ playerStats.stompWonCount || 0 }}</h1>
+                    <p>{{ (playerStats.stompWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                </div>
+            </div>
+            <div class="stats-info red">
+                <p-tag class="score-tag red">Défaites à oublier</p-tag>
+                <div class="stats-content single-line">
+                    <div class="title-with-description">
+                        <h2>Score serré</h2>
+                        <p class="description">Score à 2 points d'écarts</p>
+                    </div>
+                    <h1>{{ playerStats.closeLostCount || 0 }}</h1>
+                    <p>{{ (playerStats.closeLostCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                </div>
+                <div class="stats-content single-line">
+                    <div class="title-with-description">
+                        <h2>Score écrasant</h2>
+                        <p class="description">Différence de 7 points ou plus</p>
+                    </div>
+                    <h1>{{ playerStats.stompLostCount || 0 }}</h1>
+                    <p>{{ (playerStats.stompLostCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                </div>
+            </div>
+        </p-fluid>
+        <span><small>Moy. points lors d'une défaite: {{ playerStats.averageLostScore.toFixed(2) || 0 }}</small></span>
+    } @else if (!playerStats && !isLoading) {
+        <p-message severity="secondary" size="large">
+            Oops, pas de statistiques pour ce joueur
+        </p-message>
+    }
 </div>

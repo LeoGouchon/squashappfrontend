@@ -13,7 +13,7 @@ export class ApiAdminService {
     constructor(private readonly http: HttpClient) {
     }
 
-    invitePlayer(playerId: number) {
+    invitePlayer(playerId: string) {
         return this.http.post<{ token: string }>(this.apiUrl + `/admin/invitation?playerId=${playerId}`, {}).pipe(
             timeout(this.timeoutValue),
             tap(response => response.token))

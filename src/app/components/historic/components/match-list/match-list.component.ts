@@ -50,7 +50,7 @@ export class MatchListComponent implements OnInit {
         )
     }
 
-    onDeleteMatch(matchId: number) {
+    onDeleteMatch(matchId: string) {
         this.confirmationService.confirm({
             message: 'Cette action est irréversible.',
             header: 'Supprimer le match ? ',

@@ -23,11 +23,11 @@ export class ApiPlayerService implements ApiPlayerInterface {
         return this.http.get<PaginatedResponse<Player>>(this.apiUrl + '/players?size=50').pipe(timeout(this.timeoutValue));
     }
 
-    getPlayer(id: number): Observable<Player> {
+    getPlayer(id: string): Observable<Player> {
         return this.http.get<Player>(this.apiUrl + '/players/' + id).pipe(timeout(this.timeoutValue));
     }
 
-    deletePlayer(id: number) {
+    deletePlayer(id: string) {
         return this.http.delete(this.apiUrl + '/players/' + id).pipe(timeout(this.timeoutValue));
     }
 

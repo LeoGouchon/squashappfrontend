@@ -1,3 +1,5 @@
+import {Player} from './player.type';
+
 export type SessionStat = {
     date: number,
     matchCount: number,
@@ -5,11 +7,7 @@ export type SessionStat = {
 }
 
 export type RankSessionStat = {
-    player: {
-        id: number,
-        firstname: string,
-        lastname: string | null
-    },
+    player: Player,
     wins: number,
     losses: number,
     totalPointsScored: number,
