@@ -2,7 +2,7 @@ import {Player} from './player.type';
 import {MatchPoint} from './match-point.type';
 
 export type Match = {
-    id: number;
+    id: string;
     pointsHistory: MatchPoint[] | null;
     finalScoreA: number;
     finalScoreB: number;
