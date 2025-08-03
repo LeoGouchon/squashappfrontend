@@ -20,7 +20,7 @@ export class ApiPlayerService implements ApiPlayerInterface {
     }
 
     getPlayers(): Observable<PaginatedResponse<Player>> {
-        return this.http.get<PaginatedResponse<Player>>(this.apiUrl + '/players?size=50').pipe(timeout(this.timeoutValue));
+        return this.http.get<PaginatedResponse<Player>>(this.apiUrl + '/players?size=50&sport=squash').pipe(timeout(this.timeoutValue));
     }
 
     getPlayer(id: string): Observable<Player> {
@@ -32,6 +32,6 @@ export class ApiPlayerService implements ApiPlayerInterface {
     }
 
     getUnlinkedPlayers():Observable<Player[]> {
-        return this.http.get<Player[]>(this.apiUrl + '/players/unlinked').pipe(timeout(this.timeoutValue));
+        return this.http.get<Player[]>(this.apiUrl + '/players/unlinked?sport=squash').pipe(timeout(this.timeoutValue));
     }
 }
