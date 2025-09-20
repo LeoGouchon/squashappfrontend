@@ -86,6 +86,27 @@
 
         }
     }
+
+    &.small {
+        gap: 8px;
+        flex-direction: column;
+
+        &.single-line {
+            h2 {
+                margin: 0;
+            }
+            h1 {}
+            p {}
+        }
+
+        > .single-stat {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    }
 }
 
 .title-with-description {
@@ -93,9 +114,13 @@
     flex-direction: column;
     width: 100%;
     text-align: left;
-
+    text-wrap: pretty;
 
     h2 {
+        margin: 0;
+    }
+
+    h3 {
         margin: 0;
     }
 
@@ -112,4 +137,28 @@
     gap: 4px;
     align-items: center;
     justify-content: center;
+
+    &.small {
+        margin: 0;
+    }
+}
+
+.player-score {
+    &.small {
+        margin: 8px 0 0 0;
+    }
+}
+
+.main-value {
+    &.small {
+        margin: 0;
+    }
+}
+
+.secondary-value {
+    &.small {
+        margin: 0;
+        font-size: 0.7rem;
+        text-wrap: nowrap;
+    }
 }
