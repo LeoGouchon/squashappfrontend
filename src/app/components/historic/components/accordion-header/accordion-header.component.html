@@ -1,32 +1,30 @@
-<div class="wrapper-vertical">
+<p-fluid class="header-wrapper wrapper-vertical full-width">
     <div class="wrapper-horizontal">
         {{ sessionStat.date * 1000 | date:'dd/MM/yyyy' }}
-        <p-tag severity="secondary" [value]="sessionStat.matchCount.toString()"/>
+        <p-tag severity="secondary" [value]="sessionStat.matchCount.toString() + ' matches' "/>
     </div>
-    <div class="wrapper-horizontal wrap">
+    <p-fluid class="ranking-wrapper wrapper-horizontal wrap full-width">
         @for (playerSession of sortedRank; track playerSession; let index = $index) {
-            <div class="wrapper-horizontal full-width">
-                <div class="wrapper-horizontal no-gap full-width">
+            <p-fluid class="wrapper-horizontal full-width">
+                <p-tag
+                    class="full-width"
+                    [severity]="index === 0 ? 'success' : index === 1 ? 'warn' : 'danger'"
+                    [value]="(index + 1).toString() + ' - ' + playerSession.player.firstname"
+                />
+                <div class="wrapper-horizontal full-width">
                     <p-tag
                         class="full-width"
-                        [severity]="index === 0 ? 'success' : index === 1 ? 'warn' : 'danger'"
-                        [value]="(index + 1).toString() + ' - ' + playerSession.player.firstname"
+                        severity="secondary"
+                        [value]="playerSession.wins.toString() + 'w' + '/' + playerSession.losses.toString() + 'l'"
                     />
-                    <div class="wrapper-horizontal no-gap full-width">
-                        <p-tag
-                            class="full-width"
-                            severity="secondary"
-                            [value]="playerSession.wins.toString() + 'w' + '/' + playerSession.losses.toString() + 'l'"
-                        />
-                        <p-tag
-                            class="full-width secondary-text-color"
-                            severity="secondary"
-                            [value]="playerSession.totalPointsScored.toString() + '/' + playerSession.totalPointsReceived.toString()"
-                        />
-                    </div>
+                    <p-tag
+                        class="full-width secondary-text-color"
+                        severity="secondary"
+                        [value]="playerSession.totalPointsScored.toString() + '/' + playerSession.totalPointsReceived.toString()"
+                    />
                 </div>
-            </div>
+            </p-fluid>
         }
-    </div>
-</div>
+    </p-fluid>
+</p-fluid>
 

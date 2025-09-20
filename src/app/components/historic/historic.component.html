@@ -3,7 +3,7 @@
         <p-accordion-panel [value]="i">
             <p-accordion-header>
                 <ng-template #toggleicon let-active="active"/>
-                <app-accordion-header [sessionStat]="sessionStat"/>
+                <app-accordion-header [sessionStat]="sessionStat" style="width: 100%;"/>
             </p-accordion-header>
             <p-accordion-content>
                 @if (loadedPanels.has(i)) {

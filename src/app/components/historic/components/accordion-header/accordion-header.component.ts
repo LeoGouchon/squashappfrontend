@@ -2,12 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RankSessionStat, SessionStat} from '../../../../types/session-stat.type';
 import {DatePipe} from '@angular/common';
 import {Tag} from 'primeng/tag';
+import {Fluid} from 'primeng/fluid';
 
 @Component({
   selector: 'app-accordion-header',
     imports: [
         DatePipe,
         Tag,
+        Fluid,
     ],
   templateUrl: './accordion-header.component.html',
   styleUrl: './accordion-header.component.css'
