@@ -5,6 +5,7 @@ import {Tag} from 'primeng/tag';
 import {Fluid} from 'primeng/fluid';
 import {DatePipe, NgForOf} from '@angular/common';
 import {Match} from '../../types/match.type';
+import {ScoreDistributionComponent} from './components/score-distribution/score-distribution.component';
 
 @Component({
     selector: 'app-statistics',
@@ -12,7 +13,8 @@ import {Match} from '../../types/match.type';
         Tag,
         Fluid,
         NgForOf,
-        DatePipe
+        DatePipe,
+        ScoreDistributionComponent
     ],
     templateUrl: './statistics.component.html',
     styleUrl: './statistics.component.css'

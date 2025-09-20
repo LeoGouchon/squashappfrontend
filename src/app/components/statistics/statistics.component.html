@@ -13,13 +13,13 @@
             <h1>{{ overallStats?.closeMatchesCount }}</h1>
             <div class="score-field">
                 <p-tag class="score-tag">Interminable</p-tag>
-                    <div class="score-field" *ngFor="let match of overallStats?.closestMatches">
-                        <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
-                        <p-fluid>{{ match.playerA.firstname }}
+                <div class="score-field" *ngFor="let match of overallStats?.closestMatches">
+                    <p-fluid class="date-field">{{ match.startTime | date:'dd-MM-yyyy' }}</p-fluid>
+                    <p-fluid>{{ match.playerA.firstname }}
                         <p-tag severity="secondary">{{ match.finalScoreA }} - {{ match.finalScoreB }}</p-tag>
                         {{ match.playerB.firstname }}
-                            </p-fluid>
-                    </div>
+                    </p-fluid>
+                </div>
             </div>
         </div>
         <div class="stats-info">
@@ -38,4 +38,7 @@
             </div>
         </div>
     </p-fluid>
+    @if (overallStats) {
+        <app-score-distribution [scoreDistribution]="overallStats.scoreDistribution"/>
+    }
 </p-fluid>

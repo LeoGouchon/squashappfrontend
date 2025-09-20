@@ -1,4 +1,5 @@
 import {Match} from './match.type';
+import {ScoreDistribution} from './score-distribution.type';
 
 export type OverallStats = {
     totalMatches: number,
@@ -7,4 +8,5 @@ export type OverallStats = {
     stompMatchesCount: number,
     closestMatches: Match[],
     stompestMatches: Match[],
+    scoreDistribution: ScoreDistribution[],
 }

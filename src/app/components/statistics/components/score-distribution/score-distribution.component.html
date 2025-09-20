@@ -1,0 +1,14 @@
+<p-fluid class="chart-container">
+    <ng-container *ngIf="chartData?.labels?.length">
+        <p-chart type="bar"
+                 [data]="chartData"
+                 [options]="options"
+                 [plugins]="plugins"
+                 height="300px">
+        </p-chart>
+    </ng-container>
+
+    <ng-container *ngIf="!chartData?.labels?.length">
+        <p>Chargement des données de distribution des scores...</p>
+    </ng-container>
+</p-fluid>
