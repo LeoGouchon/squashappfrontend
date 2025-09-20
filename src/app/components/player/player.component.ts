@@ -29,7 +29,7 @@ export class PlayerComponent implements OnInit {
     playerStats?: PlayerStats;
     isLoading = false;
 
-    protected activeIndexes: number[] = [0];
+    protected activeIndexes: number[] = [];
     protected loadedPanels: Set<number> = new Set([0]);
 
     constructor(private route: ActivatedRoute, @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface
