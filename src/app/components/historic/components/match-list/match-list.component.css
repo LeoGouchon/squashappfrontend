@@ -3,18 +3,23 @@ td {
     border: none !important;
 }
 
+tr {
+    display: flex;
+}
+
 .player-a {
-    text-align: left;
+    text-align: right;
     padding: 4px;
 }
 
 .player-b {
-    text-align: right !important;
+    text-align: left !important;
     padding: 4px;
 }
 
-.delete-match {
-    width: fit-content;
+.actions-wrapper {
+    display: flex;
+    min-width: 80px;
     padding-right: 0 !important;
     padding-left: 0 !important;
 }
@@ -41,4 +46,20 @@ td {
 
 .winner {
     font-weight: bold;
+}
+
+.match-line-wrapper {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+
+    &.clickable {
+        cursor: pointer;
+
+        &:hover {
+            border-radius: 8px;
+            background-color: #ffffff12;
+        }
+    }
 }

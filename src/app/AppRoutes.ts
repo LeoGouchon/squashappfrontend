@@ -8,5 +8,6 @@ export class AppRoutes {
     static readonly REGISTER = 'register';
     static readonly STATISTICS = 'statistics';
     static readonly PLAYER = 'player';
+    static readonly MATCH = 'match';
     static readonly HOME = '';
 }
