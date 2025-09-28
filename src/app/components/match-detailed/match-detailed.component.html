@@ -1,0 +1,36 @@
+<p-fluid class="header-wrapper">
+    <p-button label="Retour" (click)="onBack()" variant="text" icon="pi pi-arrow-left"/>
+</p-fluid>
+<div class="content-wrapper">
+    <p-fluid class="player-info">
+        <span class="flex-inline">
+            <p-badge/>
+            <p-badge severity="danger"/>
+        </span>
+        <span class="flex-inline">
+            <p-tag [value]="matchDetailed?.playerA?.firstname" severity="success"/>
+            <p-tag [value]="matchDetailed?.playerB?.firstname" severity="danger"/>
+        </span>
+    </p-fluid>
+    <div class="timeline-wrapper">
+        <p-timeline [value]="pointsHistory || []" class="timeline">
+            <ng-template #content let-point>
+                <div class="point-content-wrapper">
+                    <div class="service-side-wrapper" *ngIf="point.serviceSide">
+                        <p-badge [severity]="point.serviceSide === 'L' ? 'contrast' : 'secondary'"/>
+                        <p-badge [severity]="point.serviceSide === 'R' ? 'contrast' : 'secondary'"/>
+                    </div>
+                    {{ point.server }}
+                </div>
+            </ng-template>
+            <ng-template #opposite let-point>
+                {{ point.scoreA }} - {{ point.scoreB }}
+            </ng-template>
+            <ng-template #marker let-point>
+                <p-badge *ngIf="point.scorer" value=" "
+                         [severity]="point.scorer === 'A' ? 'success' : 'danger'"/>
+                <p-badge *ngIf="!point.scorer" value=" " severity="secondary"/>
+            </ng-template>
+        </p-timeline>
+    </div>
+</div>

@@ -8,7 +8,7 @@ import {PlayerStats} from '../../types/player-stats.type';
 
 export interface ApiMatchInterface {
     getMatches(params: PaginatedRequest, filter?: {playerIds?: string[], date?: number}): Observable<PaginatedResponse<Match>>;
-    getMatch(id: string): Observable<any>;
+    getMatch(id: string): Observable<Match>;
     createEmptyMatch(playerAId: string, playerBId: string): Observable<any>;
     createFinishedMatchWithHistory(playerAId: string, playerBId: string, history: MatchPoint[], finalScoreA: number, finalScoreB: number): Observable<any>;
     createFinishedMatchWithoutHistory(playerAId: string, playerBId: string, finalScoreA: number, finalScoreB: number): Observable<any>;

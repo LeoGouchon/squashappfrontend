@@ -1,0 +1,56 @@
+:host ::ng-deep .p-timeline-event {
+    min-height: 40px !important;
+}
+
+:host ::ng-deep .p-timeline-event-opposite {
+    all: unset;
+
+    min-width: 50px;
+    text-align: center;
+    padding-right: 16px;
+    padding-left: 0;
+}
+
+.header-wrapper {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.timeline-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.player-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-left: 16px;
+}
+
+.flex-inline {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.service-side-wrapper {
+    display: flex;
+    gap: 4px;
+    width: fit-content;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.point-content-wrapper {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

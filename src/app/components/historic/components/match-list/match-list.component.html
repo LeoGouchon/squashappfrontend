@@ -6,20 +6,33 @@
 >
     <ng-template pTemplate="body" let-match>
         <tr>
-            <td class="delete-match"><p-button class="delete-button" icon="pi pi-trash" severity="danger" variant="text" (click)="onDeleteMatch(match.id)" (keydown.enter)="onDeleteMatch(match.id)"></p-button></td>
-            <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
-            <td class="score">
-                <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
+            <td class="actions-wrapper">
+                <p-button class="delete-button" icon="pi pi-trash" severity="danger" variant="text"
+                          (click)="onDeleteMatch(match.id)" (keydown.enter)="onDeleteMatch(match.id)"></p-button>
+                <p-button *ngIf="match.pointsHistory" class="see-details-button" icon="pi pi-external-link" severity="info" variant="text"
+                          (click)="onMatchClick(match)" (keydown.enter)="onMatchClick(match)"></p-button>
             </td>
-            <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
+            <div class="match-line-wrapper {{match.pointsHistory ? 'clickable' : ''}}" (click)="onMatchClick(match)">
+                <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
+                <td class="score">
+                    <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>
+                </td>
+                <td class="player-b {{match.finalScoreA < match.finalScoreB ? 'winner' : ''}}">{{ match.playerB.firstname }}</td>
+            </div>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="loadingbody">
         <tr *ngFor="let _ of [1,2,3]">
-            <td><p-skeleton width="100%"></p-skeleton></td>
-            <td><p-skeleton width="100%"></p-skeleton></td>
-            <td><p-skeleton width="100%"></p-skeleton></td>
+            <td>
+                <p-skeleton width="100%"></p-skeleton>
+            </td>
+            <td>
+                <p-skeleton width="100%"></p-skeleton>
+            </td>
+            <td>
+                <p-skeleton width="100%"></p-skeleton>
+            </td>
         </tr>
     </ng-template>
 
