@@ -8,6 +8,7 @@ import {MatchPoint} from '../../types/match-point.type';
 import {SessionStat} from '../../types/session-stat.type';
 import {OverallStats} from '../../types/overall-stats.type';
 import {PlayerStats} from '../../types/player-stats.type';
+import {Match} from '../../types/match.type';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +36,8 @@ export class ApiMatchService implements ApiMatchInterface {
         return this.http.get<PaginatedResponse<any>>(this.apiUrl + "/squash/matches", {params: paramsStr}).pipe(timeout(this.timeoutValue))
     }
 
-    getMatch(id: string) {
-        return this.http.get(this.apiUrl + "/squash/matches" + id).pipe(timeout(this.timeoutValue))
+    getMatch(id: string): Observable<Match> {
+        return this.http.get<Match>(`${this.apiUrl}/squash/matches/${id}`).pipe(timeout(this.timeoutValue));
     }
 
     createEmptyMatch(playerAId: string, playerBId: string) {
