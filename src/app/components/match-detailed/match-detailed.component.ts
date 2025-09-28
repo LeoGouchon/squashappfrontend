@@ -20,8 +20,6 @@ import {Tag} from 'primeng/tag';
         Button,
         Timeline,
         NgIf,
-        JsonPipe,
-        Chip,
         Badge,
         Tag
     ],
