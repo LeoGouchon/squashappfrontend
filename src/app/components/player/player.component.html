@@ -1,20 +1,37 @@
 <div class="main-wrapper">
     @if (playerStats) {
         <h1>{{ playerStats.player.firstname }} {{ playerStats.player.lastname }}</h1>
+        <p-tabs value="all" scrollable>
+            <p-tablist>
+                <p-tab value="all">Général</p-tab>
+                @for (yearStat of playerStats.yearlyStats; track yearStat) {
+                    <p-tab [value]="yearStat.year">
+                        {{ yearStat.year }}
+                    </p-tab>
+                }
+            </p-tablist>
+            <p-tabpanels>
+                @for (tab of playerStats.yearlyStats; track tab) {
+                    <p-tabpanel [value]="tab.year">
+                        <app-player-stats [stats]="tab"></app-player-stats>
+                    </p-tabpanel>
+                }
+            </p-tabpanels>
+        </p-tabs>
         <p-fluid class="stats-wrapper-lines">
             <div class="stats-info">
                 <p-tag class="score-tag">Statistiques globales</p-tag>
-                <div class="stats-content">
+                <div class="stats-content small">
                     <div class="single-stat">
-                        <h2 class="player-name">Total match</h2>
-                        <h1 class="player-score">{{ playerStats.totalMatches }}</h1>
+                        <p class="player-name">Total match</p>
+                        <p class="player-score">{{ playerStats.totalMatches }}</p>
                     </div>
                     <div class="single-stat">
-                        <h2 class="player-name">.% Victoire</h2>
+                        <p class="player-name">.% Victoire</p>
                         <span>
-                        <h1 class="player-score">{{ (playerStats.wins / playerStats.totalMatches * 100).toFixed(2) || 0 }}
-                            %</h1>
-                            <p class="win-loss-description"><p-badge severity="success"/>
+                        <p class="player-score small">{{ (playerStats.wins / playerStats.totalMatches * 100).toFixed(2) || 0 }}
+                            %</p>
+                            <p class="win-loss-description small"><p-badge severity="success"/>
                                 {{ playerStats.wins }} / <p-badge severity="danger"/>
                                 {{ playerStats.losses }}</p>
                             </span>
@@ -27,18 +44,18 @@
                 <p-tag class="score-tag green">Victoires notables</p-tag>
                 <div class="stats-content single-line">
                     <div class="title-with-description">
-                        <h2>Score serré</h2>
+                        <p>Score serré</p>
                         <p class="description">Score à 2 points d'écarts</p>
                     </div>
-                    <h1>{{ playerStats.closeWonCount || 0 }}</h1>
+                    <p>{{ playerStats.closeWonCount || 0 }}</p>
                     <p>{{ (playerStats.closeWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
                 </div>
                 <div class="stats-content single-line">
                     <div class="title-with-description">
-                        <h2>Score écrasant</h2>
+                        <p>Score écrasant</p>
                         <p class="description">Différence de 7 points ou plus</p>
                     </div>
-                    <h1>{{ playerStats.stompWonCount || 0 }}</h1>
+                    <p>{{ playerStats.stompWonCount || 0 }}</p>
                     <p>{{ (playerStats.stompWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
                 </div>
             </div>
