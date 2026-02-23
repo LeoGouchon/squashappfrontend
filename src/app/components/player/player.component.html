@@ -28,6 +28,7 @@
                         </div>
                         <p class="first-value">{{ playerStats.totalMatches }}</p>
                     </div>
+
                     <div class="single-stat">
                         <div class="title-with-description">
                             <p class="title-value">.% Victoire</p>
@@ -41,6 +42,22 @@
                                 {{ playerStats.wins }} / <p-badge severity="danger"/>
                                 {{ playerStats.losses }}</p>
                             </span>
+                    </div>
+
+                    <div class="single-stat">
+                        <div class="title-with-description">
+                            <p class="title-value">Score moyen</p>
+                            <p class="description">si vous perdez</p>
+                        </div>
+                        <p class="first-value">{{ playerStats.averagePlayerLostScore.toFixed(2) || 0 }}</p>
+                    </div>
+
+                    <div class="single-stat">
+                        <div class="title-with-description">
+                            <p class="title-value">Score moyen adverse</p>
+                            <p class="description">si vous gagnez</p>
+                        </div>
+                        <p class="first-value">{{ playerStats.averageOpponentLostScore.toFixed(2) || 0 }}</p>
                     </div>
                 </div>
             </div>
@@ -224,8 +241,6 @@
                 </p-accordion>
             </div>
         </p-fluid>
-        <span><small>Moy. points de l'adversaire lors d'une victoire: {{ playerStats.averageOpponentLostScore.toFixed(2) || 0 }}</small></span>
-        <span><small>Moy. points de lors d'une défaite: {{ playerStats.averagePlayerLostScore.toFixed(2) || 0 }}</small></span>
     } @else if (!playerStats && !isLoading) {
         <p-message severity="secondary" size="large">
             Oops, pas de statistiques pour ce joueur
