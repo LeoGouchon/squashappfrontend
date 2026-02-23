@@ -43,7 +43,6 @@
 .stats-wrapper-lines {
     display: flex;
     flex-direction: row;
-    gap: 16px;
     flex-wrap: wrap;
 }
 
@@ -68,6 +67,7 @@
 .stats-content {
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
     align-items: baseline;
     padding: 8px;
     gap: 16px;
