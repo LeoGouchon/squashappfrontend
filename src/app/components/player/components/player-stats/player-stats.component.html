@@ -3,15 +3,15 @@
         <p-tag class="score-tag">Statistiques globales</p-tag>
         <div class="stats-content">
             <div class="single-stat">
-                <h2 class="player-name">Total match</h2>
-                <h1 class="player-score">{{ stats.totalMatches }}</h1>
+                <h2 class="title-value">Total match</h2>
+                <h1 class="first-value">{{ stats.totalMatches }}</h1>
             </div>
             <div class="single-stat">
-                <h2 class="player-name">.% Victoire</h2>
+                <h2 class="title-value">.% Victoire</h2>
                 <span>
-                        <h1 class="player-score">{{ (stats.wins / stats.totalMatches * 100).toFixed(2) || 0 }}
+                        <h1 class="first-value">{{ (stats.wins / stats.totalMatches * 100).toFixed(2) || 0 }}
                             %</h1>
-                            <p class="win-loss-description"><p-badge severity="success"/>
+                            <p class="secondary-value"><p-badge severity="success"/>
                                 {{ stats.wins }} / <p-badge severity="danger"/>
                                 {{ stats.losses }}</p>
                             </span>
@@ -83,15 +83,15 @@
                                     <p-tag class="score-tag">Statistiques globales</p-tag>
                                     <div class="stats-content small">
                                         <div class="single-stat small">
-                                            <h3 class="player-name small">Total match</h3>
-                                            <h2 class="player-score small">{{ againststats.totalMatches }}</h2>
+                                            <h3 class="title-value small">Total match</h3>
+                                            <h2 class="first-value small">{{ againststats.totalMatches }}</h2>
                                         </div>
                                         <div class="single-stat small">
-                                            <h3 class="player-name small">.% Victoire</h3>
+                                            <h3 class="title-value small">.% Victoire</h3>
                                             <span class="single-stat-value small">
-                                                    <h2 class="player-score small">{{ (againststats.wins / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                    <h2 class="first-value small">{{ (againststats.wins / againststats.totalMatches * 100).toFixed(2) || 0 }}
                                                         %</h2>
-                                                    <p class="win-loss-description small"><p-badge severity="success"/>
+                                                    <p class="secondary-value small"><p-badge severity="success"/>
                                                         {{ againststats.wins }} / <p-badge severity="danger"/>
                                                         {{ againststats.losses }}</p>
                                                 </span>
@@ -107,7 +107,7 @@
                                         </div>
                                         <p class="secondary-value small">{{ (againststats.closeWonCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
                                             %</p>
-                                        <h2 class="main-value small">{{ againststats.closeWonCount || 0 }}</h2>
+                                        <h2 class="secondary-value small">{{ againststats.closeWonCount || 0 }}</h2>
                                     </div>
                                     <div class="stats-content single-line">
                                         <div class="title-with-description">
@@ -116,7 +116,7 @@
                                         </div>
                                         <p class="secondary-value small">{{ (againststats.stompWonCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
                                             %</p>
-                                        <h2 class="main-value small">{{ againststats.stompWonCount || 0 }}</h2>
+                                        <h2 class="secondary-value small">{{ againststats.stompWonCount || 0 }}</h2>
                                     </div>
                                 </div>
                                 <div class="stats-info red">
@@ -128,7 +128,7 @@
                                         </div>
                                         <p class="secondary-value small">{{ (againststats.closeLostCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
                                             %</p>
-                                        <h2 class="main-value small">{{ againststats.closeLostCount || 0 }}</h2>
+                                        <h2 class="secondary-value small">{{ againststats.closeLostCount || 0 }}</h2>
                                     </div>
                                     <div class="stats-content single-line">
                                         <div class="title-with-description">
@@ -137,7 +137,7 @@
                                         </div>
                                         <p class="secondary-value small">{{ (againststats.stompLostCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
                                             %</p>
-                                        <h2 class="main-value small">{{ againststats.stompLostCount || 0 }}</h2>
+                                        <h2 class="secondary-value small">{{ againststats.stompLostCount || 0 }}</h2>
                                     </div>
                                 </div>
                             </p-fluid>

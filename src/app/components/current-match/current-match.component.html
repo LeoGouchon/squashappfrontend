@@ -2,12 +2,12 @@
     <div class="score-field">
         <div class="player-info a-background">
             <p-tag class="score-tag">JOUEUR A</p-tag>
-            <h2 class="player-name">{{ playerA?.firstname }}</h2>
+            <h2 class="title-value">{{ playerA?.firstname }}</h2>
             <h1 class="player-score">{{ matchService.getPlayerScoreA() }}</h1>
         </div>
         <div class="player-info b-background">
             <p-tag class="score-tag" severity="secondary">JOUEUR B</p-tag>
-            <h2 class="player-name">{{ playerB?.firstname }}</h2>
+            <h2 class="title-value">{{ playerB?.firstname }}</h2>
             <h1 class="player-score">{{ matchService.getPlayerScoreB() }}</h1>
         </div>
     </div>
