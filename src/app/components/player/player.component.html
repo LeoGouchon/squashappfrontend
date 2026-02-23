@@ -49,28 +49,36 @@
         <p-fluid class="stats-wrapper-lines">
 
                 <div class="stats-content">
-                    <div class="single-stat">
-                        <div class="title-with-description">
-                            <p class="title-value">Victoire écrasante</p>
-                            <p class="description">≥ 7 pts d'écarts</p>
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-green-400)" [showValue]="false" [value]="(playerStats.stompWonCount / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
+                        <div class="single-stat">
+                            <div class="title-with-description">
+                                <p class="title-value">Victoire écrasante</p>
+                                <p class="description">≥ 7 pts d'écarts</p>
+                            </div>
+                            <span>
+                                <p class="first-value">{{ (playerStats.stompWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                                <p class="secondary-value">{{ playerStats.stompWonCount || 0 }}</p>
+                            </span>
                         </div>
-                        <span>
-                            <p class="first-value">{{ (playerStats.stompWonCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
-                            <p class="secondary-value">{{ playerStats.stompWonCount || 0 }}</p>
-                        </span>
                     </div>
 
-                    <div class="single-stat">
-                        <div class="title-with-description">
-                            <p class="title-value">Victoire</p>
-                            <p class="blank"></p>
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-green-400)" [showValue]="false" [value]="((playerStats.wins - playerStats.stompWonCount - playerStats.closeWonCount) / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
+                        <div class="single-stat">
+                            <div class="title-with-description">
+                                <p class="title-value">Victoire</p>
+                                <p class="blank"></p>
+                            </div>
+                            <span>
+                                <p class="first-value">{{ ((playerStats.wins - playerStats.stompWonCount - playerStats.closeWonCount) / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                                <p class="secondary-value">{{ (playerStats.wins - playerStats.stompWonCount - playerStats.closeWonCount) || 0 }}</p>
+                            </span>
                         </div>
-                        <span>
-                            <p class="first-value">{{ ((playerStats.wins - playerStats.stompWonCount - playerStats.closeWonCount) / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
-                            <p class="secondary-value">{{ playerStats.wins || 0 }}</p>
-                        </span>
                     </div>
 
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-green-400)" [showValue]="false" [value]="(playerStats.closeWonCount / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
                     <div class="single-stat">
                         <div class="title-with-description">
                             <p class="title-value">Victoire serrée</p>
@@ -83,7 +91,10 @@
                             <p class="secondary-value">{{ playerStats.closeWonCount || 0 }}</p>
                         </span>
                     </div>
+                    </div>
 
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-red-400)" [showValue]="false" [value]="(playerStats.closeLostCount / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
                     <div class="single-stat">
                         <div class="title-with-description">
                             <p class="title-value">Défaite serrée</p>
@@ -94,7 +105,10 @@
                             <p class="secondary-value">{{ playerStats.closeLostCount || 0 }}</p>
                         </span>
                     </div>
+                    </div>
 
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-red-400)" [showValue]="false" [value]="((playerStats.losses - playerStats.stompLostCount - playerStats.closeLostCount) / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
                     <div class="single-stat">
                         <div class="title-with-description">
                             <p class="title-value">Défaite</p>
@@ -105,16 +119,20 @@
                             <p class="secondary-value">{{ (playerStats.losses - playerStats.stompLostCount - playerStats.closeLostCount) || 0 }}</p>
                         </span>
                     </div>
+                    </div>
 
-                    <div class="single-stat">
-                        <div class="title-with-description">
-                            <p class="title-value">Défaite écrasante</p>
-                            <p class="description">≥ 7 pts d'écarts</p>
+                    <div class="stat-with-progress-bar">
+                        <p-progressbar color="var(--p-red-400)" [showValue]="false" [value]="(playerStats.stompLostCount / playerStats.totalMatches * 100).toFixed(2) || 0" class="progress-bar"></p-progressbar>
+                        <div class="single-stat">
+                            <div class="title-with-description">
+                                <p class="title-value">Défaite écrasante</p>
+                                <p class="description">≥ 7 pts d'écarts</p>
+                            </div>
+                            <span>
+                                <p class="first-value">{{ (playerStats.stompLostCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
+                                <p class="secondary-value">{{ playerStats.stompLostCount || 0 }}</p>
+                            </span>
                         </div>
-                        <span>
-                            <p class="first-value">{{ (playerStats.stompLostCount / playerStats.totalMatches * 100).toFixed(2) || 0 }}%</p>
-                            <p class="secondary-value">{{ playerStats.stompLostCount || 0 }}</p>
-                        </span>
                     </div>
 
                 </div>

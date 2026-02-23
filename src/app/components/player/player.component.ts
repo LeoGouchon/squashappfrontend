@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {OverallStats, PlayerStats, StatsAgainstOpponent, YearlyStats} from '../../types/player-stats.type';
+import {PlayerStats, StatsAgainstOpponent} from '../../types/player-stats.type';
 import {ApiMatchInterface} from '../../services/api-match/api-match.interface';
 import {ApiMatchService} from '../../services/api-match/api-match.service';
 import {Fluid} from 'primeng/fluid';
@@ -12,10 +12,11 @@ import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'prim
 import {NgForOf} from '@angular/common';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {PlayerStatsComponent} from './components/player-stats/player-stats.component';
+import {ProgressBar} from 'primeng/progressbar';
 
 @Component({
     selector: 'app-player',
-    imports: [Fluid, Message, Tag, Badge, Divider, AccordionContent, AccordionHeader, AccordionPanel, NgForOf, Accordion, Tabs, TabList, Tab, TabPanels, TabPanel, PlayerStatsComponent],
+    imports: [Fluid, Message, Tag, Badge, Divider, AccordionContent, AccordionHeader, AccordionPanel, NgForOf, Accordion, Tabs, TabList, Tab, TabPanels, TabPanel, PlayerStatsComponent, ProgressBar],
     providers: [
         {provide: 'ApiMatchInterface', useClass: ApiMatchService},
     ],

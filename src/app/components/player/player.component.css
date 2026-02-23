@@ -74,6 +74,23 @@
     flex-direction: column;
     margin: 0;
 
+    > .stat-with-progress-bar {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 4px;
+        --p-progressbar-height: 10px;
+        --p-progressbar-border-radius: 2px;
+
+        > .single-stat {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    }
+
     > .single-stat {
         display: flex;
         flex-direction: row;
@@ -121,4 +138,8 @@
     text-wrap: nowrap;
     text-align: right;
     margin: 0;
+}
+
+.progress-bar {
+    width: 100%;
 }
