@@ -95,6 +95,7 @@
                 display: inline-flex;
                 flex-direction: row-reverse;
                 gap: 4px;
+                align-items: baseline;
             }
         }
     }
