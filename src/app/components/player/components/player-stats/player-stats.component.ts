@@ -6,6 +6,7 @@ import {Divider} from 'primeng/divider';
 import {Fluid} from 'primeng/fluid';
 import {NgForOf, NgIf} from '@angular/common';
 import {Tag} from 'primeng/tag';
+import {ProgressBar} from 'primeng/progressbar';
 
 @Component({
   selector: 'app-player-stats',
@@ -19,7 +20,8 @@ import {Tag} from 'primeng/tag';
         Fluid,
         NgForOf,
         Tag,
-        NgIf
+        NgIf,
+        ProgressBar
     ],
   templateUrl: './player-stats.component.html',
   styleUrl: './player-stats.component.css'
