@@ -1,0 +1,255 @@
+<div class="main-wrapper">
+    <p-fluid class="stats-wrapper-lines">
+        <div class="stats-info">
+            <p-tag class="score-tag">Statistiques globales</p-tag>
+            <div class="stats-content">
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Total match</p>
+                    </div>
+                    <p class="first-value">{{ stats.totalMatches }}</p>
+                </div>
+
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">% Victoire</p>
+                        <p class="blank"></p>
+                    </div>
+                    <span>
+                            <p class="first-value">
+                                {{ (stats.wins / stats.totalMatches * 100).toFixed(2) || 0 }}%
+                            </p>
+                            <p class="secondary-value"><p-badge severity="success"/>
+                                {{ stats.wins }} / <p-badge severity="danger"/>
+                                {{ stats.losses }}</p>
+                            </span>
+                </div>
+
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Score moyen</p>
+                        <p class="description">quand vous perdez</p>
+                    </div>
+                    <span>
+                            <p class="first-value">{{ stats.averagePlayerLostScore.toFixed(2) || 0 }}</p>
+                            <p class="blank"></p>
+                        </span>
+                </div>
+
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Score moyen adverse</p>
+                        <p class="description">quand vous gagnez</p>
+                    </div>
+                    <span>
+                            <p class="first-value">{{ stats.averageOpponentLostScore.toFixed(2) || 0 }}</p>
+                            <p class="blank"></p>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </p-fluid>
+    <p-fluid class="stats-wrapper-lines">
+        <div class="stats-content">
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-green-400)" [showValue]="false"
+                               [value]="(stats.stompWonCount / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Victoire écrasante</p>
+                        <p class="description">≥ 7 pts d'écarts</p>
+                    </div>
+                    <span>
+                                <p class="first-value">{{ (stats.stompWonCount / stats.totalMatches * 100).toFixed(2) || 0 }}
+                                    %</p>
+                                <p class="secondary-value">{{ stats.stompWonCount || 0 }}</p>
+                            </span>
+                </div>
+            </div>
+
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-green-400)" [showValue]="false"
+                               [value]="((stats.wins - stats.stompWonCount - stats.closeWonCount) / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Victoire</p>
+                        <p class="blank"></p>
+                    </div>
+                    <span>
+                                <p class="first-value">{{ ((stats.wins - stats.stompWonCount - stats.closeWonCount) / stats.totalMatches * 100).toFixed(2) || 0 }}
+                                    %</p>
+                                <p class="secondary-value">{{ (stats.wins - stats.stompWonCount - stats.closeWonCount) || 0 }}</p>
+                            </span>
+                </div>
+            </div>
+
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-green-400)" [showValue]="false"
+                               [value]="(stats.closeWonCount / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Victoire serrée</p>
+                        <p class="description">≤ 2 pts d'écarts</p>
+                    </div>
+                    <span>
+                            <p class="first-value">
+                                {{ (stats.closeWonCount / stats.totalMatches * 100).toFixed(2) || 0 }}%
+                            </p>
+                            <p class="secondary-value">{{ stats.closeWonCount || 0 }}</p>
+                        </span>
+                </div>
+            </div>
+
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-red-400)" [showValue]="false"
+                               [value]="(stats.closeLostCount / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Défaite serrée</p>
+                        <p class="description">≤ 2 pts d'écarts</p>
+                    </div>
+                    <span>
+                            <p class="first-value">{{ (stats.closeLostCount / stats.totalMatches * 100).toFixed(2) || 0 }}
+                                %</p>
+                            <p class="secondary-value">{{ stats.closeLostCount || 0 }}</p>
+                        </span>
+                </div>
+            </div>
+
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-red-400)" [showValue]="false"
+                               [value]="((stats.losses - stats.stompLostCount - stats.closeLostCount) / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Défaite</p>
+                        <p class="blank"></p>
+                    </div>
+                    <span>
+                            <p class="first-value">{{ ((stats.losses - stats.stompLostCount - stats.closeLostCount) / stats.totalMatches * 100).toFixed(2) || 0 }}
+                                %</p>
+                            <p class="secondary-value">{{ (stats.losses - stats.stompLostCount - stats.closeLostCount) || 0 }}</p>
+                        </span>
+                </div>
+            </div>
+
+            <div class="stat-with-progress-bar">
+                <p-progressbar color="var(--p-red-400)" [showValue]="false"
+                               [value]="(stats.stompLostCount / stats.totalMatches * 100).toFixed(2) || 0"
+                               class="progress-bar"></p-progressbar>
+                <div class="single-stat">
+                    <div class="title-with-description">
+                        <p class="title-value">Défaite écrasante</p>
+                        <p class="description">≥ 7 pts d'écarts</p>
+                    </div>
+                    <span>
+                                <p class="first-value">{{ (stats.stompLostCount / stats.totalMatches * 100).toFixed(2) || 0 }}
+                                    %</p>
+                                <p class="secondary-value">{{ stats.stompLostCount || 0 }}</p>
+                            </span>
+                </div>
+            </div>
+
+        </div>
+    </p-fluid>
+    <ng-container *ngIf="hasOpponentStats(stats) && stats.statsAgainstOpponents.length > 0">
+        <p-fluid class="stats-wrapper-lines">
+            <p-divider/>
+            <div class="stats-info">
+                <p-tag class="score-tag">Statistiques contre chaque adversaire</p-tag>
+            </div>
+        </p-fluid>
+        <p-fluid class="stats-wrapper-lines">
+            <div class="stats-info">
+                <p-accordion [(value)]="activeIndexes" (valueChange)="onAccordionChange($event)" [multiple]="true">
+                    <ng-container
+                        *ngFor="let againststats of stats.statsAgainstOpponents; let i = index; trackBy: trackByPlayer">
+                        <p-accordion-panel [value]="i">
+                            <p-accordion-header>
+                                {{ againststats.opponentPlayer.firstname }} {{ againststats.opponentPlayer.lastname }}
+                            </p-accordion-header>
+                            <p-accordion-content>
+                                <p-fluid class="stats-wrapper-lines">
+                                    <p-divider/>
+                                    <div class="stats-content">
+                                        <div class="single-stat">
+                                            <p class="title-value">Total match</p>
+                                            <p class="first-value">{{ againststats.totalMatches }}</p>
+                                        </div>
+                                        <div class="single-stat">
+                                            <div class="title-with-description">
+                                                <p class="title-value small">% Victoire</p>
+                                                <p class="blank"></p>
+                                            </div>
+                                            <span class="single-stat-value">
+                                                    <p class="first-value small">{{ (againststats.wins / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                        %</p>
+                                                    <p class="secondary-value small"><p-badge severity="success"/>
+                                                        {{ againststats.wins }} / <p-badge severity="danger"/>
+                                                        {{ againststats.losses }}</p>
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <p-divider/>
+                                    <div class="stats-content green">
+                                        <div class="single-stat">
+                                            <div class="title-with-description">
+                                                <p>Victoire écrasant</p>
+                                                <p class="description">≥ 7 pts d'écarts</p>
+                                            </div>
+                                            <span>
+                                                <p class="first-value">{{ (againststats.stompWonCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                    %</p>
+                                                <p class="secondary-value">{{ againststats.stompWonCount || 0 }}</p>
+                                            </span>
+                                        </div>
+
+                                        <div class="single-stat">
+                                            <div class="title-with-description">
+                                                <p>Victoire serrée</p>
+                                                <p class="description">≤ 2 pts d'écarts</p>
+                                            </div>
+                                            <span>
+                                                <p class="first-value">{{ (againststats.closeWonCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                    %</p>
+                                                <p class="secondary-value">{{ againststats.closeWonCount || 0 }}</p>
+                                            </span>
+                                        </div>
+
+                                        <div class="single-stat">
+                                            <div class="title-with-description">
+                                                <p>Défaite serrée</p>
+                                                <p class="description">≤ 2 pts d'écarts</p>
+                                            </div>
+                                            <span>
+                                            <p class="first-value">{{ (againststats.closeLostCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                %</p>
+                                            <p class="secondary-value">{{ againststats.closeLostCount || 0 }}</p>
+                                                </span>
+                                        </div>
+
+                                        <div class="single-stat">
+                                            <div class="title-with-description">
+                                                <p>Défaite écrasante</p>
+                                                <p class="description">≥ 7 pts d'écarts</p>
+                                            </div>
+                                            <span>
+                                            <p class="first-value">{{ (againststats.stompLostCount / againststats.totalMatches * 100).toFixed(2) || 0 }}
+                                                %</p>
+                                            <p class="secondary-value">{{ againststats.stompLostCount || 0 }}</p>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </p-fluid>
+                            </p-accordion-content>
+                        </p-accordion-panel>
+                    </ng-container>
+                </p-accordion>
+            </div>
+        </p-fluid>
+    </ng-container>
+</div>
