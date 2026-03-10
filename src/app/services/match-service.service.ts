@@ -181,7 +181,7 @@ export class MatchService {
             this.gameEnded = false;
         }
         const lastPoint = this.history.pop();
-        const lastValidPoint = this.history[this.history.length - 1];
+        const lastValidPoint = this.history.at(-1);
         // Reset point
         if (lastPoint) {
             lastPoint.scorer === 'A' ? this.playerAScore-- : this.playerBScore--;
@@ -230,7 +230,7 @@ export class MatchService {
     }
 
     getLastWinnerPoint(): PlayerLetter {
-        return this.history[this.history.length - 1]?.scorer;
+        return <"A" | "B">this.history.at(-1)?.scorer;
     }
 
     isInitialization(): boolean {

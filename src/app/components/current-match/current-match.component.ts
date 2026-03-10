@@ -67,7 +67,9 @@ export class CurrentMatchComponent implements OnInit {
         scoreA: number,
         scoreB: number
     }) {
-        this.matchService.addMatchPoint({server, serviceSide, scorer, scoreA, scoreB});
+        const timestamp = Date.now();
+
+        this.matchService.addMatchPoint({server, serviceSide, scorer, scoreA, scoreB, createdAt: timestamp});
     }
 
     handleOnClickSetWinnerPoint(scorerPlayer: PlayerLetter) {

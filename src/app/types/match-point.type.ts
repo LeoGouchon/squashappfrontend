@@ -6,5 +6,6 @@ export type MatchPoint = {
     scorer: PlayerLetter,
     serviceSide: ServiceSide,
     scoreA: number,
-    scoreB: number
+    scoreB: number,
+    createdAt: number
 }
