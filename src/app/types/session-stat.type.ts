@@ -11,5 +11,14 @@ export type RankSessionStat = {
     wins: number,
     losses: number,
     totalPointsScored: number,
-    totalPointsReceived: number
+    totalPointsReceived: number,
+    statsAgainstPlayers: Array<DirectOpponentStats>
+}
+
+export type DirectOpponentStats = {
+    losses: number,
+    opponents: Player,
+    pointsReceived: number,
+    pointsScored: number,
+    wins: number,
 }
