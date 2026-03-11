@@ -1,25 +1,31 @@
 :host ::ng-deep .p-timeline-event {
-    min-height: 40px !important;
+    min-height: 38px !important;
 }
 
 :host ::ng-deep .p-timeline-event-opposite {
     all: unset;
 
-    min-width: 50px;
+    flex: 1;
     text-align: center;
     padding-right: 16px;
     padding-left: 0;
 }
 
+:host ::ng-deep .p-timeline-event-content {
+    padding-right: 0;
+}
+
 .header-wrapper {
     display: flex;
     margin-bottom: 16px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .timeline-wrapper {
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: center;
 }
 
 .player-info {
@@ -38,19 +44,107 @@
 .service-side-wrapper {
     display: flex;
     gap: 4px;
-    width: fit-content;
-    border-radius: 4px;
-    padding: 2px;
+    padding: 4px;
+    width: 20px;
+}
+
+.player-score-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .win-point {
+        font-weight: bold;
+        font-size: 1.175em;
+    }
+
+    .lose-point {
+        font-size: 1.175em;
+    }
+}
+
+.timestamp {
+    font-size: 0.875em;
+    opacity: 0.7;
 }
 
 .point-content-wrapper {
     display: flex;
     gap: 4px;
     align-items: center;
+    padding: 0 4px;
+
+    &.winner {
+        background: var(--p-surface-800);
+        border-radius: 8px;
+    }
+}
+
+.left-side {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    align-items: flex-start;
+}
+
+.right-side {
+    justify-content: flex-start;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
 }
 
 .content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.single-point-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 16px;
+    border: 1px solid var(--p-surface-800);
+    border-radius: 12px;
+    background: inherit;
+}
+
+.single-point-score {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.single-point-label,
+.empty-state {
+    color: var(--p-text-muted-color);
+    text-align: center;
+}
+
+.left-circle {
+    margin-top: 4px;
+    width: 12px;
+    height: 12px;
+    mask-image: linear-gradient(to right, black 50%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to right, black 50%, transparent 50%);
+
+    .hidden {
+        opacity: 0;
+    }
+}
+
+.right-circle {
+    margin-top: 4px;
+    width: 12px;
+    height: 12px;
+    mask-image: linear-gradient(to left, black 50%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to left, black 50%, transparent 50%);
+
+    .hidden {
+        opacity: 0;
+    }
 }
