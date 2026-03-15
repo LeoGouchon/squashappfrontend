@@ -7,22 +7,16 @@
         @for (playerSession of sortedRank; track playerSession; let index = $index) {
             <p-fluid class="wrapper-horizontal full-width">
                 <p-tag
-                    class="full-width"
+                    [class]="'player-tag ' + (index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : 'other')"
                     [severity]="index === 0 ? 'success' : index === 1 ? 'warn' : 'danger'"
                     [value]="(index + 1).toString() + ' - ' + playerSession.player.firstname"
                 />
-                <div class="wrapper-horizontal full-width">
-                    <p-tag
-                        class="full-width"
-                        severity="secondary"
-                        [value]="playerSession.wins.toString() + 'w' + '/' + playerSession.losses.toString() + 'l'"
-                    />
-                    <p-tag
-                        class="full-width secondary-text-color"
-                        severity="secondary"
-                        [value]="playerSession.totalPointsScored.toString() + '/' + playerSession.totalPointsReceived.toString()"
-                    />
-                </div>
+                <p class="matches">
+                    {{ playerSession.wins.toString() + 'w' + '/' + playerSession.losses.toString() + 'l' }}
+                </p>
+                <small class="points">
+                    {{ playerSession.totalPointsScored.toString() + '/' + playerSession.totalPointsReceived.toString() }}
+                </small>
             </p-fluid>
         }
     </p-fluid>

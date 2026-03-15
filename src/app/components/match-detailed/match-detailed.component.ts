@@ -6,16 +6,13 @@ import {ApiMatchService} from '../../services/api-match/api-match.service';
 import {Fluid} from 'primeng/fluid';
 import {Button} from 'primeng/button';
 import {Timeline} from 'primeng/timeline';
-import {NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
-import {Player} from '../../types/player.type';
+import {NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {MatchPoint} from '../../types/match-point.type';
-import {Chip} from 'primeng/chip';
 import {Badge} from 'primeng/badge';
 import {Tag} from 'primeng/tag';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {TableModule} from 'primeng/table';
 import {ConfirmationService} from 'primeng/api';
-import {StyleClass} from 'primeng/styleclass';
 
 @Component({
     selector: 'app-match-detailed',
@@ -23,7 +20,6 @@ import {StyleClass} from 'primeng/styleclass';
         Fluid,
         Button,
         Timeline,
-        NgIf,
         NgClass,
         Badge,
         Tag,
@@ -32,7 +28,6 @@ import {StyleClass} from 'primeng/styleclass';
         NgSwitchCase,
         NgSwitch,
         NgSwitchDefault,
-        StyleClass
     ],
     providers: [
         {provide: 'ApiMatchInterface', useClass: ApiMatchService},

@@ -21,9 +21,7 @@ import {AppRoutes} from '../../../../AppRoutes';
         PrimeTemplate,
         Skeleton,
         TableModule,
-        Button,
         ConfirmDialog,
-        NgIf
     ],
     providers: [ConfirmationService],
     templateUrl: './match-list.component.html',

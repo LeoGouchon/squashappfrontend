@@ -29,7 +29,7 @@ import {AccordionHeaderComponent} from './components/accordion-header/accordion-
 })
 export class HistoricComponent implements OnInit {
     protected sessionStats: SessionStat[] = [];
-    private readonly pagination: PaginatedRequest = {page: 0, size: 50};
+    private readonly pagination: PaginatedRequest = {page: 0, size: 10};
     protected isDateLoading: boolean = false;
 
     protected activeIndexes: number[] = [0];
