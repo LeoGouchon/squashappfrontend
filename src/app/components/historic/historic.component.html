@@ -14,3 +14,16 @@
     </ng-container>
 </p-accordion>
 
+@if (hasMoreSessions) {
+    <div class="load-more-container">
+        <p-button
+            size="small"
+            severity="secondary"
+            (click)="loadMoreSessions()"
+            (keydown.enter)="loadMoreSessions()"
+            [disabled]="isDateLoading || isLoadingMore"
+        >
+            {{ isLoadingMore ? 'Chargement...' : 'Charger plus...' }}
+        </p-button>
+    </div>
+}
