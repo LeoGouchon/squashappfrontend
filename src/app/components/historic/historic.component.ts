@@ -8,6 +8,8 @@ import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'prim
 import {MatchListComponent} from './components/match-list/match-list.component';
 import {SessionStat} from '../../types/session-stat.type';
 import {AccordionHeaderComponent} from './components/accordion-header/accordion-header.component';
+import {finalize} from 'rxjs';
+import {Button} from 'primeng/button';
 
 @Component({
     selector: 'app-historic',
@@ -20,6 +22,7 @@ import {AccordionHeaderComponent} from './components/accordion-header/accordion-
         AccordionContent,
         MatchListComponent,
         AccordionHeaderComponent,
+        Button,
     ],
     templateUrl: './historic.component.html',
     styleUrl: './historic.component.css',
@@ -29,8 +32,11 @@ import {AccordionHeaderComponent} from './components/accordion-header/accordion-
 })
 export class HistoricComponent implements OnInit {
     protected sessionStats: SessionStat[] = [];
-    private readonly pagination: PaginatedRequest = {page: 0, size: 50};
+    private readonly pageSize = 10;
     protected isDateLoading: boolean = false;
+    protected isLoadingMore: boolean = false;
+    protected hasMoreSessions: boolean = true;
+    private currentPage = 0;
 
     protected activeIndexes: number[] = [0];
     protected loadedPanels: Set<number> = new Set([0]);
@@ -41,13 +47,7 @@ export class HistoricComponent implements OnInit {
     };
 
     ngOnInit() {
-        this.isDateLoading = true;
-        this.apiMatchService.getSessionStats(this.pagination).subscribe(
-            session => {
-                this.sessionStats = [...session.content];
-                this.isDateLoading = false;
-            }
-        );
+        this.loadSessions();
     }
 
     protected trackBySession(index: number, session: SessionStat): SessionStat {
@@ -57,5 +57,38 @@ export class HistoricComponent implements OnInit {
     protected onAccordionChange(indexes: unknown) {
         const openIndexes = Array.isArray(indexes) ? indexes : [indexes];
         openIndexes.forEach(i => this.loadedPanels.add(i));
+    }
+
+    protected loadMoreSessions() {
+        if (!this.hasMoreSessions || this.isDateLoading || this.isLoadingMore) {
+            return;
+        }
+
+        this.loadSessions(true);
+    }
+
+    private loadSessions(isLoadMore: boolean = false) {
+        if (isLoadMore) {
+            this.isLoadingMore = true;
+        } else {
+            this.isDateLoading = true;
+        }
+
+        const pagination: PaginatedRequest = {page: this.currentPage, size: this.pageSize};
+        this.apiMatchService.getSessionStats(pagination)
+            .pipe(finalize(() => {
+                if (isLoadMore) {
+                    this.isLoadingMore = false;
+                } else {
+                    this.isDateLoading = false;
+                }
+            }))
+            .subscribe(session => {
+                this.sessionStats = isLoadMore
+                    ? [...this.sessionStats, ...session.content]
+                    : [...session.content];
+                this.hasMoreSessions = this.currentPage + 1 < session.totalPages;
+                this.currentPage += 1;
+            });
     }
 }
