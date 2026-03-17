@@ -48,6 +48,7 @@ export class NavigationService implements NavigationServiceInterface {
             void this.router.navigate(['/']);
         } else if (this.matchService.hasMatchInProgress() && this.router.url !== "/" + AppRoutes.NEW_MATCH) {
             this.confirmationService.confirm({
+                key: 'app-confirm-dialog',
                 message: 'Un match est en cours. Voulez-vous vraiment quitter ?',
                 header: 'Arrêter l\'arbitrage ?',
                 acceptButtonProps: {

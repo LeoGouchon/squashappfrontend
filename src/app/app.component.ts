@@ -8,10 +8,11 @@ import {NavigationService} from './services/navigation.service';
 import {catchError, of, retry, timeout, timer} from 'rxjs';
 import {ProgressSpinner} from 'primeng/progressspinner';
 import {Fluid} from 'primeng/fluid';
+import {ConfirmDialog} from 'primeng/confirmdialog';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, ProgressSpinner, Fluid],
+    imports: [RouterOutlet, DockModule, NavigationComponent, Panel, ProgressSpinner, Fluid, ConfirmDialog],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

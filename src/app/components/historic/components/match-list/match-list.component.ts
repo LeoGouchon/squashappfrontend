@@ -8,8 +8,6 @@ import {Match} from '../../../../types/match.type';
 import {PaginatedRequest} from '../../../../types/pagination.type';
 import {ApiMatchInterface} from '../../../../services/api-match/api-match.interface';
 import {SessionStat} from '../../../../types/session-stat.type';
-import {Button} from 'primeng/button';
-import {ConfirmDialog} from 'primeng/confirmdialog';
 import {Router} from '@angular/router';
 import {AppRoutes} from '../../../../AppRoutes';
 
@@ -21,9 +19,7 @@ import {AppRoutes} from '../../../../AppRoutes';
         PrimeTemplate,
         Skeleton,
         TableModule,
-        ConfirmDialog,
     ],
-    providers: [ConfirmationService],
     templateUrl: './match-list.component.html',
     styleUrl: './match-list.component.css',
     encapsulation: ViewEncapsulation.None
@@ -50,21 +46,6 @@ export class MatchListComponent implements OnInit {
                 this.isMatchesLoading = false;
             }
         )
-    }
-
-    onDeleteMatch(matchId: string) {
-        this.confirmationService.confirm({
-            message: 'Cette action est irréversible.',
-            header: 'Supprimer le match ? ',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.apiMatchService.deleteMatch(matchId).subscribe(
-                    () => {
-                        this.matches = this.matches.filter(match => match.id !== matchId);
-                    }
-                )
-            }
-        });
     }
 
     onMatchClick(match: Match) {

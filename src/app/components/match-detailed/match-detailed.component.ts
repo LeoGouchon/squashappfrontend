@@ -10,7 +10,6 @@ import {NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common'
 import {MatchPoint} from '../../types/match-point.type';
 import {Badge} from 'primeng/badge';
 import {Tag} from 'primeng/tag';
-import {ConfirmDialog} from 'primeng/confirmdialog';
 import {TableModule} from 'primeng/table';
 import {ConfirmationService} from 'primeng/api';
 
@@ -23,7 +22,6 @@ import {ConfirmationService} from 'primeng/api';
         NgClass,
         Badge,
         Tag,
-        ConfirmDialog,
         TableModule,
         NgSwitchCase,
         NgSwitch,
@@ -31,7 +29,6 @@ import {ConfirmationService} from 'primeng/api';
     ],
     providers: [
         {provide: 'ApiMatchInterface', useClass: ApiMatchService},
-        ConfirmationService,
     ],
     templateUrl: './match-detailed.component.html',
     styleUrl: './match-detailed.component.css'
@@ -103,9 +100,17 @@ export class MatchDetailedComponent implements OnInit {
 
     onDeleteMatch() {
         this.confirmationService.confirm({
+            key: 'app-confirm-dialog',
             message: 'Cette action est irréversible.',
             header: 'Supprimer le match ? ',
-            icon: 'pi pi-exclamation-triangle',
+            acceptLabel: 'Supprimer',
+            acceptButtonProps: {
+                severity: 'danger'
+            },
+            rejectButtonProps: {
+                severity: 'secondary'
+            },
+            rejectLabel: 'Annuler',
             accept: () => {
                 this.apiMatchService.deleteMatch(this.matchId!).subscribe(
                     () => {
@@ -134,6 +139,4 @@ export class MatchDetailedComponent implements OnInit {
 
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
-
-    protected readonly Date = Date;
 }
