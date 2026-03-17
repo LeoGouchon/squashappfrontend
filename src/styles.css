@@ -47,3 +47,8 @@ h4 {
 .p-panelmenu {
     gap: 0 !important;
 }
+
+.navigation-confirm-dialog {
+    margin: 0 1rem 40%;
+
+}

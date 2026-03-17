@@ -43,21 +43,28 @@ export class NavigationService implements NavigationServiceInterface {
 
     navigateTo(route: AppRoutes) {
         if (!this.tokenService.getAccessToken()) {
-            this.router.navigate([AppRoutes.LOGIN]);
+            void this.router.navigate([AppRoutes.LOGIN]);
         } else if (this.tokenService.getAccessToken() && this.router.url === "/" + AppRoutes.LOGIN) {
-            this.router.navigate(['/']);
+            void this.router.navigate(['/']);
         } else if (this.matchService.hasMatchInProgress() && this.router.url !== "/" + AppRoutes.NEW_MATCH) {
             this.confirmationService.confirm({
                 message: 'Un match est en cours. Voulez-vous vraiment quitter ?',
-                header: 'Confirmation',
-                icon: 'pi pi-exclamation-triangle',
+                header: 'Arrêter l\'arbitrage ?',
+                acceptButtonProps: {
+                    severity: 'danger',
+                },
+                acceptLabel: 'Quitter',
+                rejectLabel: 'Continuer \u00e0 arbitrer',
+                rejectButtonProps: {
+                    severity: 'secondary'
+                },
                 accept: () => {
                     this.matchService.endMatch();
-                    this.router.navigate([route]);
+                    void this.router.navigate([route]);
                 }
             });
         } else {
-            this.router.navigate([route]);
+            void this.router.navigate([route]);
         }
     }
 }
