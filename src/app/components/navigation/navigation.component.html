@@ -14,6 +14,19 @@
         <p-panelMenu [model]="items"/>
         @if (this.tokenService.getAccessToken()) {
             <p-divider/>
+            <div class="theme-menu-item">
+                <div class="theme-menu-label">
+                    <i class="pi" [class.pi-moon]="darkModeEnabled" [class.pi-sun]="!darkModeEnabled"></i>
+                    <span>{{ themeLabel }}</span>
+                </div>
+                <div class="theme-menu-switch">
+                    <p-toggleswitch
+                        [(ngModel)]="darkModeEnabled"
+                        (ngModelChange)="onThemeChange($event)"
+                        inputId="theme-switch"/>
+                </div>
+            </div>
+            <p-divider/>
             <p-panel-menu [model]="profilItems"/>
         }
         @if (this.tokenService.getIsAdmin()) {
@@ -22,4 +35,3 @@
         }
     </p-drawer>
 }
-<p-confirmdialog styleClass="navigation-confirm-dialog"></p-confirmdialog>

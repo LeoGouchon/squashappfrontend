@@ -1,6 +1,6 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
-import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MenuItem, MessageService} from 'primeng/api';
 import {NavigationService, NavigationServiceInterface} from '../../services/navigation.service';
 import {TokenService} from '../../services/token.service';
 import {Toast} from 'primeng/toast';
@@ -12,39 +12,46 @@ import {Divider} from 'primeng/divider';
 import {Drawer} from 'primeng/drawer';
 import {ApiUserService} from '../../services/api-user/api-user.service';
 import {ApiUserInterface} from '../../services/api-user/api-user.interface';
+import {ToggleSwitch} from 'primeng/toggleswitch';
+import {ThemeService} from '../../services/theme/theme.service';
 
 
 @Component({
     selector: 'app-navigation',
     imports: [
+        FormsModule,
         ReactiveFormsModule,
         Toast,
         ConfirmDialogModule,
         PanelMenu,
         Fluid,
         Divider,
-        Drawer
+        Drawer,
+        ToggleSwitch
     ],
     templateUrl: './navigation.component.html',
     styleUrl: './navigation.component.css',
     providers: [
         {provide: 'NavigationServiceInterface', useClass: NavigationService},
         {provide: 'ApiUserInterface', useClass: ApiUserService},
-        MessageService,
-        ConfirmationService
+        MessageService
     ]
 })
 export class NavigationComponent implements OnInit {
     protected displaySidebar = false;
+    protected darkModeEnabled = false;
+    protected readonly themeLabel = 'Thème';
 
     constructor(
         @Inject('NavigationServiceInterface') protected readonly navigation: NavigationServiceInterface,
         @Inject('ApiUserInterface') protected readonly apiUserService: ApiUserInterface,
         private readonly messageService: MessageService,
         protected tokenService: TokenService,
+        private readonly themeService: ThemeService
     ) {
         this.tokenService = tokenService;
         this.messageService = messageService;
+        this.darkModeEnabled = this.themeService.isDarkMode;
     }
 
     protected items: MenuItem[] | undefined;
@@ -52,9 +59,9 @@ export class NavigationComponent implements OnInit {
     protected adminItems: MenuItem[] | undefined;
 
     ngOnInit() {
+        this.darkModeEnabled = this.themeService.isDarkMode;
         this.items = [
             {
-                styleClass: "menu-item",
                 label: 'Nouveau Match',
                 icon: 'pi pi-plus',
                 command: () => {
@@ -143,7 +150,7 @@ export class NavigationComponent implements OnInit {
                 }
             },
             {
-                label: 'Deconnexion',
+                label: 'Déconnexion',
                 icon: 'pi pi-sign-out',
                 command: () => {
                     if (this.tokenService.getAccessToken()) {
@@ -177,5 +184,10 @@ export class NavigationComponent implements OnInit {
 
     toggleSidebar() {
         this.displaySidebar = !this.displaySidebar;
+    }
+
+    onThemeChange(enabled: boolean): void {
+        this.darkModeEnabled = enabled;
+        this.themeService.toggleDarkMode(enabled);
     }
 }
