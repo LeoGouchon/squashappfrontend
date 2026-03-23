@@ -1,13 +1,13 @@
 <p-fluid class="header-wrapper wrapper-vertical full-width">
     <div class="wrapper-horizontal">
         {{ sessionStat.date * 1000 | date:'dd/MM/yyyy' }}
-        <p-tag severity="secondary" [value]="sessionStat.matchCount.toString() + ' matches' "/>
+        <small>{{ sessionStat.matchCount.toString() + ' matches' }}</small>
     </div>
     <p-fluid class="ranking-wrapper wrapper-horizontal wrap full-width">
         @for (playerSession of sortedRank; track playerSession; let index = $index) {
             <p-fluid class="wrapper-horizontal full-width">
                 <p-tag
-                    [class]="'player-tag ' + (index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : 'other')"
+                    [styleClass]="'player-tag ' + (index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : 'other')"
                     [severity]="index === 0 ? 'success' : index === 1 ? 'warn' : 'danger'"
                     [value]="(index + 1).toString() + ' - ' + playerSession.player.firstname"
                 />

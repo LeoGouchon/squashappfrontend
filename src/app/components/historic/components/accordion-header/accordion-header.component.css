@@ -1,3 +1,33 @@
+:host {
+    --accordion-header-background: var(--p-surface-100);
+    --accordion-header-border: var(--p-surface-300);
+    --accordion-header-shadow: color-mix(in srgb, var(--p-surface-900) 8%, transparent);
+    --accordion-tag-first: linear-gradient(to left, transparent 10%, var(--p-green-200));
+    --accordion-tag-second: linear-gradient(to left, transparent 10%, var(--p-orange-200));
+    --accordion-tag-third: linear-gradient(to left, transparent 10%, var(--p-red-200));
+    --accordion-tag-other-bg: var(--p-surface-200);
+    --accordion-tag-other-color: var(--p-text-color);
+    --accordion-summary-tag-bg: var(--p-surface-200);
+    --accordion-summary-tag-color: var(--p-text-color);
+    --accordion-tag-text: var(--p-surface-900);
+
+    display: block;
+}
+
+:host-context(.app-dark) {
+    --accordion-header-background: var(--p-surface-800);
+    --accordion-header-border: var(--p-surface-700);
+    --accordion-header-shadow: color-mix(in srgb, var(--p-surface-0) 10%, transparent);
+    --accordion-tag-first: linear-gradient(to left, transparent 10%, var(--p-green-900));
+    --accordion-tag-second: linear-gradient(to left, transparent 10%, var(--p-orange-900));
+    --accordion-tag-third: linear-gradient(to left, transparent 10%, var(--p-red-900));
+    --accordion-tag-other-bg: var(--p-surface-700);
+    --accordion-tag-other-color: var(--p-surface-0);
+    --accordion-summary-tag-bg: var(--p-surface-700);
+    --accordion-summary-tag-color: var(--p-surface-0);
+    --accordion-tag-text: var(--p-surface-0);
+}
+
 .wrapper-vertical {
     display: flex;
     flex-direction: column;
@@ -9,6 +39,7 @@
 .wrapper-horizontal {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
 }
 
@@ -38,20 +69,31 @@
     width: 100%;
 }
 
-.player-tag {
+.player-tag.p-tag {
     width: 100%;
     display: flex;
     justify-content: left;
 
     &.first {
-        background: linear-gradient(to left, transparent 10%, var(--p-green-900));
+        background: var(--accordion-tag-first);
     }
 
     &.second {
-        background: linear-gradient(to left, transparent 10%, var(--p-orange-900));
+        background: var(--accordion-tag-second);
     }
 
     &.third {
-        background: linear-gradient(to left, transparent 10%, var(--p-red-900));
+        background: var(--accordion-tag-third);
     }
+
+    &.other {
+        background-color: var(--accordion-tag-other-bg);
+        color: var(--accordion-tag-other-color);
+    }
+}
+
+:host ::ng-deep .summary-tag.p-tag {
+    background-color: var(--accordion-summary-tag-bg);
+    color: var(--accordion-summary-tag-color);
+    border-color: transparent;
 }
