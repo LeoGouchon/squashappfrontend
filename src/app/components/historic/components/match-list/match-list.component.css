@@ -17,6 +17,10 @@ tr {
     padding: 4px;
 }
 
+.match-list-table {
+    margin-bottom: 16px;
+}
+
 .actions-wrapper {
     display: flex;
     min-width: 80px;
@@ -51,7 +55,7 @@ tr {
 .match-line-wrapper {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 10px 1fr 1fr 1fr;
     align-items: center;
 
     &.clickable {
@@ -62,4 +66,8 @@ tr {
             background-color: #ffffff12;
         }
     }
+}
+
+.row-index {
+    color: var(--p-text-muted-color);
 }

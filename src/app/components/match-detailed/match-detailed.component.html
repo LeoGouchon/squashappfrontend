@@ -1,4 +1,3 @@
-<p-confirmDialog/>
 <p-fluid class="header-wrapper">
     <p-button label="Retour" (click)="onBack()" (keydown.enter)="onBack()" variant="text" icon="pi pi-arrow-left"/>
     <p-button label="Supprimer" class="delete-button" icon="pi pi-trash" severity="danger" variant="text"
@@ -9,12 +8,12 @@
     <div class="single-point-wrapper">
         <div class="single-point-score">
             <p-tag [value]="matchDetailed?.playerA?.firstname"
-                   [severity]="matchDetailed!.finalScoreA! > matchDetailed!.finalScoreB! ? 'success' : 'danger'"/>
+                   [severity]="matchDetailed?.finalScoreA! > matchDetailed?.finalScoreB! ? 'success' : 'danger'"/>
             <span>{{ matchDetailed?.finalScoreA }}</span>
             <span>-</span>
             <span>{{ matchDetailed?.finalScoreB }}</span>
             <p-tag [value]="matchDetailed?.playerB?.firstname"
-                   [severity]="matchDetailed!.finalScoreA! > matchDetailed!.finalScoreB! ? 'danger' : 'success'"/>
+                   [severity]="matchDetailed?.finalScoreA! > matchDetailed?.finalScoreB! ? 'danger' : 'success'"/>
         </div>
     </div>
     <div *ngSwitchCase="(pointsHistory?.length || 0) === 1">
