@@ -152,6 +152,16 @@
 
 .progress-bar {
     width: 100%;
-    --p-progressbar-height: 4px;
-    --p-progressbar-border-radius: 2px;
+
+    ::ng-deep .p-metergroup {
+        gap: 0;
+    }
+
+    ::ng-deep .p-metergroup-label-list {
+        display: none;
+    }
+
+    ::ng-deep .p-metergroup-meters {
+        height: 6px;
+    }
 }

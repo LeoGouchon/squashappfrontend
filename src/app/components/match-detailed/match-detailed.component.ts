@@ -55,7 +55,6 @@ export class MatchDetailedComponent implements OnInit {
                 this.matchId = id;
                 this.apiMatchService.getMatch(id).subscribe({
                     next: (match: Match) => {
-                        console.log('Match reçu :', match);
                         this.matchDetailed = match
                         if (this.matchDetailed.pointsHistory) {
                             this.formatPointHistory()
