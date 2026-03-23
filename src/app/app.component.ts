@@ -9,6 +9,7 @@ import {catchError, of, retry, timeout, timer} from 'rxjs';
 import {ProgressSpinner} from 'primeng/progressspinner';
 import {Fluid} from 'primeng/fluid';
 import {ConfirmDialog} from 'primeng/confirmdialog';
+import {version} from '../../package.json';
 
 @Component({
     selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     protected isMobile: boolean = false;
     protected isBackendLoading: boolean = true;
     protected isBackendError: boolean = false;
+    protected version: string = version;
 
     constructor(
         private readonly primeng: PrimeNG,
@@ -89,8 +91,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     checkDevice() {
         const isMobileUA = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        const isSmallScreen = window.innerWidth < 768;
+        const isTouch = 'ontouchstart' in globalThis || navigator.maxTouchPoints > 0;
+        const isSmallScreen = globalThis.innerWidth < 768;
 
         this.isMobile = isMobileUA && isTouch && isSmallScreen;
     }
