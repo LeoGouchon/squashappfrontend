@@ -1,7 +1,7 @@
 import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Chip} from "primeng/chip";
-import {NgForOf, NgIf} from "@angular/common";
-import {ConfirmationService, PrimeTemplate} from "primeng/api";
+import {NgForOf} from "@angular/common";
+import {PrimeTemplate} from "primeng/api";
 import {Skeleton} from "primeng/skeleton";
 import {TableModule} from "primeng/table";
 import {Match} from '../../../../types/match.type';
@@ -33,7 +33,6 @@ export class MatchListComponent implements OnInit {
 
     constructor(
         @Inject('ApiMatchInterface') private readonly apiMatchService: ApiMatchInterface,
-        private readonly confirmationService: ConfirmationService,
         private readonly router: Router,
     ) {
     };

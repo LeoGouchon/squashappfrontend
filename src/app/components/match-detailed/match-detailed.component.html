@@ -8,12 +8,12 @@
     <div class="single-point-wrapper">
         <div class="single-point-score">
             <p-tag [value]="matchDetailed?.playerA?.firstname"
-                   [severity]="matchDetailed!.finalScoreA! > matchDetailed!.finalScoreB! ? 'success' : 'danger'"/>
+                   [severity]="matchDetailed?.finalScoreA! > matchDetailed?.finalScoreB! ? 'success' : 'danger'"/>
             <span>{{ matchDetailed?.finalScoreA }}</span>
             <span>-</span>
             <span>{{ matchDetailed?.finalScoreB }}</span>
             <p-tag [value]="matchDetailed?.playerB?.firstname"
-                   [severity]="matchDetailed!.finalScoreA! > matchDetailed!.finalScoreB! ? 'danger' : 'success'"/>
+                   [severity]="matchDetailed?.finalScoreA! > matchDetailed?.finalScoreB! ? 'danger' : 'success'"/>
         </div>
     </div>
     <div *ngSwitchCase="(pointsHistory?.length || 0) === 1">

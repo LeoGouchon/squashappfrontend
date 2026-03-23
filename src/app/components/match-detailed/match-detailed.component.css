@@ -1,3 +1,14 @@
+:host {
+    --match-detailed-winner-background: var(--p-surface-100);
+    --match-detailed-header-border: var(--p-surface-200);
+}
+
+:host-context(.app-dark) {
+    --match-detailed-winner-background: var(--p-surface-800);
+    --match-detailed-header-border: var(--p-surface-700);
+}
+
+
 :host ::ng-deep .p-timeline-event {
     min-height: 38px !important;
 }
@@ -74,7 +85,7 @@
     padding: 0 4px;
 
     &.winner {
-        background: var(--p-surface-800);
+        background: var(--match-detailed-winner-background);
         border-radius: 8px;
     }
 }
@@ -106,7 +117,7 @@
     justify-content: center;
     gap: 8px;
     padding: 24px 16px;
-    border: 1px solid var(--p-surface-800);
+    border: 1px solid var(--match-detailed-header-border);
     border-radius: 12px;
     background: inherit;
 }
