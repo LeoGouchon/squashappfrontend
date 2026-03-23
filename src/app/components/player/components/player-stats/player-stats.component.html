@@ -51,10 +51,13 @@
     </p-fluid>
     <p-fluid class="stats-wrapper-lines">
         <div class="stats-content">
+            <p-meter-group
+                [value]="resultMeterValues(stats)"
+                [max]="100"
+                class="progress-bar">
+            </p-meter-group>
+
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-green-400)" [showValue]="false"
-                               [value]="(stats.stompWonCount / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Victoire écrasante</p>
@@ -69,9 +72,6 @@
             </div>
 
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-green-400)" [showValue]="false"
-                               [value]="((stats.wins - stats.stompWonCount - stats.closeWonCount) / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Victoire</p>
@@ -86,9 +86,6 @@
             </div>
 
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-green-400)" [showValue]="false"
-                               [value]="(stats.closeWonCount / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Victoire serrée</p>
@@ -104,9 +101,6 @@
             </div>
 
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-red-400)" [showValue]="false"
-                               [value]="(stats.closeLostCount / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Défaite serrée</p>
@@ -121,9 +115,6 @@
             </div>
 
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-red-400)" [showValue]="false"
-                               [value]="((stats.losses - stats.stompLostCount - stats.closeLostCount) / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Défaite</p>
@@ -138,9 +129,6 @@
             </div>
 
             <div class="stat-with-progress-bar">
-                <p-progressbar color="var(--p-red-400)" [showValue]="false"
-                               [value]="(stats.stompLostCount / stats.totalMatches * 100).toFixed(2) || 0"
-                               class="progress-bar"></p-progressbar>
                 <div class="single-stat">
                     <div class="title-with-description">
                         <p class="title-value">Défaite écrasante</p>
