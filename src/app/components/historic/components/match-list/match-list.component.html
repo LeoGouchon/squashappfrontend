@@ -3,10 +3,10 @@
          [showLoader]="false"
          styleClass="match-list-table"
 >
-    <ng-template pTemplate="body" let-match let-rowIndex="rowIndex">
+    <ng-template pTemplate="body" let-match>
         <tr>
             <div class="match-line-wrapper clickable" (click)="onMatchClick(match)" (keydown.enter)="onMatchClick(match)">
-                <td class="row-index"><small>{{ rowIndex + 1 }}</small></td>
+                <td class="row-index"><small>{{ match.endTime | date:'HH:mm' }}</small></td>
                 <td class="player-a {{match.finalScoreA > match.finalScoreB ? 'winner' : ''}}">{{ match.playerA.firstname }}</td>
                 <td class="score">
                     <p-chip label="{{ match.finalScoreA }} - {{ match.finalScoreB }}"/>

@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Chip} from "primeng/chip";
-import {NgForOf} from "@angular/common";
+import {DatePipe, NgForOf} from "@angular/common";
 import {PrimeTemplate} from "primeng/api";
 import {Skeleton} from "primeng/skeleton";
 import {TableModule} from "primeng/table";
@@ -19,6 +19,7 @@ import {AppRoutes} from '../../../../AppRoutes';
         PrimeTemplate,
         Skeleton,
         TableModule,
+        DatePipe,
     ],
     templateUrl: './match-list.component.html',
     styleUrl: './match-list.component.css',
