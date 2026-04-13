@@ -11,6 +11,8 @@
         <label for="lastname">Nom</label>
     </p-floatlabel>
 
+    <p-select [options]="teams" formControlName="team" optionLabel="name" placeholder="Équipe" />
+
     <p-button
         type="submit"
         [disabled]="!formGroup.valid"

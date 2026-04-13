@@ -3,7 +3,7 @@ import {Player} from '../../types/player.type';
 import {PaginatedResponse} from '../../types/pagination.type';
 
 export interface ApiPlayerInterface {
-    createPlayer(firstname: string, lastname: string): Observable<Player>;
+    createPlayer(firstname: string, lastname: string, teamId: string): Observable<Player>;
     getPlayers(): Observable<PaginatedResponse<Player>>;
     getPlayer(id: string): Observable<Player>;
     deletePlayer(id: string): Observable<any>;
