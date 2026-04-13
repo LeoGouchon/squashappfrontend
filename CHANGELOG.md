@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/LeoGouchon/squashappfrontend/compare/v1.0.0...v1.0.1) (2026-04-13)
+
+
+### Bug Fixes
+
+* add unbreakable space for some texts ([7e18b86](https://github.com/LeoGouchon/squashappfrontend/commit/7e18b86234ce32318d6f16a4da7b1c89166a4691))
+* **admin:** team id was missing in player creation form ([d5903f9](https://github.com/LeoGouchon/squashappfrontend/commit/d5903f98bedc2aacdbf727ba8e660a9c71653a41))
+
 # 1.0.0 (2026-03-28)
 
 
