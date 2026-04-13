@@ -58,7 +58,7 @@
     @if (displayedScorerChoice()) {
         <p-fluid>
             <p-message severity="secondary">
-                {{ matchService.getServer() === 'A' ? playerA!.firstname : playerB!.firstname }} doit servir à
+                {{ matchService.getServer() === 'A' ? playerA!.firstname : playerB!.firstname }} doit servir à&nbsp;
                 <strong>{{ matchService.getServiceSide() === 'L' ? "gauche" : "droite" }}</strong>
             </p-message>
         </p-fluid>
@@ -83,9 +83,9 @@
     } @else {
         <p-fluid>
             <p-message severity="secondary">
-                {{ matchService.getServer() === 'A' ? playerB!.firstname : playerA!.firstname }} peut
-                <strong>choisir</strong> son côté de
-                service
+                {{ matchService.getServer() === 'A' ? playerB!.firstname : playerA!.firstname }} peut&nbsp;
+                <strong>choisir</strong>
+                &nbsp;son côté de service
             </p-message>
         </p-fluid>
         <p-fieldset
