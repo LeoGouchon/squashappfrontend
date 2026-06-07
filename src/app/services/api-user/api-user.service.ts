@@ -20,7 +20,11 @@ export class ApiUserService implements ApiUserInterface {
     }
 
     login(email: string, password: string) {
-        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/login', {email, password}).pipe(
+        return this.http.post<{ token: string }>(
+            this.apiUrl + '/authenticate/login',
+            {email, password},
+            {withCredentials: true}
+        ).pipe(
             timeout(this.timeoutValue),
             map(response => {
                 const accessToken = response.token;
@@ -31,7 +35,11 @@ export class ApiUserService implements ApiUserInterface {
     }
 
     logout() {
-        return this.http.post(this.apiUrl + '/authenticate/logout', {}).pipe(
+        return this.http.post(
+            this.apiUrl + '/authenticate/logout',
+            null,
+            {withCredentials: true}
+        ).pipe(
             timeout(this.timeoutValue),
             tap(_ => {
                 this.tokenService.clearToken()
@@ -41,7 +49,11 @@ export class ApiUserService implements ApiUserInterface {
     }
 
     signup(email: string, password: string, invitationToken: string) {
-        return this.http.post<{ token: string }>(this.apiUrl + '/authenticate/signup' + "?token=" + invitationToken, {email, password}).pipe(
+        return this.http.post<{ token: string }>(
+            this.apiUrl + '/authenticate/signup' + "?token=" + encodeURIComponent(invitationToken),
+            {email, password},
+            {withCredentials: true}
+        ).pipe(
             timeout(this.timeoutValue),
             tap(response => {
                 const accessToken = response.token;
