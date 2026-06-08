@@ -21,8 +21,7 @@ import {NgForOf} from '@angular/common';
         InputText,
         ReactiveFormsModule,
         Toast,
-        Select,
-        NgForOf
+        Select
     ],
     templateUrl: './add-player.component.html',
     styleUrl: './add-player.component.css',

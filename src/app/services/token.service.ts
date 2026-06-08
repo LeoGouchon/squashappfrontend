@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, firstValueFrom, Observable, timeout} from 'rxjs';
+import {BehaviorSubject, finalize, firstValueFrom, Observable, shareReplay, tap, timeout} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {User} from '../types/user.type';
@@ -16,6 +16,7 @@ export class TokenService {
 
     private isAdmin: boolean = false;
     private accessToken: string | null = null;
+    private refreshTokenRequest$: Observable<{ token: string }> | null = null;
     private user: User | null = null;
 
     constructor(private readonly http: HttpClient) {}
@@ -39,12 +40,33 @@ export class TokenService {
         return this.accessToken;
     }
 
-    clearToken(): void {
-        this.accessToken = null;
+    isRefreshingToken(): boolean {
+        return !!this.refreshTokenRequest$;
     }
 
-    refreshToken(): Observable<any> {
-        return this.http.post(this.apiUrl + '/authenticate/refresh-token', {}).pipe();
+    clearToken(): void {
+        this.accessToken = null;
+        this.accessToken$.next(null);
+        this.isAdmin = false;
+        this.user = null;
+    }
+
+    refreshToken(): Observable<{ token: string }> {
+        if (this.refreshTokenRequest$) {
+            return this.refreshTokenRequest$;
+        }
+
+        this.refreshTokenRequest$ = this.http.post<{ token: string }>(
+            this.apiUrl + '/authenticate/refresh-token',
+            null,
+            {withCredentials: true}
+        ).pipe(
+            tap(response => this.setAccessToken(response.token)),
+            finalize(() => this.refreshTokenRequest$ = null),
+            shareReplay({bufferSize: 1, refCount: false})
+        );
+
+        return this.refreshTokenRequest$;
     }
 
     getIsAdmin(): boolean {
