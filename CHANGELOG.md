@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/LeoGouchon/squashappfrontend/compare/v1.0.1...v1.0.2) (2026-06-14)
+
+
+### Bug Fixes
+
+* **auth:** store access token inside localStorage ([#20](https://github.com/LeoGouchon/squashappfrontend/issues/20)) ([54057eb](https://github.com/LeoGouchon/squashappfrontend/commit/54057ebeb95a2ec3cf3a1bf008556798c381b0cc))
+
 ## [1.0.1](https://github.com/LeoGouchon/squashappfrontend/compare/v1.0.0...v1.0.1) (2026-04-13)
 
 
