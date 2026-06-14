@@ -24,14 +24,16 @@ describe('AuthInterceptor', () => {
 
     afterEach(() => {
         httpTesting.verify();
+        localStorage.removeItem('squashapp.accessToken');
     });
 
-    it('should add and Authorization header', () => {
+    it('should add an Authorization header', () => {
         const token = 'fake-token';
-        document.cookie = `token=${token}; path=/;`;
+        localStorage.setItem('squashapp.accessToken', token);
 
         httpClient.get('/test').subscribe();
         const req = httpTesting.expectOne('/test');
         expect(req.request.withCredentials).toBeTrue();
+        expect(req.request.headers.get('Authorization')).toBe(`Bearer ${token}`);
     })
 })
