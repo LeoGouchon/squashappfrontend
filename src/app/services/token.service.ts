@@ -10,34 +10,42 @@ import {User} from '../types/user.type';
 export class TokenService {
     private readonly apiUrl = environment.apiUrl;
     private readonly timeoutValue: number = environment.timeoutValue;
+    private readonly accessTokenStorageKey = 'squashapp.accessToken';
 
-    private readonly accessToken$ = new BehaviorSubject<string | null>(null);
+    private readonly accessToken$ = new BehaviorSubject<string | null>(this.getStoredAccessToken());
     public tokenReady$ = this.accessToken$.asObservable();
 
     private isAdmin: boolean = false;
-    private accessToken: string | null = null;
     private refreshTokenRequest$: Observable<{ token: string }> | null = null;
     private user: User | null = null;
 
     constructor(private readonly http: HttpClient) {}
 
     async initAuth(): Promise<void> {
+        if (this.getAccessToken()) {
+            return;
+        }
+
         try {
-            const response = await firstValueFrom(this.refreshToken());
-            this.setAccessToken(response.token);
+            await firstValueFrom(this.refreshToken());
         } catch (error) {
-            this.setAccessToken(null);
+            this.clearToken();
             console.error(error);
         }
     }
 
     setAccessToken(token: string | null) {
-        this.accessToken = token;
+        if (token) {
+            this.storeAccessToken(token);
+        } else {
+            this.removeStoredAccessToken();
+        }
+
         this.accessToken$.next(token);
     }
 
     getAccessToken(): string | null {
-        return this.accessToken;
+        return this.getStoredAccessToken();
     }
 
     isRefreshingToken(): boolean {
@@ -45,10 +53,33 @@ export class TokenService {
     }
 
     clearToken(): void {
-        this.accessToken = null;
-        this.accessToken$.next(null);
+        this.setAccessToken(null);
         this.isAdmin = false;
         this.user = null;
+    }
+
+    private getStoredAccessToken(): string | null {
+        try {
+            return globalThis.localStorage?.getItem(this.accessTokenStorageKey) ?? null;
+        } catch {
+            return null;
+        }
+    }
+
+    private storeAccessToken(token: string): void {
+        try {
+            globalThis.localStorage?.setItem(this.accessTokenStorageKey, token);
+        } catch {
+            // Storage can be unavailable in private browsing or restricted mobile contexts.
+        }
+    }
+
+    private removeStoredAccessToken(): void {
+        try {
+            globalThis.localStorage?.removeItem(this.accessTokenStorageKey);
+        } catch {
+            // Storage can be unavailable in private browsing or restricted mobile contexts.
+        }
     }
 
     refreshToken(): Observable<{ token: string }> {
