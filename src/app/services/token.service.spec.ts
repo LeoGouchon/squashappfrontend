@@ -27,6 +27,19 @@ describe('TokenService', () => {
 
         expect(service.getAccessToken()).toBeNull();
         expect(service.getUser()).toBeNull();
-        expect(service.getIsAdmin()).toBeFalse();
+        expect(service.hasAnyRole('ADMIN', 'MODERATOR')).toBeFalse();
+    });
+
+    it('checks application roles', () => {
+        (service as any).applicationUser = {
+            id: 'id',
+            email: 'user@example.com',
+            player: null,
+            role: 'MODERATOR'
+        };
+
+        expect(service.hasRole('MODERATOR')).toBeTrue();
+        expect(service.hasAnyRole('ADMIN', 'MODERATOR')).toBeTrue();
+        expect(service.hasRole('USER')).toBeFalse();
     });
 });

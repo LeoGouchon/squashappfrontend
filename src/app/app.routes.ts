@@ -13,6 +13,7 @@ import {StatisticsComponent} from './components/statistics/statistics.component'
 import {PlayerComponent} from './components/player/player.component';
 import {PlayerSelectorComponent} from './components/player-selector/player-selector.component';
 import {MatchDetailedComponent} from './components/match-detailed/match-detailed.component';
+import {AdminGuard} from './services/routes-protection/admin-guard';
 
 export const routes: Routes = [
     {
@@ -38,7 +39,8 @@ export const routes: Routes = [
     },
     {
         path: AppRoutes.ADMIN,
-        component: AdminComponent
+        component: AdminComponent,
+        canActivate: [AdminGuard]
     },
     {
         path: AppRoutes.REGISTER,

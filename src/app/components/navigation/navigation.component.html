@@ -29,7 +29,7 @@
             <p-divider/>
             <p-panel-menu [model]="profilItems"/>
         }
-        @if (this.tokenService.getIsAdmin()) {
+        @if (this.tokenService.hasAnyRole('ADMIN', 'MODERATOR')) {
             <p-divider/>
             <p-panel-menu [model]="adminItems"/>
         }

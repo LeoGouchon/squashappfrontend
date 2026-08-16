@@ -172,7 +172,7 @@ export class NavigationComponent implements OnInit {
                 label: 'Admin',
                 icon: 'pi pi-cog',
                 command: () => {
-                    if (this.tokenService.getIsAdmin()) {
+                    if (this.tokenService.hasAnyRole('ADMIN', 'MODERATOR')) {
                         this.navigation.navigateTo(AppRoutes.ADMIN);
                         this.toggleSidebar();
                     }

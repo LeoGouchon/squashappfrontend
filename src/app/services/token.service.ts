@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { User as OidcUser } from 'oidc-client-ts';
-import { Observable, defer, finalize, from, map, shareReplay } from 'rxjs';
+import { Observable, defer, finalize, from, map, shareReplay, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { oauthClient, randomState } from '../auth/config';
-import { User as ApplicationUser } from '../types/user.type';
+import { User as ApplicationUser, UserRole } from '../types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
     private readonly apiUrl = environment.apiUrl;
     private user: OidcUser | null = null;
     private applicationUser: ApplicationUser | null = null;
-    private isAdmin = false;
+    private currentUserRequest$: Observable<ApplicationUser> | null = null;
     private refreshTokenRequest$: Observable<{ token: string }> | null = null;
 
     constructor(private readonly http: HttpClient) {}
@@ -73,10 +73,6 @@ export class TokenService {
         return this.user && !this.user.expired ? this.user.access_token : null;
     }
 
-    getIsAdmin(): boolean {
-        return this.isAdmin;
-    }
-
     isRefreshingToken(): boolean {
         return !!this.refreshTokenRequest$;
     }
@@ -104,22 +100,34 @@ export class TokenService {
     clearToken(): void {
         this.user = null;
         this.applicationUser = null;
-        this.isAdmin = false;
+        this.currentUserRequest$ = null;
         void oauthClient.removeUser();
     }
 
-    fetchIsAdmin(): void {
-        this.http.get<any>(`${this.apiUrl}/me`).pipe().subscribe({
-            next: response => {
-                this.applicationUser = response as ApplicationUser;
-                this.isAdmin = response.admin === true;
-            },
-            error: () => this.isAdmin = false,
-        });
+    fetchCurrentUser(): Observable<ApplicationUser> {
+        if (this.currentUserRequest$) {
+            return this.currentUserRequest$;
+        }
+
+        this.currentUserRequest$ = this.http.get<ApplicationUser>(`${this.apiUrl}/me`).pipe(
+            tap(user => this.applicationUser = user),
+            finalize(() => this.currentUserRequest$ = null),
+            shareReplay({bufferSize: 1, refCount: false})
+        );
+
+        return this.currentUserRequest$;
     }
 
     getUser(): ApplicationUser | null {
         return this.applicationUser;
+    }
+
+    hasRole(role: UserRole): boolean {
+        return this.applicationUser?.role === role;
+    }
+
+    hasAnyRole(...roles: UserRole[]): boolean {
+        return this.applicationUser != null && roles.includes(this.applicationUser.role);
     }
 
     private async clearUser(): Promise<void> {

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ApiUserInterface } from './api-user.interface';
 import { TokenService } from '../token.service';
+import { User } from '../../types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class ApiUserService implements ApiUserInterface {
@@ -20,7 +21,7 @@ export class ApiUserService implements ApiUserInterface {
         return from(this.tokenService.logout());
     }
 
-    getCurrentUser() {
-        return this.http.get(`${this.apiUrl}/me`).pipe(timeout(this.timeoutValue));
+    getCurrentUser(): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}/me`).pipe(timeout(this.timeoutValue));
     }
 }
