@@ -1,42 +1,14 @@
 <p-fluid>
     <h1>Se connecter</h1>
-    <form [formGroup]="loginForm">
+    <form (ngSubmit)="onSubmit()">
         <div class="form-wrapper">
-            <p-floatlabel variant="on">
-                <input
-                    pInputText
-                    id="emailInput"
-                    formControlName="email"
-                    autocomplete="off"
-                    type="email"
-                    required
-                    [class.ng-invalid]="formError && alreadySubmitOnce"
-                    [class.ng-dirty]="formError && alreadySubmitOnce"
-                    (focus)="onFocus()"
-                />
-                <label for="emailInput">Email</label>
-            </p-floatlabel>
-            <p-floatlabel variant="on">
-                <p-password
-                    formControlName="password"
-                    required
-                    id="passwordInput"
-                    [feedback]=false
-                    [toggleMask]=true
-                    [class.ng-invalid]="formError && alreadySubmitOnce && isEmailvalid()"
-                    [class.ng-dirty]="formError && alreadySubmitOnce && isEmailvalid()"
-                    (focus)="onFocus()"
-                />
-                <label for="passwordInput">Mot de passe</label>
-                @if (formError) {
-                    <small>{{ formErrorText }}</small>
-                }
-            </p-floatlabel>
+            <p>La connexion est gérée par le service d’identité.</p>
             <div class="buttons-wrapper">
                 <p-fluid>
-                    <p-button type="submit" label="Connexion" severity="primary" [loading]="isResponseLoading" (onClick)="onSubmit()"></p-button>
+                    <p-button type="submit" label="Connexion" severity="primary" [loading]="isResponseLoading"></p-button>
                 </p-fluid>
             </div>
+            @if (formError) { <small>{{ formErrorText }}</small> }
         </div>
     </form>
 </p-fluid>

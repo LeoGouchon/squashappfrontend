@@ -23,6 +23,7 @@
         "@angular/router": "^19.2.20",
         "@primeng/themes": "^19.1.4",
         "chartjs-plugin-datalabels": "^2.2.0",
+        "oidc-client-ts": "^3.5.0",
         "primeflex": "^4.0.0",
         "primeicons": "^7.0.0",
         "primeng": "^19.1.4",
