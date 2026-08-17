@@ -14,8 +14,8 @@ export class ApiAdminService {
     }
 
     invitePlayer(playerId: string) {
-        return this.http.post<{ token: string }>(this.apiUrl + `/admin/invitation?playerId=${playerId}`, {}).pipe(
+        return this.http.post<{ invitationUrl: string }>(this.apiUrl + '/admin/invitation', {playerId}).pipe(
             timeout(this.timeoutValue),
-            tap(response => response.token))
+            tap(response => response.invitationUrl))
     }
 }
