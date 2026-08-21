@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/LeoGouchon/squashappfrontend/compare/v1.0.2...v1.1.0) (2026-08-21)
+
+
+### Features
+
+* **auth:** implement external identity provider ([#22](https://github.com/LeoGouchon/squashappfrontend/issues/22)) ([e867341](https://github.com/LeoGouchon/squashappfrontend/commit/e867341213d48aab4c1a40b3592f83bbba02fc51))
+
 ## [1.0.2](https://github.com/LeoGouchon/squashappfrontend/compare/v1.0.1...v1.0.2) (2026-06-14)
 
 
