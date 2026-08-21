@@ -1,8 +1,10 @@
 import {Player} from './player.type';
 
+export type UserRole = 'USER' | 'MODERATOR' | 'ADMIN';
+
 export type User = {
     id: string;
-    admin: boolean;
-    mail: string;
-    player: Player;
+    email: string;
+    player: Player | null;
+    role: UserRole;
 }

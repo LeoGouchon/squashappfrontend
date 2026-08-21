@@ -1,36 +1,24 @@
-import {HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
-import {Observable, switchMap} from 'rxjs';
-import {TokenService} from '../token.service';
-import {inject} from '@angular/core';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Observable, switchMap } from 'rxjs';
+import { TokenService } from '../token.service';
+import { environment } from '../../../environments/environment';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     const tokenService = inject(TokenService);
-    const token = tokenService.getAccessToken();
-    const isAuthEndpoint = req.url.includes('/authenticate/');
 
-    if (isAuthEndpoint) {
-        return next(req.clone({
-            withCredentials: true
-        }));
+    if (req.url.startsWith(environment.identityIssuer)) {
+        return next(req);
     }
 
     if (tokenService.isRefreshingToken()) {
         return tokenService.refreshToken().pipe(
-            switchMap(({token: refreshedToken}) => next(req.clone({
-                setHeaders: {Authorization: `Bearer ${refreshedToken}`},
-                withCredentials: true
-            })))
+            switchMap(({ token }) => next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })))
         );
     }
 
-    if (!token) {
-        return next(req.clone({
-            withCredentials: true
-        }));
-    }
-
-    return next(req.clone({
-        setHeaders: {Authorization: `Bearer ${token}`},
-        withCredentials: true
-    }));
+    const token = tokenService.getAccessToken();
+    return next(token
+        ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+        : req);
 }

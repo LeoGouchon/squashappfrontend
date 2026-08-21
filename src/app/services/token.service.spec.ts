@@ -1,48 +1,45 @@
-import {TestBed} from '@angular/core/testing';
-import {provideHttpClient} from '@angular/common/http';
-import {provideHttpClientTesting} from '@angular/common/http/testing';
-import {TokenService} from './token.service';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TokenService } from './token.service';
+import { oauthClient } from '../auth/config';
 
 describe('TokenService', () => {
-    const storageKey = 'squashapp.accessToken';
     let service: TokenService;
 
     beforeEach(() => {
-        localStorage.removeItem(storageKey);
-
         TestBed.configureTestingModule({
-            providers: [
-                provideHttpClient(),
-                provideHttpClientTesting()
-            ]
+            providers: [provideHttpClient(), provideHttpClientTesting()],
         });
-
         service = TestBed.inject(TokenService);
     });
 
-    afterEach(() => {
-        localStorage.removeItem(storageKey);
+    afterEach(async () => {
+        await oauthClient.removeUser();
     });
 
-    it('should store the access token in localStorage', () => {
-        service.setAccessToken('fake-token');
-
-        expect(localStorage.getItem(storageKey)).toBe('fake-token');
-        expect(service.getAccessToken()).toBe('fake-token');
+    it('starts without an access token', () => {
+        expect(service.getAccessToken()).toBeNull();
     });
 
-    it('should read the access token from localStorage', () => {
-        localStorage.setItem(storageKey, 'stored-token');
-
-        expect(service.getAccessToken()).toBe('stored-token');
-    });
-
-    it('should remove the access token from localStorage when cleared', () => {
-        service.setAccessToken('fake-token');
-
+    it('clears the OIDC user and application state', () => {
         service.clearToken();
 
-        expect(localStorage.getItem(storageKey)).toBeNull();
         expect(service.getAccessToken()).toBeNull();
+        expect(service.getUser()).toBeNull();
+        expect(service.hasAnyRole('ADMIN', 'MODERATOR')).toBeFalse();
+    });
+
+    it('checks application roles', () => {
+        (service as any).applicationUser = {
+            id: 'id',
+            email: 'user@example.com',
+            player: null,
+            role: 'MODERATOR'
+        };
+
+        expect(service.hasRole('MODERATOR')).toBeTrue();
+        expect(service.hasAnyRole('ADMIN', 'MODERATOR')).toBeTrue();
+        expect(service.hasRole('USER')).toBeFalse();
     });
 });

@@ -7,7 +7,6 @@ import {Fluid} from 'primeng/fluid';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Select} from 'primeng/select';
 import {ApiAdminService} from '../../services/api-admin.service';
-import {AppRoutes} from '../../AppRoutes';
 import {MessageService} from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
@@ -68,7 +67,7 @@ export class AdminComponent implements OnInit {
         if (selectedPlayer != null) {
             this.apiAdminService.invitePlayer(selectedPlayer.id).subscribe(
                 (response) => {
-                    this.invitationUrl = window.location.origin + '/' + AppRoutes.REGISTER + '?invitation-token=' + response.token;
+                    this.invitationUrl = response.invitationUrl;
                     this.copyLink();
                 });
         }

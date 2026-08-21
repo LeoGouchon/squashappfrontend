@@ -16,6 +16,13 @@ export const environment = {
   production: true,
   apiUrl: '${apiUrl}',
   timeoutValue: 3000,
+  identityIssuer: '${process.env.IDENTITY_ISSUER || 'https://identity.leogouchon.com'}',
+  identityAuthFrontendUrl: '${process.env.IDENTITY_AUTH_FRONTEND_URL || 'https://identity.leogouchon.com'}',
+  identityClientId: '${process.env.IDENTITY_CLIENT_ID || 'squash-client'}',
+  identityRedirectUri: '${process.env.IDENTITY_REDIRECT_URI || 'https://squash.leogouchon.com/'}',
+  identityPostLogoutRedirectUri: '${process.env.IDENTITY_POST_LOGOUT_REDIRECT_URI || 'https://squash.leogouchon.com/'}',
+  identityResource: '${process.env.IDENTITY_RESOURCE || 'https://backend.api.default/'}',
+  identityScope: '${process.env.IDENTITY_SCOPE || 'openid profile email'}',
 };
 `;
 

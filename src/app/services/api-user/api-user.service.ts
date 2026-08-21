@@ -1,70 +1,27 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {map, Observable, tap, timeout} from 'rxjs';
-import {ApiUserInterface} from './api-user.interface';
-import {TokenService} from '../token.service';
-import {NavigationService} from '../navigation.service';
-import {AppRoutes} from '../../AppRoutes';
+import { Injectable } from '@angular/core';
+import { Observable, from, timeout } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { ApiUserInterface } from './api-user.interface';
+import { TokenService } from '../token.service';
+import { User } from '../../types/user.type';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ApiUserService implements ApiUserInterface {
     private readonly apiUrl = environment.apiUrl;
-    private readonly timeoutValue: number = environment.timeoutValue;
+    private readonly timeoutValue = environment.timeoutValue;
 
-    constructor(private readonly http: HttpClient, private readonly tokenService: TokenService, private readonly navigationService: NavigationService) {
-        this.tokenService = tokenService;
-        this.navigationService = navigationService;
+    constructor(private readonly http: HttpClient, private readonly tokenService: TokenService) {}
+
+    login(): Observable<void> {
+        return from(this.tokenService.login());
     }
 
-    login(email: string, password: string) {
-        return this.http.post<{ token: string }>(
-            this.apiUrl + '/authenticate/login',
-            {email, password},
-            {withCredentials: true}
-        ).pipe(
-            timeout(this.timeoutValue),
-            map(response => {
-                const accessToken = response.token;
-                this.tokenService.setAccessToken(accessToken);
-                return response;
-            })
-        );
+    logout(): Observable<void> {
+        return from(this.tokenService.logout());
     }
 
-    logout() {
-        return this.http.post(
-            this.apiUrl + '/authenticate/logout',
-            null,
-            {withCredentials: true}
-        ).pipe(
-            timeout(this.timeoutValue),
-            tap(_ => {
-                this.tokenService.clearToken()
-                this.navigationService.navigateTo(AppRoutes.LOGIN)
-            })
-        );
-    }
-
-    signup(email: string, password: string, invitationToken: string) {
-        return this.http.post<{ token: string }>(
-            this.apiUrl + '/authenticate/signup' + "?token=" + encodeURIComponent(invitationToken),
-            {email, password},
-            {withCredentials: true}
-        ).pipe(
-            timeout(this.timeoutValue),
-            tap(response => {
-                const accessToken = response.token;
-                this.tokenService.setAccessToken(accessToken);
-            }));
-    }
-
-    getCurrentUser(): Observable<any> {
-        return this.http.get(this.apiUrl + '/me').pipe(
-            timeout(this.timeoutValue),
-            tap((response: any) => {return response;})
-        );
+    getCurrentUser(): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}/me`).pipe(timeout(this.timeoutValue));
     }
 }

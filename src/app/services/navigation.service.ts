@@ -4,7 +4,7 @@ import {TokenService} from './token.service';
 import {AppRoutes} from '../AppRoutes';
 import {MatchService} from './match-service.service';
 import {ConfirmationService} from 'primeng/api';
-import {EMPTY, from, map, Observable, of, switchMap} from 'rxjs';
+import {EMPTY, from, map, Observable, switchMap} from 'rxjs';
 
 export interface NavigationServiceInterface {
     checkTokenAndNavigate(): Observable<void>;
@@ -34,8 +34,7 @@ export class NavigationService implements NavigationServiceInterface {
                 if (!this.tokenService.getAccessToken()) {
                     return from(this.router.navigate([AppRoutes.LOGIN])).pipe(map(() => undefined));
                 } else {
-                    this.tokenService.fetchIsAdmin();
-                    return of(undefined);
+                    return this.tokenService.fetchCurrentUser().pipe(map(() => undefined));
                 }
             })
         );

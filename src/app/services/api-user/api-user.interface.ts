@@ -1,8 +1,8 @@
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { User } from '../../types/user.type';
 
 export interface ApiUserInterface {
-    login(email: string, password: string): Observable<{token: string}>;
-    logout(): Observable<any>;
-    signup(email: string, password: string, invitationToken: string): Observable<{token: string}>;
-    getCurrentUser(): Observable<any>;
+    login(): Observable<void>;
+    logout(): Observable<void>;
+    getCurrentUser(): Observable<User>;
 }
